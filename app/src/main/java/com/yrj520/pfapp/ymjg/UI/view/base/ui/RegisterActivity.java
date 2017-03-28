@@ -1,6 +1,8 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -13,6 +15,22 @@ import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 public class RegisterActivity extends BaseActivity {
 
     private TextView iv_left;
+
+    private EditText et_mobile;
+
+    private EditText et_message_code;
+
+    private Button btn_get_message_code;
+
+    private EditText et_psw1;
+
+    private EditText et_psw2;
+
+    private Button btn_aggrement;
+
+    private  Button btn_register;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
