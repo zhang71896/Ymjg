@@ -92,7 +92,7 @@ public class AccountManageActivity extends BaseActivity {
     private void setViews() {
         tv_center.setText("账户管理");
         String imgUrl= Host.HOST+mUserData.getUserimg();
-        if(!StringUtils.isEmpty(imgUrl)) {
+        if(!StringUtils.isEmpty(mUserData.getUserimg())) {
             ImageUtils.loadCirclePic(AccountManageActivity.this,imgUrl,iv_header,R.mipmap.header);
             tv_shop_name.setText(mUserData.getUsername());
             tv_account.setText(mUserData.getPhone());

@@ -5,6 +5,21 @@ package com.yrj520.pfapp.ymjg.UI.constant;
  */
 
 public class MyConstant {
+
+    /**
+     * 清空购物车
+     */
+    public static final String ClearShopCart="ClearShopCart";
+
+    /**
+     * 更新购物车
+     */
+    public static final String UpdateShopCart="UpdateShopCart";
+
+    /**
+     * 更新价目相关
+     */
+    public static final String UpdatePrices="UpdatePrices";
     /**
      * 上传头像
      */

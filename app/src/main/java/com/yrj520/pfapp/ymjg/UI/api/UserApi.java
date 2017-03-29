@@ -163,7 +163,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void ProduceOrderApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_PRODUCE_ORDER,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_PRODUCE_ORDER,params,onBack);
     }
 
     /**
@@ -172,7 +173,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void ShoppingCatApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_SHOPPING_CAT,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_SHOPPING_CAT,params,onBack);
     }
 
     /**
@@ -181,7 +183,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void ClearShoppingCatApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_CLEAR_SHOPPING_CAT,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_CLEAR_SHOPPING_CAT,params,onBack);
     }
 
     /**
@@ -229,8 +232,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void QueryPersonalMessageApi(Context context, RequestBack onBack) {
-
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_QUERY_USERMESSAGE,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_QUERY_USERMESSAGE,params,onBack);
     }
 
     /**

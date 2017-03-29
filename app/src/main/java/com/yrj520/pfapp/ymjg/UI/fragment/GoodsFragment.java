@@ -20,9 +20,7 @@ import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
-import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import org.json.JSONObject;
@@ -73,7 +71,6 @@ public class GoodsFragment extends Fragment {
             UserApi.Get3GoodsApi(SuperApplication.getInstance().getApplicationContext(), pid, new HttpUtil.RequestBack() {
                 @Override
                 public void onSuccess(JSONObject response) {
-                    LogUtils.info("ThridGoods", response.toString());
                     String code = response.optString("code");
                     if (code.equals("200")) {
                         Gson gson = new Gson();
@@ -110,13 +107,12 @@ public class GoodsFragment extends Fragment {
         secondAdapter.addAll(mArrayBeanList);
         lv_second_goods.setAdapter(secondAdapter);
         secondAdapter.setSelectedIndex(0);
-        thridAdapter=new ThridClassGoodAdapter(SuperApplication.getInstance().getApplicationContext());
+        thridAdapter=new ThridClassGoodAdapter(getActivity());
         gv_thrid_goods.setAdapter(thridAdapter);
         gv_thrid_goods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showShort(SuperApplication.getInstance().getApplicationContext(),"当前position："+position);
-                thridAdapter.ClickPositionListener(position);
+                thridAdapter.ClickPositionListener(position,viewContent);
             }
         });
     }

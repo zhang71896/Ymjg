@@ -17,16 +17,10 @@
                app:tabIndicatorColor="@color/black_de"/>
 
 
-    <android.support.v4.view.ViewPager
-        android:layout_below="@+id/tab_essence"
-        android:id="@+id/vp_essence"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-       />
+
     <RelativeLayout
         android:layout_alignParentBottom="true"
-        android:id="@+id/bottom_menu"
+        android:id="@+id/rl_bottom_menu"
         android:background="@color/black_de"
         android:layout_height="80dp"
         android:layout_width="match_parent">
@@ -36,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="商品价格以购物车中为准"
-            android:background="@color/color_milk_yellow"
+            android:background="@color/milk_yellow"
             android:layout_height="15dp"
             android:layout_width="match_parent"
             />
@@ -100,6 +94,9 @@
                     android:text="商品"
                     android:button="@null"
                     android:layout_height="30dp"
+                    android:checked="true"
+                    android:textColor="@drawable/color_radiobutton"
+                    android:background="@drawable/radio_button_selector"
                     />
                 <RadioButton
                     android:id="@+id/rb_order_manage"
@@ -114,4 +111,12 @@
                     />
             </LinearLayout>
     </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tab_essence"
+        android:layout_above="@+id/rl_bottom_menu"
+        android:id="@+id/vp_essence"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 </RelativeLayout>

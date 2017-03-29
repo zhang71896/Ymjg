@@ -1,6 +1,6 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 public class ThridClassGoodAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
-    private Context mContext;
+    private Activity mContext;
     private List<ThridGoodsData.DataBean> dataBeanList=new ArrayList<ThridGoodsData.DataBean>();
 
     public void clearAll(){
@@ -42,11 +43,11 @@ public class ThridClassGoodAdapter extends BaseAdapter {
         dataBeanList.addAll(list);
         notifyDataSetChanged();
     }
-    public void ClickPositionListener(int position){
+    public void ClickPositionListener(int position,View parent){
         ThridGoodsData.DataBean dataBean=getItem(position);
-        PopUtil.showCartPopWindow(dataBean,mContext);
+        PopUtil.showCartPopWindow(dataBean,mContext, PurchaseGoodActivity.getBottomView());
     }
-    public ThridClassGoodAdapter(Context context) {
+    public ThridClassGoodAdapter(Activity context) {
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
     }
