@@ -16,7 +16,7 @@
     <string name="input_right_name">请输入正确名称</string>
     <string name="input_right_id">请输入正确的身份证号码</string>
     <string name="input_right_mobile_number">请输入正确的手机号码</string>
-    <string name="input_right_password">请输入6-12位有效密码</string>
+    <string name="input_right_password">请输入6-12位数字、字母组合密码</string>
     <string name="input_same_password">两次密码请保持一致</string>
     <string name="please_input_messagecode">请输入短信验证码</string>
     <string name="return_btn">返回</string>

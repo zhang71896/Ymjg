@@ -51,7 +51,7 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private TabLayout tab_essence;
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private  TextView tv_center;
 
@@ -62,6 +62,8 @@ public class PurchaseGoodActivity extends BaseActivity {
     private ViewPager vp_essence;
 
     private ImageView iv_cart;
+
+    private RelativeLayout rl_shop_cart;
 
     private TextView tv_produce_order;
 
@@ -239,6 +241,7 @@ public class PurchaseGoodActivity extends BaseActivity {
     }
 
     private void initViews() {
+        rl_shop_cart=(RelativeLayout) findViewById(R.id.rl_shop_cart);
         rb_order_manage=(RadioButton) findViewById(R.id.rb_order_manage);
         rl_bottom_menu=(RelativeLayout)findViewById(R.id.rl_bottom_menu);
         tv_produce_order=(TextView)findViewById(R.id.tv_produce_order);
@@ -248,13 +251,13 @@ public class PurchaseGoodActivity extends BaseActivity {
         tv_total_goods_num=(TextView)findViewById(R.id.tv_total_goods_num);
         tab_essence = (TabLayout)findViewById(R.id.tab_essence);
          vp_essence = (ViewPager) findViewById(R.id.vp_essence);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         tv_center.setText("商品进购");
     }
 
     private void initClickListenner(){
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -279,6 +282,13 @@ public class PurchaseGoodActivity extends BaseActivity {
                 finish();
                 Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        rl_shop_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopUtil.ShowShopCartPopWindow(PurchaseGoodActivity.this,PurchaseGoodActivity.getBottomView());
             }
         });
     }

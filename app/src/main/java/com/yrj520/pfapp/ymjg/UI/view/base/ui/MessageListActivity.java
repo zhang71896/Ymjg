@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -21,7 +22,7 @@ import com.yrj520.pfapp.ymjg.UI.adapter.MessageAdapter;
 
 public class MessageListActivity  extends Activity{
     private ListView lv_message_list;
-    private TextView tv_left;
+    private RelativeLayout rl_left;
     private TextView tv_center;
     private MessageAdapter messageAdapter;
     @Override
@@ -40,7 +41,7 @@ public class MessageListActivity  extends Activity{
     }
 
     private void initClickListenner() {
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -50,7 +51,7 @@ public class MessageListActivity  extends Activity{
 
     private void initViews() {
         lv_message_list=(ListView) findViewById(R.id.lv_message_list);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         tv_center.setText("消息列表");
     }

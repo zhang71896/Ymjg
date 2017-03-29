@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -45,7 +46,7 @@ public class OrderCooperateActivity extends BaseActivity {
     }
 
     private static int mPosition=0;
-    private TextView tv_left;
+    private RelativeLayout rl_left;
     private  TextView tv_center;
     List<String> titles=new ArrayList<String>();
     String[] titlesGroup={"全部","待付款","待收货","已完成","已取消"};
@@ -115,7 +116,7 @@ public class OrderCooperateActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -128,7 +129,7 @@ public class OrderCooperateActivity extends BaseActivity {
         tab_essence = (TabLayout)findViewById(R.id.tab_essence);
         vp_essence = (ViewPager) findViewById(R.id.vp_essence);
         tv_center=(TextView)findViewById(R.id.tv_center);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center.setText("订单管理");
 
     }

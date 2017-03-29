@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -17,12 +18,14 @@ import org.json.JSONObject;
 
 import okhttp3.Request;
 
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
+
 /**
  * Created by zry on 17/4/4.
  */
 
 public class ActivityFeedBack extends BaseActivity {
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -51,7 +54,7 @@ public class ActivityFeedBack extends BaseActivity {
     }
 
     private void initClickListenner(){
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -117,7 +120,7 @@ public class ActivityFeedBack extends BaseActivity {
     }
 
     private void initViews() {
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         btn_submit=(Button) findViewById(R.id.btn_submit);
         et_feedback=(EditText) findViewById(R.id.et_feedback);

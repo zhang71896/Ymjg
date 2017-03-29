@@ -37,6 +37,8 @@ import java.net.URISyntaxException;
 import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
+
 /**
  * Title:
  * Description:
@@ -70,7 +72,7 @@ public class AccountManageActivity extends BaseActivity {
 
     private TextView tv_account;
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -197,7 +199,7 @@ public class AccountManageActivity extends BaseActivity {
             }
         });
 
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -321,7 +323,7 @@ public class AccountManageActivity extends BaseActivity {
         iv_header=(ImageView)findViewById(R.id.iv_header);
         tv_shop_name=(TextView) findViewById(R.id.tv_shop_name);
         tv_account=(TextView) findViewById(R.id.tv_account);
-        tv_left=(TextView) findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView) findViewById(R.id.tv_center);
     }
 }

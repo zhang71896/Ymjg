@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,8 @@ import java.net.URISyntaxException;
 
 import okhttp3.Request;
 
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
+
 /**
  * Title:
  * Description:
@@ -46,7 +49,7 @@ import okhttp3.Request;
 
 public class VerifyActivity extends BaseActivity {
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -117,7 +120,7 @@ public class VerifyActivity extends BaseActivity {
                 selectPhoto();
             }
         });
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -212,7 +215,7 @@ public class VerifyActivity extends BaseActivity {
     private void initViews() {
         et_id= (EditText) findViewById(R.id.et_id);
         et_name= (EditText) findViewById(R.id.et_name);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         iv_idz=(ImageView)findViewById(R.id.iv_idz);
         iv_idf=(ImageView)findViewById(R.id.iv_idf);

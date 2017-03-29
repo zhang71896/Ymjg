@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
 
 /**
  * Title:等待验证界面
@@ -22,7 +25,7 @@ import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 public class WaitingVerifyActivity extends BaseActivity {
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -31,11 +34,11 @@ public class WaitingVerifyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_verify_activity);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         btn_back_login=(Button)findViewById(R.id.btn_back_login);
 
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

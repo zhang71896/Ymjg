@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
 
 /**
  * Created by zry on 17/4/1.
@@ -19,7 +22,7 @@ import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 public class ActivityAboutUs extends BaseActivity {
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -31,7 +34,7 @@ public class ActivityAboutUs extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        tv_left = (TextView) findViewById(R.id.tv_left);
+        rl_left = (RelativeLayout) findViewById(R.id.rl_left);
         tv_center = (TextView) findViewById(R.id.tv_center);
         tv_center.setText("关于我们");
         btn_call = (Button) findViewById(R.id.btn_call);
@@ -40,7 +43,7 @@ public class ActivityAboutUs extends BaseActivity {
     }
 
     private void initClickListenner() {
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

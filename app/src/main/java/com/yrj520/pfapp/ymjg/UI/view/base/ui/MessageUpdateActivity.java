@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -25,7 +26,7 @@ import de.greenrobot.event.EventBus;
 
 public class MessageUpdateActivity extends BaseActivity {
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -48,7 +49,7 @@ public class MessageUpdateActivity extends BaseActivity {
     }
 
     private void initClickListenner() {
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -92,7 +93,7 @@ public class MessageUpdateActivity extends BaseActivity {
     }
 
     private void initViews() {
-        tv_left=(TextView) findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center=(TextView) findViewById(R.id.tv_center);
         btn_save=(Button)findViewById(R.id.btn_save);
         et_message=(EditText) findViewById(R.id.et_message);

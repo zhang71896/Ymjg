@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,6 +22,8 @@ import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
+
 /**
  * Title:
  * Description:
@@ -33,7 +36,7 @@ import de.greenrobot.event.EventBus;
 
 public class ActivityAddress extends BaseActivity {
     private TextView tv_center;
-    private TextView tv_left;
+    private RelativeLayout rl_left;
     private TextView tv_add_address;
     private AddressData addressData;
     private AddressAdapter addressAdapter;
@@ -49,7 +52,7 @@ public class ActivityAddress extends BaseActivity {
     }
 
     private void initClickListenner() {
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -100,7 +103,7 @@ public class ActivityAddress extends BaseActivity {
     private void initViews(){
         addressAdapter=new AddressAdapter(ActivityAddress.this);
         tv_center=(TextView)findViewById(R.id.tv_center);
-        tv_left=(TextView)findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_add_address=(TextView)findViewById(R.id.tv_add_address);
         lv_list=(ListView)findViewById(R.id.lv_list);
         lv_list.setAdapter(addressAdapter);

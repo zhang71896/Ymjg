@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
+import static com.yrj520.pfapp.ymjg.R.id.tv_left;
+
 /**
  * Title:
  * Description:
@@ -41,7 +43,7 @@ import okhttp3.Request;
  */
 
 public class ActivityAddAddress extends BaseActivity{
-    private TextView tv_left;
+    private RelativeLayout rl_left;
     private TextView tv_center;
     private EditText et_lianxiren;
     private EditText et_mobile;
@@ -92,7 +94,7 @@ public class ActivityAddAddress extends BaseActivity{
     }
 
     private void initClickListenner() {
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -211,7 +213,7 @@ public class ActivityAddAddress extends BaseActivity{
 
     private void initViews() {
         btn_save=(Button)findViewById(R.id.btn_save);
-        tv_left=(TextView) findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout)findViewById(R.id.rl_left);
         tv_center=(TextView) findViewById(R.id.tv_center);
         et_lianxiren=(EditText) findViewById(R.id.et_lianxiren);
         et_mobile=(EditText) findViewById(R.id.et_mobile);

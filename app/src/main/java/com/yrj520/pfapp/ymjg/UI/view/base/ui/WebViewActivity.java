@@ -21,6 +21,7 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
@@ -40,7 +41,7 @@ public class WebViewActivity extends BaseActivity {
 
     private WebView webView;
 
-    private TextView tv_left;
+    private RelativeLayout rl_left;
 
     private TextView tv_center;
 
@@ -108,11 +109,11 @@ public class WebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aggrenment_activity);
         webView = (WebView) findViewById(R.id.webView);
-        tv_left = (TextView) findViewById(R.id.tv_left);
+        rl_left = (RelativeLayout) findViewById(R.id.rl_left);
         tv_center = (TextView) findViewById(R.id.tv_center);
         headr_bar = (RelativeLayout) findViewById(R.id.headr_bar);
         tv_center.setText("用户协议");
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -150,26 +151,8 @@ public class WebViewActivity extends BaseActivity {
     final class MyWebViewClient extends WebViewClient {
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            final PayTask task = new PayTask(WebViewActivity.this);
-            final String ex = task.fetchOrderInfoFromH5PayUrl(url);
-            if (!TextUtils.isEmpty(ex)) {
-                //调用支付接口进行支付
-                new Thread(new Runnable() {
-                    public void run() {
-                        H5PayResultModel result = task.h5Pay(ex, true);
-                        //处理返回结果
+            LogUtils.info("WebResourceResponse",url);
 
-                            String code=result.getResultCode();
-                            Message message=mHandler.obtainMessage();
-                            message.what=1;
-                            message.obj=code;
-                            mHandler.sendMessage(message);
-
-                    }
-                }).start();
-            } else {
-
-            }
             return super.shouldInterceptRequest(view, url);
         }
 
@@ -181,9 +164,30 @@ public class WebViewActivity extends BaseActivity {
         }
 
         public void onPageFinished(WebView view, String url) {
-     /*       LogUtils.info("onPageFinished","onPageFinished");
-            view.loadUrl("javascript:window.local_obj.showSource('<head>'+" +
-                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");*/
+            final PayTask task = new PayTask(WebViewActivity.this);
+            final String ex = task.fetchOrderInfoFromH5PayUrl(url);
+            LogUtils.info("WebResourceResponse ex:","here"+ex);
+            if (!TextUtils.isEmpty(ex)) {
+                //调用支付接口进行支付
+                new Thread(new Runnable() {
+                    public void run() {
+                        H5PayResultModel result = task.h5Pay(ex, true);
+                        //处理返回结果
+                        LogUtils.info("H5PayResultModel",result.getResultCode().toString());
+                        if(!StringUtils.isEmpty(result.getResultCode())){
+                            String code=result.getResultCode();
+                            if(code.equals("9000")){
+                                Message message=mHandler.obtainMessage();
+                                message.what=1;
+                                message.obj=code;
+                                mHandler.sendMessage(message);
+                            }
+                        }
+                    }
+                }).start();
+            } else {
+
+            }
             super.onPageFinished(view, url);
 
         }

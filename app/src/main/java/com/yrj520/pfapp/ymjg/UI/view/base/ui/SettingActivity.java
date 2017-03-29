@@ -33,7 +33,7 @@ import okhttp3.Request;
 
 public class SettingActivity extends BaseActivity{
 
-    private  TextView tv_left;
+    private  RelativeLayout rl_left;
 
     private RelativeLayout rl_clear_cashe;
 
@@ -58,7 +58,7 @@ public class SettingActivity extends BaseActivity{
         tv_clear_data=(TextView) findViewById(R.id.tv_clear_data);
         btn_log_out=(Button) findViewById(R.id.btn_log_out);
         tv_center=(TextView) findViewById(R.id.tv_center);
-        tv_left=(TextView) findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center.setText("设置");
         setDataTv();
     }
@@ -83,7 +83,7 @@ public class SettingActivity extends BaseActivity{
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        CasheUtil.cleanExternalCache(SettingActivity.this);
+
                     }
                 }).show();
 
@@ -99,7 +99,7 @@ public class SettingActivity extends BaseActivity{
             }
         });
 
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
