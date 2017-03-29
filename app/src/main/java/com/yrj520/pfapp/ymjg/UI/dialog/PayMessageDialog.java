@@ -19,6 +19,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.DefaultAddressData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.ActivityAddress;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.WebViewActivity;
 
 import org.json.JSONObject;
 
@@ -42,6 +43,8 @@ public class PayMessageDialog extends Dialog{
     private  TextView tv_pay_value;
     private RelativeLayout rl_address;
     private Button btn_pay;
+    private String mAddressId;
+    private String mOrderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +66,9 @@ public class PayMessageDialog extends Dialog{
 
     }
 
-    public PayMessageDialog(Context context) {
+    public PayMessageDialog(Context context,String orderId) {
         super(context);
+        mOrderId=orderId;
         mContext=context;
     }
 
@@ -73,6 +77,11 @@ public class PayMessageDialog extends Dialog{
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(mContext, WebViewActivity.class);
+                intent.putExtra("type",1);
+                intent.putExtra("address_id",mAddressId);
+                intent.putExtra("order_id",mOrderId);
+                mContext.startActivity(intent);
 
             }
         });
@@ -117,7 +126,7 @@ public class PayMessageDialog extends Dialog{
                         defaultAddressData = gson.fromJson(response.toString(), DefaultAddressData.class);
                     }
                     if(defaultAddressData!=null)
-                       setViews(totalPrices);
+                       setViews(totalPrices,defaultAddressData.getData().getAddress_id());
                     else{
                         Intent intent =new Intent(mContext, ActivityAddress.class);
                         mContext.startActivity(intent);
@@ -133,7 +142,8 @@ public class PayMessageDialog extends Dialog{
         });
     }
 
-    private void setViews(String totalPrices){
+    private void setViews(String totalPrices,String addressId){
+        mAddressId=addressId;
         if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
             tv_phone.setText(defaultAddressData.getData().getSh_phone());
         }
