@@ -7,16 +7,28 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.photo.MediaChoseActivity;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PermissionUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import okhttp3.Request;
 
 /**
  * Title:
@@ -41,6 +53,10 @@ public class VerifyActivity extends BaseActivity {
     private ImageView iv_idf;
 
     private ImageView iv_bussiness_lience;
+
+    private boolean isUploadSuccess=false;
+
+    private Button btn_submit;
 
     //0:iv_idz 1:iv_idf 2:iv_bussiness_lience
     private int photoType=0;
@@ -79,6 +95,36 @@ public class VerifyActivity extends BaseActivity {
                 selectPhoto();
             }
         });
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserApi.IndexApi(VerifyActivity.this, new HttpUtil.RequestBack() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        String code=response.optString("code");
+                        ToastUtils.showShort(VerifyActivity.this,code);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onBefore(Request request) {
+                        super.onBefore(request);
+                        showLoading("加载中");
+                    }
+
+                    @Override
+                    public void onAfter() {
+                        super.onAfter();
+                        closeLoading();
+                    }
+                });
+            }
+        });
     }
 
     private void initViews() {
@@ -88,6 +134,9 @@ public class VerifyActivity extends BaseActivity {
         iv_idz=(ImageView)findViewById(R.id.iv_idz);
         iv_idf=(ImageView)findViewById(R.id.iv_idf);
         iv_bussiness_lience=(ImageView)findViewById(R.id.iv_bussiness_lience);
+
+        btn_submit=(Button) findViewById(R.id.btn_submit);
+
 
     }
     
@@ -112,6 +161,16 @@ public class VerifyActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             picPath = data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
             ImageView photoId=getImageViewByPhotoType();
+            if(picPath!=null) {
+                LogUtils.info("picPath: "+picPath);
+                try {
+                    uploadRes(new File(new URI(picPath.toString())));
+                    LogUtils.info("uploadRes: "+picPath);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    LogUtils.info("printStackTrace: "+e.getMessage());
+                }
+            }
             if(photoId!=null) {
                 Glide.with(this)
                         .load(picPath)
@@ -142,6 +201,37 @@ public class VerifyActivity extends BaseActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         }
+    }
+
+    //上传头像
+    private void uploadRes(File file) {
+        UserApi.uploadResApi(this, file, new HttpUtil.RequestBack() {
+            @Override
+            public void onBefore(Request request) {
+                super.onBefore(request);
+                showLoading("请稍后...");
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                if(code.equals("200")){
+                    ToastUtils.showShort(VerifyActivity.this,"上传成功");
+                }
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+
+            @Override
+            public void onAfter() {
+                super.onAfter();
+                closeLoading();
+            }
+        });
     }
 
     private ImageView getImageViewByPhotoType(){

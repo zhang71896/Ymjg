@@ -1,9 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/bg_gray"
     android:layout_height="match_parent">
+    <include layout="@layout/header_bar"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:background="@color/gray_e5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:id="@+id/rl_clear_cashe"
+        android:background="@color/bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+    >
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/tv_clear_cash"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black_de"
+        android:text="清除本地缓存"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
 
-
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:id="@+id/iv_right_arrow"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:background="@mipmap/right_arrow"
+        />
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_right_arrow"
+        android:layout_marginRight="20dp"
+        android:id="@+id/tv_clear_data"
+        android:text="0kb"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
+</RelativeLayout>
+    <TextView
+        android:background="@color/gray_e5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <RelativeLayout
+        android:id="@+id/rl_about_us"
+        android:background="@color/bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_about_us"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black_de"
+            android:text="关于我们"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+    </RelativeLayout>
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_log_out"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/colorpurple"
+        android:text="退出登录"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        />
+</LinearLayout>

@@ -28,8 +28,8 @@
         <activity android:name=".UI.view.base.ui.LoginActivity"
                   android:screenOrientation="portrait">
             <intent-filter>
-                    <category android:name="android.intent.category.DEFAULT"/>
-                    <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
         <activity
@@ -45,17 +45,16 @@
         <activity android:name=".UI.view.base.ui.RegisterActivity"
                   android:screenOrientation="portrait" />
         <activity android:name=".UI.view.base.ui.SettingActivity"
-                  android:screenOrientation="portrait" />
+                  android:screenOrientation="portrait" >
+
+            </activity>
         <activity android:name=".UI.view.base.ui.IndexActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".UI.view.base.ui.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".UI.view.base.ui.VerifyActivity"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
+
             </activity>
         <activity android:name=".UI.view.base.ui.WaitingVerifyActivity"
             android:screenOrientation="portrait" >

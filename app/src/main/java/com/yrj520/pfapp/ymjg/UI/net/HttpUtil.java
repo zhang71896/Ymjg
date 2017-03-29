@@ -95,7 +95,7 @@ public class HttpUtil {
                               Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
         OkHttpUtils.post()
-                .url(reqUrl)
+                .url(reqUrl).addHeader("Cookie","")
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }

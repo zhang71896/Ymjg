@@ -11,6 +11,7 @@ import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil.RequestBack;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +59,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void IndexApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context, Constant.REQUEST_ID_RETURN, Host.URL_INDEX, null, onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context, Constant.REQUEST_ID_RETURN, Host.URL_INDEX, params, onBack);
     }
 
     /**
@@ -203,6 +205,11 @@ public class UserApi {
                 .build();
         LogUtils.info("put params:" + " file: " + file );
         HttpUtil.doPut(context, Constant.REQUEST_ID_RETURN, requestBody, Host.URL_UPLOAD_IMAGE, onBack);
+    }
+
+    public static void uploadResApi(Context context, File file, RequestBack onBack) {
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPostFile(context, Constant.REQUEST_ID_RETURN, Host.URL_UPLOAD_IMAGE, params, file, onBack);
     }
 
     /**
