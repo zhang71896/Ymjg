@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/black_de"
+    android:background="@color/bg_white"
     >
     <TextView
         android:id="@+id/tv_left"
@@ -14,7 +14,7 @@
         android:text="@string/return_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/black_de"
         android:textSize="16sp"
         />
 
@@ -25,7 +25,7 @@
         android:text="@string/action_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/black_de"
         android:textSize="18sp"
         />
 </RelativeLayout>

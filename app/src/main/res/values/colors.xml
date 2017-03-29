@@ -6,7 +6,8 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorpink">#FF4081</color>
     <color name="colororange">#FF4500</color>
-
+    <color name="colorpurple">#C16CEB</color>
+    <color name="colorred">#C62F2F</color>
     <color name="text_bg">#969696</color>
     <color name="text_color">#444444</color>
     <color name="color_text_bg">#6dc2b3</color>

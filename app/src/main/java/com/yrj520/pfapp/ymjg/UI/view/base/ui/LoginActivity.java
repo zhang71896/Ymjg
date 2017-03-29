@@ -104,8 +104,31 @@ public class LoginActivity extends BaseActivity {
                         String code=response.optString("code");
                         String message=response.optString("message");
                         String auditstate=response.optString("auditstate");
-                        Intent intent=new Intent(LoginActivity.this,IndexActivity.class);
-                        startActivity(intent);
+                        ToastUtils.showShort(LoginActivity.this,message);
+                        if(code.equals("200")) {
+                            /**
+                             * 审核状态(1需审核 2正在审核中 3审核通过)     1跳转到审核界面设置相关的证件照片     2 提示正在审核中     3跳转到首页
+                             */
+                            if(auditstate.equals("1")){
+                                Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
+                                startActivity(intent);
+                                return;
+                            }
+                            if(auditstate.equals("2")){
+                                Intent intent = new Intent(LoginActivity.this, WaitingVerifyActivity.class);
+                                startActivity(intent);
+                                return;
+                            }
+
+                            if(auditstate.equals("3")){
+                                Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                                //清空之前栈内的acitivity
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                return;
+                            }
+
+                        }
                 }
 
                 @Override
@@ -116,7 +139,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onBefore(Request request) {
                     super.onBefore(request);
-                    showLoading("登录中");
+                    showLoading("登录中...");
                 }
 
                 @Override

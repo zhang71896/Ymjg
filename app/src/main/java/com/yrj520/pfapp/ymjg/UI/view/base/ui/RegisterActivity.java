@@ -1,5 +1,6 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -54,11 +55,16 @@ public class RegisterActivity extends BaseActivity {
 
     private String mPhone="";
 
+    private String psw1="";
+
+    private String psw2="";
+
+    private String messageCode="";
+
     private TimeCount timeCount;
 
-
-    //type 0:注册用户 1:找回密码
-    private int mType=0;
+    //type 1:注册用户 2:找回密码
+    private String mScene;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,14 +85,15 @@ public class RegisterActivity extends BaseActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                registerUser();
             }
         });
 
         btn_aggrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(RegisterActivity.this,WebViewActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -128,10 +135,16 @@ public class RegisterActivity extends BaseActivity {
 
         tv_center.setText("注册");
 
-         mType=getIntent().getIntExtra("type",0);
+         int mType=getIntent().getIntExtra("type",0);
+         if(mType==0){
+             mScene="1";
+         }else {
+             mScene="2";
+         }
 
-        if(mType==1){
+        if(mScene.equals("2")){
             tv_center.setText("找回密码");
+            btn_register.setText("找回");
             rl_aggrement.setVisibility(View.GONE);
             rl_ensure_psw.setVisibility(View.GONE);
             tv_line1.setVisibility(View.GONE);
@@ -146,11 +159,6 @@ public class RegisterActivity extends BaseActivity {
             et_mobile.requestFocus();
             return;
         }
-        //注册场景
-        String mScene="1";
-        //找回密码场景
-        if(mType==1)
-            mScene="2";
 
         UserApi.SendMessageApi(this,mPhone,mScene, new HttpUtil.RequestBack() {
             @Override
@@ -183,7 +191,118 @@ public class RegisterActivity extends BaseActivity {
                 closeLoading();
             }
         });
+    }
 
+    private void registerUser(){
+            if(checkSubmitDataCorrect()){
+                if(mScene.equals("1")){
+                UserApi.Register(RegisterActivity.this,mPhone,psw1,messageCode, new HttpUtil.RequestBack() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        String code=response.optString("code");
+                        String message=response.optString("message");
+                        ToastUtils.showShort(RegisterActivity.this,message);
+                        if(code.equals("200")){
+                            Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                            //清空之前栈内的acitivity
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onBefore(Request request) {
+                        super.onBefore(request);
+                        showLoading("注册中...");
+                    }
+
+                    @Override
+                    public void onAfter() {
+                        super.onAfter();
+                        closeLoading();
+                    }
+                });//找回密码
+            }else if(mScene.equals("2")){
+                    UserApi.FindPasswordApi(RegisterActivity.this, mPhone, psw1, messageCode, new HttpUtil.RequestBack() {
+                        @Override
+                        public void onSuccess(JSONObject response) {
+                            String code=response.optString("code");
+                            String meg=response.optString("meg");
+                            ToastUtils.showShort(RegisterActivity.this,meg);
+                            if(code.equals("200")){
+                                Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
+                                //清空之前activity的栈
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                        @Override
+                        public void onBefore(Request request) {
+                            super.onBefore(request);
+                            showLoading("找回中...");
+                        }
+
+                        @Override
+                        public void onAfter() {
+                            super.onAfter();
+                            closeLoading();
+                        }
+                    }
+                    );
+                }
+            }
+    }
+
+    //判断提交数据是否正确
+    private boolean checkSubmitDataCorrect(){
+        boolean ispass=true;
+        mPhone=et_mobile.getText().toString();
+        psw1=et_psw1.getText().toString();
+        messageCode=et_message_code.getText().toString();
+
+        if(StringUtils.isEmpty(mPhone)||!StringUtils.checkMobileNumber(mPhone)){
+            ToastUtils.showShort(this,R.string.input_right_mobile_number);
+            et_mobile.requestFocus();
+            return false;
+        }
+
+        if(StringUtils.isEmpty(messageCode)){
+            ToastUtils.showShort(this,R.string.please_input_messagecode);
+            et_message_code.requestFocus();
+            return false;
+        }
+
+        if(StringUtils.isEmpty(psw1)||!StringUtils.checkPwd(psw1)){
+            ToastUtils.showShort(this,R.string.input_right_password);
+            et_psw1.requestFocus();
+            return false;
+        }
+        //注册场景
+        if(mScene.equals("1")) {
+            psw2 = et_psw2.getText().toString();
+            if (StringUtils.isEmpty(psw2) || !StringUtils.checkPwd(psw2)) {
+                ToastUtils.showShort(this, R.string.input_right_password);
+                et_psw2.requestFocus();
+                return false;
+            }
+
+            if (!psw1.equals(psw2)) {
+                ToastUtils.showShort(this, R.string.input_same_password);
+                et_psw1.requestFocus();
+                return false;
+            }
+        }
+        return ispass;
     }
 
     //倒计时计数
@@ -191,13 +310,11 @@ public class RegisterActivity extends BaseActivity {
         private TimeCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);// 参数依次为总时长,和计时的时间间隔
         }
-
         @Override
         public void onFinish() {// 计时完毕时触发
             btn_get_message_code.setText("获取验证码");
             btn_get_message_code.setClickable(true);
         }
-
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             btn_get_message_code.setClickable(false);
