@@ -56,10 +56,11 @@
             />
 
         <RelativeLayout
+            android:layout_toLeftOf="@+id/tv_produce_order"
             android:id="@+id/rl_shop_cart"
             android:layout_below="@+id/tv_title"
             android:layout_toRightOf="@+id/iv_cart"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
             android:layout_marginTop="3dp"

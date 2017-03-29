@@ -41,6 +41,10 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
         return fragment;
     }
 
+    public void refrashDatas(int position){
+        fragmentList.get(position).initDatas();
+    }
+
     @Override
     public int getCount() {
         return mTitles.size();

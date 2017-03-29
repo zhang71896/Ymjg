@@ -115,7 +115,7 @@ public class OrderAdapter extends BaseAdapter {
         if(mType==0){
             //未审核通过
             holder.btn_cancel.setText("取消订单");
-            if(dataBean.getAuditings().equals("0")) {
+            if(dataBean.getAuditings().equals("1")) {
                 holder.btn_pay.setText("等待审核");
                 holder.btn_pay.setEnabled(false);
             }else{

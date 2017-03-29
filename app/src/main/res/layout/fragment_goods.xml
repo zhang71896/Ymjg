@@ -17,9 +17,9 @@
         android:layout_height="match_parent"
         />
     <GridView
-        android:background="@color/white"
+        android:background="@color/gray_e5"
         android:id="@+id/gv_thrid_goods"
-        android:padding="1dp"
+        android:padding="2dp"
         android:numColumns="2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

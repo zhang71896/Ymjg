@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -114,7 +115,7 @@ public class AddressAdapter extends BaseAdapter {
             }
         });
 
-        holder.iv_del.setOnClickListener(new View.OnClickListener() {
+        holder.rl_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delAddress(dataBean,position);
@@ -164,6 +165,7 @@ public class AddressAdapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView iv_del;
+        RelativeLayout rl_delete;
         RadioButton rb_default;
         TextView tv_address;
         TextView tv_phone;
@@ -175,6 +177,7 @@ public class AddressAdapter extends BaseAdapter {
             tv_phone = (TextView) root.findViewById(R.id.tv_phone);
             tv_lianxiren = (TextView) root.findViewById(R.id.tv_lianxiren);
             iv_del = (ImageView) root.findViewById(R.id.iv_del);
+            rl_delete = (RelativeLayout) root.findViewById(R.id.rl_delete);
             rb_default = (RadioButton) root.findViewById(R.id.rb_default);
         }
 

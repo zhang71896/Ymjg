@@ -19,7 +19,6 @@ import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -77,7 +76,7 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private List<String> titles = new ArrayList<>();
 
-
+    private GoodFragmentAdapter goodFragmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         initViews();
         initClickListenner();
-        initDatas();
+        initDatas(0);
         GetShopCart();
     }
 
@@ -94,6 +93,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         String msgType=cartRefreshEvent.getMsg();
         if(msgType.equals(MyConstant.UpdateShopCart)){
             //获取购物车相关的信息
+            initDatas(1);
             GetShopCart();
             return;
         }
@@ -138,7 +138,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         for(int i=0;i<mOneTwoClassGoodData.getData().size();i++){
             firstGoodtitles.add(mOneTwoClassGoodData.getData().get(i).getName());
         }
-        GoodFragmentAdapter goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles,mOneTwoClassGoodData);
+        goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles,mOneTwoClassGoodData);
 
         vp_essence.setAdapter(goodFragmentAdapter);
 
@@ -203,18 +203,22 @@ public class PurchaseGoodActivity extends BaseActivity {
         return rl_bottom_menu;
     }
 
-    private void initDatas() {
+
+    private void initDatas(final int mType) {
         UserApi.Get12GoodsDirectlyApi(PurchaseGoodActivity.this,new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                LogUtils.info("response.Result: ",response.toString());
                 String code=response.optString("code");
                 //获取数据成功
                 if(code.equals("200")) {
                     ToastUtils.showShort(PurchaseGoodActivity.this, "获取数据成功!");
                     Gson gson = new Gson();
                     mOneTwoClassGoodData = gson.fromJson(response.toString(), OneTwoClassGoodData.class);
-                    setViews();
+                    if(mType==0) {
+                        setViews();
+                    }else{
+                        goodFragmentAdapter.refrashDatas(mPosition);
+                    }
                     return;
                 }
                 //获取失败

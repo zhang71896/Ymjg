@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
-import static com.yrj520.pfapp.ymjg.R.id.tv_left;
-
 /**
  * Title:
  * Description:
@@ -196,7 +194,7 @@ public class ActivityAddAddress extends BaseActivity{
             ToastUtils.showShort(this,"请填写联系人名字！");
             return false;
         }
-        if(StringUtils.isEmpty(et_mobile.getText())&&!StringUtils.checkMobileNumber(et_mobile.getText().toString())){
+        if(StringUtils.isEmpty(et_mobile.getText())||!StringUtils.checkMobileNumber(et_mobile.getText().toString())){
             ToastUtils.showShort(this,"请填写正确的手机号！");
             return false;
         }

@@ -2,20 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:padding="1dp"
-    android:background="@color/bg_white"
+    android:background="@color/gray_e5"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:id="@+id/rl_bg"
+        android:background="@color/gray_e5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/gray_e5"
+        android:background="@color/bg_white"
         android:layout_height="match_parent"
+        android:padding="1dp"
         >
+        <TextView
+            android:id="@+id/tv_number"
+            android:textColor="@color/bg_white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorred"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text=""
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            />
     <ImageView
+        android:layout_below="@id/tv_number"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/iv_pic"
         android:layout_width="138dp"
         android:layout_height="80dp"
         />
+
     <TextView
         android:layout_marginTop="8dp"
         android:layout_below="@+id/iv_pic"
@@ -73,5 +95,6 @@
         android:textSize="16sp"
         android:text=" ¥ 599"
         />
+        </RelativeLayout>
         </RelativeLayout>
 </RelativeLayout>

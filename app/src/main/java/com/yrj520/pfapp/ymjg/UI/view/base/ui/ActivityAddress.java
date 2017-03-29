@@ -22,8 +22,6 @@ import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
-import static com.yrj520.pfapp.ymjg.R.id.tv_left;
-
 /**
  * Title:
  * Description:

@@ -19,6 +19,8 @@ import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.util.H5PayResultModel;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -26,6 +28,8 @@ import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Title:网页访问界面
@@ -95,6 +99,9 @@ public class WebViewActivity extends BaseActivity {
                 if(code.equals("200")){
                     Intent intent=new Intent(WebViewActivity.this,OrderCooperateActivity.class);
                     startActivity(intent);
+                    //更新主界面的信息
+                    PersonalMessagEvent personalMessagEvent=new PersonalMessagEvent(MyConstant.UpdatePersonalMessage);
+                    EventBus.getDefault().post(personalMessagEvent);
                 }
             }
 

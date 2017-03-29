@@ -63,7 +63,7 @@ public class GoodsFragment extends Fragment {
         return viewContent;
     }
 
-    private void initDatas() {
+    public void initDatas() {
         String pid=PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray().get(mSecondGoodPoistion).getCid();
         if(!StringUtils.isEmpty(pid)) {
             UserApi.Get3GoodsApi(SuperApplication.getInstance().getApplicationContext(), pid, new HttpUtil.RequestBack() {
