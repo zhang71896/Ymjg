@@ -9,6 +9,8 @@ import android.widget.RadioButton;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
+import com.yrj520.pfapp.ymjg.UI.fragment.GoodsFragment;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +49,7 @@ public class SecondClassGoodAdapter extends BaseAdapter {
 
     public void setSelectedIndex(int position){
         selectedIndex = position;
+        states.put(String.valueOf(selectedIndex), true);
         notifyDataSetChanged();
     }
 
@@ -94,6 +97,10 @@ public class SecondClassGoodAdapter extends BaseAdapter {
                 selectedIndex=position;
                 states.put(String.valueOf(position),  holder.rb_second_class.isChecked());
                 SecondClassGoodAdapter.this.notifyDataSetChanged();
+                int firstGoodInex= PurchaseGoodActivity.getFirstGoodPosition();
+                GoodsFragment goodsFragment=GoodFragmentAdapter.getFragmentList().get(firstGoodInex);
+                goodsFragment.ChangeThridGoodsFragment(selectedIndex);
+
             }
         });
 

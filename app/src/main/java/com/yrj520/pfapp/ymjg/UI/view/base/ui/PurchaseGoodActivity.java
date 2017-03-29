@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
@@ -42,6 +43,9 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private TabLayout tab_essence;
 
+    private TextView tv_left;
+
+    private  TextView tv_center;
 
     private ViewPager vp_essence;
 
@@ -59,7 +63,6 @@ public class PurchaseGoodActivity extends BaseActivity {
         setContentView(R.layout.activity_purchase);
         initViews();
         initDatas();
-
     }
 
     private void setViews() {
@@ -79,7 +82,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         tab_essence.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                mPosition=tab.getPosition();
                 vp_essence.setCurrentItem(tab.getPosition());
 
         }
@@ -188,6 +191,16 @@ public class PurchaseGoodActivity extends BaseActivity {
     private void initViews() {
         tab_essence = (TabLayout)findViewById(R.id.tab_essence);
          vp_essence = (ViewPager) findViewById(R.id.vp_essence);
+        tv_left=(TextView)findViewById(R.id.tv_left);
+        tv_center=(TextView)findViewById(R.id.tv_center);
+        tv_center.setText("商品进购");
+
+        tv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

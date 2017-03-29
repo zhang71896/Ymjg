@@ -9,17 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.entity.IndexData;
 import com.yrj520.pfapp.ymjg.UI.entity.MessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
-import com.yrj520.pfapp.ymjg.UI.net.Host;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.GlideCircleTransform;
+import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
@@ -100,17 +97,19 @@ public class IndexActivity extends BaseActivity {
                       mTimeCount = new TimeCount(totalTime, intervalTime);// 构造CountDownTimer对象
                       mTimeCount.start();// 开始计时
                   }
-                String imgUrl= Host.HOST+indexData.getUser().getUserimg();
+                String imgUrl=indexData.getUser().getUserimg();
                 String nickNmae=indexData.getUser().getUsername();
-                if(!StringUtils.isEmpty(imgUrl))
-                Glide.with(this)
+                if(!StringUtils.isEmpty(imgUrl)){
+                    ImageUtils.loadCirclePic(IndexActivity.this,ImageUtils.getImageUrl(imgUrl),iv_header,R.mipmap.header);
+                }
+              /*  Glide.with(this)
                 .load(imgUrl).transform(new GlideCircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .centerCrop()
                 .placeholder(R.mipmap.header)
                 .error(R.mipmap.header)
                 .skipMemoryCache(true) //跳过内存缓存
-                .into(iv_header);
+                .into(iv_header);*/
                 tv_nickname.setText(nickNmae);
 
     }

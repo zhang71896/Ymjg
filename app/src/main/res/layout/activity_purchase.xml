@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
     <include layout="@layout/header_bar" android:id="@+id/header_bar" />
     <android.support.design.widget.TabLayout
+               android:layout_marginTop="1dp"
                android:layout_below="@+id/header_bar"
                android:id="@+id/tab_essence"
                android:layout_width="match_parent"
@@ -23,5 +24,94 @@
        android:layout_height="match_parent"
        app:layout_behavior="@string/appbar_scrolling_view_behavior"
        />
-
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_menu"
+        android:background="@color/black_de"
+        android:layout_height="80dp"
+        android:layout_width="match_parent">
+        <TextView
+            android:id="@+id/tv_title"
+            android:textSize="10sp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="商品价格以购物车中为准"
+            android:background="@color/color_milk_yellow"
+            android:layout_height="15dp"
+            android:layout_width="match_parent"
+            />
+        <ImageView
+            android:layout_alignParentTop="true"
+            android:id="@+id/iv_cart"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/cart"
+            />
+        <TextView
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="3dp"
+            android:textSize="16sp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/iv_cart"
+            android:id="@+id/tv_total_price"
+            android:textColor="@color/bg_white"
+            android:text="¥ 0"
+            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:layout_below="@+id/tv_total_price"
+            android:textSize="8sp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/iv_cart"
+            android:id="@+id/tv_total_goods_num"
+            android:textColor="@color/bg_white"
+            android:text="共计商品0件"
+            android:layout_height="10dp"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_produce_order"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_title"
+            android:layout_height="35dp"
+            android:layout_width="80dp"
+            android:background="@color/color_text_bg"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="@color/bg_white"
+            android:text="生成订单"
+            />
+            <LinearLayout
+                android:background="@color/bg_white"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_height="30dp"
+                android:layout_width="match_parent">
+                <RadioButton
+                    android:id="@+id/rb_goods"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:text="商品"
+                    android:button="@null"
+                    android:layout_height="30dp"
+                    />
+                <RadioButton
+                    android:id="@+id/rb_order_manage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:text="订单管理"
+                    android:button="@null"
+                    android:layout_height="30dp"
+                    />
+            </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

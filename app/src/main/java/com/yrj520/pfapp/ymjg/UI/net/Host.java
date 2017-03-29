@@ -14,7 +14,7 @@ public class Host {
         int MODE = MODE_OFFICIAL;
         switch (MODE) {
             case MODE_OFFICIAL:
-                HOST = "http://pfapp.yrj520.com";
+                HOST = "https://pfapp.yrj520.com";
                 break;
         }
     }

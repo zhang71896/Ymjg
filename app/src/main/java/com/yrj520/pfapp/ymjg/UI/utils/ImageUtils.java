@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.net.Host;
 
 
 public class ImageUtils {
@@ -33,15 +34,23 @@ public class ImageUtils {
      * @param picUrl  图片地址
      * @param view    加载的view
      */
-    public static void loadCirclePic(Context context, String picUrl, ImageView view) {
+    public static void loadCirclePic(Context context, String picUrl, ImageView view,int resourceId) {
         Glide.with(context)
                 .load(picUrl)
                 .transform(new GlideCircleTransform(context))
-                .placeholder(R.mipmap.header)
-                .error(R.mipmap.header)
+                .placeholder(resourceId)
+                .error(resourceId)
                 .crossFade()
                 .into(view);
     }
 
+    /**
+     * 获取有地址的图片
+     * @param url 图片后缀
+     * @return
+     */
+    public static  String getImageUrl(String url){
+        return Host.HOST+url;
+    }
 
 }

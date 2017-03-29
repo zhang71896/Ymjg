@@ -8,6 +8,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.fragment.GoodsFragment;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,11 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
 
     private OneTwoClassGoodData mOneTwoClassGoodData;
 
+    private static List<GoodsFragment> fragmentList=new ArrayList<GoodsFragment>();
 
+    public static List<GoodsFragment> getFragmentList(){
+        return fragmentList;
+    }
 
     public GoodFragmentAdapter(FragmentManager fm, List<String> titles, OneTwoClassGoodData oneTwoClassGoodData) {
         super(fm);
@@ -32,7 +37,9 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         PurchaseGoodActivity.setFirstGoodPosition(position);
         GoodsFragment fragment=new GoodsFragment();
-        return fragment;
+        fragmentList.add(fragment);
+
+        return fragmentList.get(position);
     }
 
     @Override
