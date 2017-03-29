@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="140dp"
+    android:background="@color/bg_gray"
     android:layout_height="match_parent">
-
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_pic"
+        android:background="@mipmap/ic_launcher"
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        />
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/iv_pic"
+        android:textColor="@color/black_de"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:id="@+id/good_name"
+        android:text="百合花"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/good_name"
+        android:gravity="center"
+        android:id="@+id/tv_market_price"
+        android:textColor="@color/black_de"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textSize="10sp"
+        android:text="市场价:"
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/good_name"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/tv_market_price"
+        android:id="@+id/tv_market_price_value"
+        android:textColor="@color/black_de"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textSize="16sp"
+        android:text=" ¥ 599"
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_market_price"
+        android:id="@+id/tv_now_price"
+        android:textColor="@color/black_de"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="现价: "
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_market_price"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/tv_now_price"
+        android:id="@+id/tv_now_price_value"
+        android:textColor="@color/black_de"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textSize="16sp"
+        android:text=" ¥ 599"
+        />
 </RelativeLayout>
