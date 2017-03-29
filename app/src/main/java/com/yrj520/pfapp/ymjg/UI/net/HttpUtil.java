@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.config.AppData;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.OkHttpUtils;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.callback.JsonCallback;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
@@ -95,10 +96,7 @@ public class HttpUtil {
                               Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
         OkHttpUtils.post()
-/*
                 .url(reqUrl).addHeader("Cookie", AppData.getAppData(context).getTokenValue())
-*/
-                .url(reqUrl).addHeader("Cookie", "PHPSESSID=f3otklh7oiupmhkhe585gr5ci0")
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }
@@ -116,7 +114,7 @@ public class HttpUtil {
     public static void doPostFile(Context context, Integer id, String fileName,String reqUrl,
                                   Map<String, String> params, File file, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
-        OkHttpUtils.post().addHeader("Cookie", "PHPSESSID=9391rrdevkeqaigcis8pakt7c4")
+        OkHttpUtils.post().addHeader("Cookie", AppData.getAppData(context).getTokenValue())
                 .addFile(fileName, "file213.jpg", file)
                 .url(reqUrl).params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
@@ -175,6 +173,7 @@ public class HttpUtil {
         if(!StringUtils.isEmpty(code)){
             //登录失效
             if(code.equals("800")){
+                AppData.getAppData(context).setTokenValue("");
                 ToastUtils.showShort(context, R.string.login_lose_efficacy);
                 Intent intent = new Intent(context, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

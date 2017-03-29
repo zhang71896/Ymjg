@@ -30,7 +30,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
         <ImageView
             android:id="@+id/iv_header"
@@ -68,7 +68,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
         <TextView
             android:id="@+id/tv_shop_name"
@@ -107,7 +107,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
         <TextView
             android:id="@+id/tv_account"
@@ -143,7 +143,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
     </RelativeLayout>
     <TextView
@@ -178,7 +178,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
     </RelativeLayout>
     <!--收货地址管理-->
@@ -204,7 +204,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
     </RelativeLayout>
     <TextView
@@ -239,7 +239,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
     </RelativeLayout>
     <!--关于-->
@@ -265,7 +265,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="25dp" />
     </RelativeLayout>
 </LinearLayout>

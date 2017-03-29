@@ -23,17 +23,17 @@ public class PersonMessageData {
     public final String Keydistrict="district";
 
 
-    private String lianxiren;
+    private String lianxiren=null;
 
-    private String userimg;
+    private String userimg=null;
 
-    private String address;
+    private String address=null;
 
-    private String city;
+    private String city=null;
 
-    private String provice;
+    private String provice=null;
 
-    private String district;
+    private String district=null;
 
     public String getLianxiren() {
         return lianxiren;

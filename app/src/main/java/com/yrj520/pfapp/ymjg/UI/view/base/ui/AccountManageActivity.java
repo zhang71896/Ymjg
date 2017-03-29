@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.entity.PersonMessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.photo.MediaChoseActivity;
@@ -73,6 +74,8 @@ public class AccountManageActivity extends BaseActivity {
     private UserData mUserData;
 
     private Uri picPath;
+
+    private String myImgUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,12 +196,11 @@ public class AccountManageActivity extends BaseActivity {
 
                 try {
                     uploadRes(MyConstant.FileNameHeader,new File(new URI(picPath.toString())));
-                    LogUtils.info("uploadRes: "+picPath);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                     LogUtils.info("printStackTrace: "+e.getMessage());
                 }
-                Glide.with(this)
+                Glide.with(AccountManageActivity.this)
                         .load(picPath)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .centerCrop()
@@ -227,8 +229,8 @@ public class AccountManageActivity extends BaseActivity {
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 if(code.equals("200")){
-                    ToastUtils.showShort(AccountManageActivity.this,"上传成功");
-
+                    myImgUrl=response.optString("imgurl");
+                    UpdateHeaderImage();
                 }
 
             }
@@ -243,6 +245,25 @@ public class AccountManageActivity extends BaseActivity {
                 closeLoading();
             }
         });
+    }
+
+    private void UpdateHeaderImage(){
+        PersonMessageData pMD=new PersonMessageData();
+        pMD.setUserimg(myImgUrl);
+        UserApi.UpdatePersonalMessageApi(AccountManageActivity.this, pMD, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(AccountManageActivity.this,meg);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

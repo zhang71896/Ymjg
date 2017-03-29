@@ -130,7 +130,7 @@ public class PurchaseGoodActivity extends BaseActivity {
     }
 
     private void initDatas() {
-        UserApi.Get12GoodsDirectlyApi(PurchaseGoodActivity.this, new HttpUtil.RequestBack() {
+        UserApi.Get12GoodsDirectlyApi(PurchaseGoodActivity.this,new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
                 LogUtils.info("response.Result: ",response.toString());

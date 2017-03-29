@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.config.AppData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -42,6 +43,13 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //如果本地存在登录令牌
+        if(!StringUtils.isEmpty(AppData.getAppData(LoginActivity.this).getTokenValue())){
+            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+            //清空之前栈内的acitivity
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
         setContentView(R.layout.login_activity);
         initView();
         iniCLickListener();

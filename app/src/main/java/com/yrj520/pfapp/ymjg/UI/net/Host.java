@@ -5,7 +5,7 @@ public class Host {
     private static final int MODE_OFFICIAL = 0;//生产
 
 
-    private static String HOST = "";//接口地址
+    public static String HOST = "";//接口地址
 
     /**
      *生产环境下的地址
@@ -14,7 +14,7 @@ public class Host {
         int MODE = MODE_OFFICIAL;
         switch (MODE) {
             case MODE_OFFICIAL:
-                HOST = " http://pfapp.yrj520.com";
+                HOST = "http://pfapp.yrj520.com";
                 break;
         }
     }

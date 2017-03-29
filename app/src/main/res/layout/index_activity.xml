@@ -113,7 +113,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:textSize="16sp"
-                    android:text="商品采购"
+                    android:text="订单管理"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

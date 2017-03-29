@@ -50,7 +50,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void LogOutApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context, Constant.REQUEST_ID_RETURN, Host.URL_LOGOUT, null, onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context, Constant.REQUEST_ID_RETURN, Host.URL_LOGOUT, params, onBack);
     }
 
     /**
@@ -110,7 +111,9 @@ public class UserApi {
      */
     public static void Get12GoodsSinglyApi(Context context,String parent_id,RequestBack onBack){
         Map<String, String> params = new HashMap<>();
-        params.put("parent_id", parent_id);
+        if(parent_id!=null) {
+            params.put("parent_id", parent_id);
+        }
         HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_GET_12GOODS_SINGLELY,params,onBack);
     }
 
@@ -238,12 +241,24 @@ public class UserApi {
      */
     public static void UpdatePersonalMessageApi(Context context, PersonMessageData personMessageData, RequestBack onBack) {
         Map<String, String> params = new HashMap<>();
-        params.put(personMessageData.keyaddress,personMessageData.getAddress());
-        params.put(personMessageData.Keydistrict,personMessageData.getDistrict());
-        params.put(personMessageData.Keylianxiren,personMessageData.getAddress());
-        params.put(personMessageData.Keyprovice,personMessageData.getProvice());
-        params.put(personMessageData.Keyuserimg,personMessageData.getUserimg());
-        params.put(personMessageData.Keycity,personMessageData.getCity());
+        if(personMessageData.getAddress()!=null) {
+            params.put(personMessageData.keyaddress, personMessageData.getAddress());
+        }
+        if(personMessageData.getDistrict()!=null) {
+            params.put(personMessageData.Keydistrict, personMessageData.getDistrict());
+        }
+        if(personMessageData.getLianxiren()!=null) {
+            params.put(personMessageData.Keylianxiren, personMessageData.getLianxiren());
+        }
+        if(personMessageData.getProvice()!=null) {
+            params.put(personMessageData.Keyprovice, personMessageData.getProvice());
+        }
+        if(personMessageData.getUserimg()!=null) {
+            params.put(personMessageData.Keyuserimg, personMessageData.getUserimg());
+        }
+        if(personMessageData.getCity()!=null) {
+            params.put(personMessageData.Keycity, personMessageData.getCity());
+        }
         HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_UPDATE_USERINFO,params,onBack);
     }
 

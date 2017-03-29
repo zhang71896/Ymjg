@@ -17,6 +17,7 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.entity.IndexData;
 import com.yrj520.pfapp.ymjg.UI.entity.MessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
+import com.yrj520.pfapp.ymjg.UI.net.Host;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -75,7 +76,7 @@ public class IndexActivity extends BaseActivity {
         initDatas();
         initViews();
         initClickListenner();
-
+        setViews();
     }
 
     private void setViews() {
@@ -98,7 +99,7 @@ public class IndexActivity extends BaseActivity {
                       mTimeCount = new TimeCount(totalTime, intervalTime);// 构造CountDownTimer对象
                       mTimeCount.start();// 开始计时
                   }
-                String imgUrl=indexData.getUser().getUserimg();
+                String imgUrl= Host.HOST+indexData.getUser().getUserimg();
                 String nickNmae=indexData.getUser().getUsername();
                 if(!StringUtils.isEmpty(imgUrl))
                 Glide.with(this)
@@ -128,8 +129,6 @@ public class IndexActivity extends BaseActivity {
                     Gson gson = new Gson();
                     indexData=gson.fromJson(response.toString(),IndexData.class);
                     setViews();
-                  /*  LogUtils.info("responseSuccess",response.toString());
-                    LogUtils.info("indexData",indexData.getUser().getPhone());*/
                     return;
                 }
                 //获取失败

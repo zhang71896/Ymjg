@@ -29,7 +29,7 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         GoodsFragment fragment=new GoodsFragment();
-
+        GoodsFragment.setPosition(position);
         return fragment;
     }
 

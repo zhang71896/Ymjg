@@ -219,7 +219,7 @@ public class CasheUtil {
      * @throws Exception
      */
     public static String getApplicationCasheSize(Context context) throws Exception {
-            return getCacheSize(context.getCacheDir());
+            return getCacheSize(context.getExternalCacheDir());
         }
 
         public static String getCacheSize(File file) throws Exception {
