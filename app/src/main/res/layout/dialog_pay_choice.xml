@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_marginLeft="15dp"
-        android:id="@+id/iv_close"
+        android:id="@+id/tv_close"
         android:text="✘"
         android:textSize="18sp"
         android:layout_width="25dp"
@@ -14,12 +14,12 @@
         />
     <RelativeLayout
         android:background="@color/bg_white"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:layout_width="match_parent"
         >
         <TextView
             android:id="@+id/tv_lianxiren"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:textColor="@color/black_de"
@@ -31,7 +31,7 @@
             />
         <TextView
             android:id="@+id/tv_phone"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black_de"
             android:text="15208266460"
@@ -103,5 +103,110 @@
         android:layout_height="50dp"
         android:layout_width="match_parent"
         >
+        <TextView
+            android:id="@+id/tv_need_pay"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black_de"
+            android:textSize="14sp"
+            android:text="需付款"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_pay_value"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black_de"
+            android:textSize="14sp"
+            android:text="29000.00元"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_pay_ways"
+            android:layout_below="@+id/tv_need_pay"
+            android:textColor="@color/black_de"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:textSize="12sp"
+            android:text="付款方式选择"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_zhifu_pay"
+        android:layout_marginTop="5dp"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:background="@color/bg_white"
+        >
+        <ImageView
+            android:id="@+id/iv_zhifu"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/zhilogo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            />
+        <TextView
+            android:id="@+id/tv_zhifubao"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/iv_zhifu"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_de"
+            android:text="支付宝"
+            />
+        <ImageView
+            android:id="@+id/iv_suggest"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/tv_zhifubao"
+            android:textSize="12sp"
+            android:layout_width="30dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/suggest"
+            />
+        <TextView
+            android:id="@+id/tv_choice"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_zhifu"
+            android:layout_below="@+id/iv_suggest"
+            android:layout_marginLeft="10dp"
+            android:textSize="8sp"
+            android:text="数亿用户都在用，安全可托付"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/iv_big_check"
+            android:src="@mipmap/yes"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            />
+        </RelativeLayout>
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_pay"
+        android:textSize="18sp"
+        android:text="确认付款"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:background="@color/colorpurple"
+        android:layout_marginBottom="10dp"
+        />
 </LinearLayout>

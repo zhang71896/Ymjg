@@ -16,6 +16,7 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.OrderCooperateActivity;
 
 import org.json.JSONObject;
 
@@ -52,7 +53,7 @@ public class OrderFragment extends Fragment {
     private void initViews() {
         iv_order=(ImageView) viewContent.findViewById(R.id.iv_order);
         order_lv=(ListView) viewContent.findViewById(R.id.order_lv);
-        orderAdapter=new OrderAdapter(SuperApplication.getInstance().getApplicationContext());
+        orderAdapter=new OrderAdapter(OrderCooperateActivity.getActivity());
         order_lv.setAdapter(orderAdapter);
     }
 

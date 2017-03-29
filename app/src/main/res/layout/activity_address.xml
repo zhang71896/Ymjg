@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/headr_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_white"
+        >
+        <ImageView
+            android:id="@+id/iv_left_arrow"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/left_arrow"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="10dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_toRightOf="@+id/iv_left_arrow"
+            android:gravity="center_vertical"
+            android:text="@string/return_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:textColor="@color/black_de"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tv_center"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:text="@string/action_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_de"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/tv_add_address"
+            android:text="添加地址"
+            android:textSize="16sp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black_de"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <ListView
+        android:layout_marginTop="10dp"
+        android:dividerHeight="4dp"
+        android:id="@+id/lv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.jock.pickerview.dao.DBManager;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 
 import java.util.Stack;
@@ -32,12 +33,16 @@ import java.util.Stack;
 public class SuperApplication extends Application {
     private static Stack<Activity> activityStack;
     private static SuperApplication singleton;
-    public static boolean isUnity = true;//如果在unity环境下打包则为true，否则为false
+    public static boolean isUnity = false;//如果在unity环境下打包则为true，否则为false
     public static Context context;
+    private DBManager dbHelper;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
+        dbHelper = new DBManager(this);
+        dbHelper.openDatabase();
         context=this.getApplicationContext();
         singleton = this;
         LogUtils.isDebug = true;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.dialog.PayMessageDialog;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.fragment.OrderFragment;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
@@ -209,7 +210,27 @@ public class OrderAdapter extends BaseAdapter {
     }
     //支付订单
     private void PayOrder(){
+     /*   AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("这个就是自定义的提示框");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //设置你的操作事项
+            }
+        });
 
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();*/
+
+        PayMessageDialog dialog=new PayMessageDialog(mContext);
+        dialog.show();
     }
 
     private void DeleteOrder(String orderId,final int position){

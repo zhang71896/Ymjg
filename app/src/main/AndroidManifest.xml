@@ -82,6 +82,12 @@
         <activity android:name=".UI.view.base.ui.ActivityFeedBack"
             android:screenOrientation="portrait" >
         </activity>
+    <activity android:name=".UI.view.base.ui.ActivityAddress"
+        android:screenOrientation="portrait" >
+    </activity>
+        <activity android:name=".UI.view.base.ui.ActivityAddAddress"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
