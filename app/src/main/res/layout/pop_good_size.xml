@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/gray_e5"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/tv_good_name"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black_de"
+            android:layout_marginLeft="10dp"
+            android:text="牵牛花"
+            android:layout_toRightOf="@+id/iv_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_good_num"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/black_de"
+            android:layout_marginLeft="10dp"
+            android:text="总库存"
+            android:layout_toRightOf="@+id/iv_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="14dp"
+            />
+        <TextView
+            android:id="@+id/tv_now_price"
+            android:textSize="16sp"
+            android:textColor="@color/colorred"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="¥ 299.00"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_shop_price"
+            android:layout_below="@+id/tv_now_price"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black_de"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            android:layout_marginRight="10dp"
+            android:text="¥ 599.00"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/iv_pic"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:background="@mipmap/message_bar"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_height="20dp"
+        android:background="@color/bg_white"
+        android:gravity="center_vertical"
+        android:textColor="@color/black_de"
+        android:layout_width="match_parent"
+        android:paddingLeft="5dp"
+        android:text="规格列表"
+        />
+    <ListView
+        android:id="@+id/lv_size_list"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

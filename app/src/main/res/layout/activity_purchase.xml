@@ -30,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="商品价格以购物车中为准"
-            android:background="@color/milk_yellow"
+            android:background="@color/orange_yellow"
             android:layout_height="15dp"
             android:layout_width="match_parent"
             />

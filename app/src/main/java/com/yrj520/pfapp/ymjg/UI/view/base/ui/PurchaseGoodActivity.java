@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
@@ -58,6 +60,10 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private ViewPager vp_essence;
 
+    private ImageView iv_cart;
+
+    private TextView tv_produce_order;
+
     private static RelativeLayout rl_bottom_menu;
 
     private static int mPosition=0;
@@ -74,7 +80,9 @@ public class PurchaseGoodActivity extends BaseActivity {
         setContentView(R.layout.activity_purchase);
         EventBus.getDefault().register(this);
         initViews();
+        initClickListenner();
         initDatas();
+        GetShopCart();
     }
 
     public void onEventMainThread(CartRefreshEvent cartRefreshEvent){
@@ -82,12 +90,6 @@ public class PurchaseGoodActivity extends BaseActivity {
         if(msgType.equals(MyConstant.UpdateShopCart)){
             //获取购物车相关的信息
             GetShopCart();
-
-            return;
-        }
-        if(msgType.equals(MyConstant.UpdatePrices)){
-
-
             return;
         }
     }
@@ -245,6 +247,8 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private void initViews() {
         rl_bottom_menu=(RelativeLayout)findViewById(R.id.rl_bottom_menu);
+        iv_cart=(ImageView)findViewById(R.id.iv_cart);
+        tv_produce_order=(TextView)findViewById(R.id.tv_produce_order);
         tv_total_price=(TextView)findViewById(R.id.tv_total_price);
         tv_total_goods_num=(TextView)findViewById(R.id.tv_total_goods_num);
         tab_essence = (TabLayout)findViewById(R.id.tab_essence);
@@ -252,13 +256,36 @@ public class PurchaseGoodActivity extends BaseActivity {
         tv_left=(TextView)findViewById(R.id.tv_left);
         tv_center=(TextView)findViewById(R.id.tv_center);
         tv_center.setText("商品进购");
+    }
 
+    private void initClickListenner(){
         tv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        iv_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopUtil.ShowShopCartPopWindow(PurchaseGoodActivity.this,PurchaseGoodActivity.getBottomView());
+            }
+        });
+
+        tv_produce_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    /**
+     * 生成订单
+     */
+    private void ProduceOrder(){
+
+
     }
 
 

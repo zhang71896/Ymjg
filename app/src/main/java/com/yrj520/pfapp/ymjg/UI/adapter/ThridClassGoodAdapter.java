@@ -45,7 +45,7 @@ public class ThridClassGoodAdapter extends BaseAdapter {
     }
     public void ClickPositionListener(int position,View parent){
         ThridGoodsData.DataBean dataBean=getItem(position);
-        PopUtil.showCartPopWindow(dataBean,mContext, PurchaseGoodActivity.getBottomView());
+        PopUtil.ShowGoodSizePopWindow(dataBean,mContext, PurchaseGoodActivity.getBottomView());
     }
     public ThridClassGoodAdapter(Activity context) {
         mContext = context;

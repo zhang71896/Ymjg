@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
-import com.yrj520.pfapp.ymjg.UI.entity.GoodSize;
+import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 
 import org.json.JSONObject;
@@ -36,8 +37,8 @@ import de.greenrobot.event.EventBus;
  * @version 1.0
  */
 
-public class GoodSpecAdapter extends BaseAdapter {
-    private List<GoodSize.DataBean.SpecBean> mListArrayBean= new ArrayList<GoodSize.DataBean.SpecBean>();
+public class ShopCartAdapter extends BaseAdapter {
+    private List<ShopCartData.DataBean> mListArrayBean= new ArrayList<ShopCartData.DataBean>();
     private LayoutInflater mInflater;
     private Context mContext;
     private List<GoodSizeBean> goodSizeBeanList=new ArrayList<GoodSizeBean>();
@@ -45,9 +46,8 @@ public class GoodSpecAdapter extends BaseAdapter {
     private int max_store_num=0;
     private float totalPrices=0.0f;
     private int totalCount=0;
-    private String good_id;
 
-    public GoodSpecAdapter(Context context){
+    public ShopCartAdapter(Context context){
         mContext=context;
         mInflater = LayoutInflater.from(mContext);
     }
@@ -58,18 +58,22 @@ public class GoodSpecAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addAll(GoodSize goodSize) {
+    public void addAll(ShopCartData shopCartData) {
         mListArrayBean.clear();
-        mListArrayBean.addAll(goodSize.getData().getSpec());
+        mListArrayBean.addAll(shopCartData.getData());
         goodSizeBeanList.clear();
-        for(int i=0;i<goodSize.getData().getSpec().size();i++){
-            GoodSize.DataBean.SpecBean  specBean=getItem(i);
+        for(int i=0;i<shopCartData.getData().size();i++){
+            ShopCartData.DataBean  specBean=getItem(i);
             GoodSizeBean goodSizeBean=new GoodSizeBean();
-            goodSizeBean.setGood_num(0);
+            if(!StringUtils.isEmpty(specBean.getGoods_num())) {
+                goodSizeBean.setGood_num(Integer.parseInt(specBean.getGoods_num().toString()));
+            }else{
+                goodSizeBean.setGood_num(0);
+            }
             goodSizeBean.setGood_price(Float.parseFloat(specBean.getPrice().toString()));
             goodSizeBeanList.add(goodSizeBean);
         }
-        good_id=goodSize.getData().getGoods_id();
+        //good_id=shopCartData.getData().getGoods_id();
         notifyDataSetChanged();
     }
 
@@ -79,7 +83,7 @@ public class GoodSpecAdapter extends BaseAdapter {
     }
 
     @Override
-    public GoodSize.DataBean.SpecBean getItem(int position) {
+    public ShopCartData.DataBean getItem(int position) {
         return mListArrayBean.get(position);
     }
 
@@ -90,15 +94,15 @@ public class GoodSpecAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final GoodSpecAdapter.ViewHolder holder;
+        final ShopCartAdapter.ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_good_spec, null);
-            holder = new GoodSpecAdapter.ViewHolder(convertView);
+            holder = new ShopCartAdapter.ViewHolder(convertView);
             convertView.setTag(holder);
         }else {
-            holder = (GoodSpecAdapter.ViewHolder) convertView.getTag();
+            holder = (ShopCartAdapter.ViewHolder) convertView.getTag();
         }
-        final GoodSize.DataBean.SpecBean data = getItem(position);
+        final ShopCartData.DataBean data = getItem(position);
 
         if(!StringUtils.isEmpty(data.getKey_name())){
             holder.tv_keyname.setText(data.getKey_name());
@@ -150,12 +154,13 @@ public class GoodSpecAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void OperateGoodsNum(GoodSize.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
+    private void OperateGoodsNum(ShopCartData.DataBean data, TextView tv_stock, final EditText et_store_num, final int position) {
         if(store_num>=0) {
             String goodsNum = store_num + "";
-            UserApi.OperateGoodsNumApi(mContext, good_id, data.getSgp_id().toString(), goodsNum, new HttpUtil.RequestBack() {
+            UserApi.OperateGoodsNumApi(mContext, data.getGoods_id(), data.getSgp_id().toString(), goodsNum, new HttpUtil.RequestBack() {
                 @Override
                 public void onSuccess(JSONObject response) {
+                    LogUtils.info("operate_good", response.toString());
                     String code = response.optString("code");
                     String goods_num = "0";
                     if (code.equals("200")) {
