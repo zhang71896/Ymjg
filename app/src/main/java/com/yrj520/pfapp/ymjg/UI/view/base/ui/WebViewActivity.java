@@ -20,6 +20,7 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.event.AlipayEvent;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -114,7 +115,9 @@ public class WebViewActivity extends BaseActivity {
                     //finish();
                     //更新主界面的信息
                     AlipayEvent alip=new AlipayEvent(MyConstant.AfterPay);
+                    PersonalMessagEvent personalMessagEvent=new PersonalMessagEvent(MyConstant.UpdatePersonalMessage);
                     EventBus.getDefault().post(alip);
+                    EventBus.getDefault().post(personalMessagEvent);
                     tv_title.setText("支付成功");
                 }else{
                     tv_title.setText("支付失败");
