@@ -131,6 +131,10 @@ public class GoodsFragment extends Fragment {
         initDatas();
     }
 
+    public void SetFirstPosition(int position){
+        mFirstPosition=position;
+    }
+
 
 
 

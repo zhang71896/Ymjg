@@ -12,7 +12,7 @@ import java.util.List;
  * @version 1.0
  */
 
-public class GoodSize {
+public class GoodSizeData {
 
     /**
      * data : {"goods_id":"160","goods_name":"红宝石群生多头多肉植物","market_price":"6.00","shop_price":"5.00","sumstore_count":"600","image_url":"/upload/goods_images/20170407/c32114ee8a24b1568320d8ae9ccf74d3.jpg","spec":[{"goods_num":"","sgp_id":"138","key_name":"是否含花盆:不含花盆 颜色:深黑色","price":"6.00","store_count":"222"}],"goods_image":[]}

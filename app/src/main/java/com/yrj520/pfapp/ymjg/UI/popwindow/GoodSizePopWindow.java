@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.adapter.GoodSpecAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
-import com.yrj520.pfapp.ymjg.UI.entity.GoodSize;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
@@ -35,7 +35,7 @@ public class GoodSizePopWindow extends PopupWindow {
     private static Activity mContext;
     private View view;
     //private ThridGoodsData.DataBean mDataBean;
-    private GoodSize goodSize;
+    private GoodSizeData goodSize;
     private GoodSpecAdapter goodSpecAdapter;
     private  static GoodSizePopWindow mCartPopWindow=null;
     private ImageView iv_pic;
@@ -98,7 +98,7 @@ public class GoodSizePopWindow extends PopupWindow {
                 String meg=response.optString("meg");
                 if(code.equals("200")){
                      Gson gson=new Gson();
-                     goodSize=gson.fromJson(response.toString(),GoodSize.class);
+                     goodSize=gson.fromJson(response.toString(),GoodSizeData.class);
                      setViews();
                 }
             }

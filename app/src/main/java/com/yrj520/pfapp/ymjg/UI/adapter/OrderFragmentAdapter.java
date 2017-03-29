@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
-import com.yrj520.pfapp.ymjg.UI.fragment.GoodsFragment;
+import com.yrj520.pfapp.ymjg.UI.fragment.OrderFragment;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.OrderCooperateActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,28 +14,28 @@ import java.util.List;
  * Created by zry on 17/4/2.
  */
 
-public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
+public class OrderFragmentAdapter extends FragmentStatePagerAdapter {
 
 
     private List<String> mTitles;
 
-    private OneTwoClassGoodData mOneTwoClassGoodData;
 
-    private static List<GoodsFragment> fragmentList=new ArrayList<GoodsFragment>();
+    private static List<OrderFragment> fragmentList=new ArrayList<OrderFragment>();
 
-    public static List<GoodsFragment> getFragmentList(){
+    public static List<OrderFragment> getFragmentList(){
         return fragmentList;
     }
 
-    public GoodFragmentAdapter(FragmentManager fm, List<String> titles, OneTwoClassGoodData oneTwoClassGoodData) {
+    public OrderFragmentAdapter(FragmentManager fm, List<String> titles) {
         super(fm);
+        fragmentList.clear();
         mTitles=titles;
-        mOneTwoClassGoodData=oneTwoClassGoodData;
     }
     @Override
     public Fragment getItem(int position) {
-        GoodsFragment fragment=new GoodsFragment();
-        fragment.SetFirstPosition(position);
+        OrderFragment fragment=new OrderFragment();
+        int type= OrderCooperateActivity.titlesIndex[position];
+        fragment.setType(position);
         fragmentList.add(fragment);
 
         return fragmentList.get(position);

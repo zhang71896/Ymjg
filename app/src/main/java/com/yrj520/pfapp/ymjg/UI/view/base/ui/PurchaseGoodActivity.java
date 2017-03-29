@@ -1,12 +1,11 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +20,7 @@ import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
@@ -104,8 +104,12 @@ public class PurchaseGoodActivity extends BaseActivity {
                     ShopCartData shopCartData=gson.fromJson(response.toString(),ShopCartData.class);
                     String sumprice=response.optString("sumprice");
                     String goods_num=response.optString("goods_num");
-                    tv_total_goods_num.setText("共计商品"+goods_num+"件");
-                    tv_total_price.setText("¥ "+sumprice);
+                    if(!StringUtils.isEmpty(goods_num)) {
+                        tv_total_goods_num.setText("共计商品" + goods_num + "件");
+                    }
+                    if(!StringUtils.isEmpty(sumprice)) {
+                        tv_total_price.setText("¥ " + sumprice);
+                    }
                 }
             }
 
@@ -147,19 +151,6 @@ public class PurchaseGoodActivity extends BaseActivity {
             }
         });
 
-
-//        for (int i = 0; i < tab_essence.getTabCount(); i++) {
-//            TabLayout.Tab tab = tab_essence.getTabAt(i);
-//            if (tab != null) {
-//                tab.setCustomView((View) goodFragmentAdapter.instantiateItem(tab_essence,i));
-//                if (tab.getCustomView() != null) {
-//                    View tabView = (View) tab.getCustomView().getParent();
-//                    tabView.setTag(i);
-//                    tabView.setOnClickListener(mTabOnClickListener);
-//                }
-//            }
-//        }
-
     }
 
     @Override
@@ -195,14 +186,6 @@ public class PurchaseGoodActivity extends BaseActivity {
         mPosition=position;
     }
 
-    private void initLinearLayout() {
-        LinearLayout layout=new LinearLayout(this);
-        LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);//定义布局管理器的参数
-        layout.setOrientation(LinearLayout.VERTICAL);//所有组件垂直摆放
-
-    }
 
     public static View getBottomView(){
         return rl_bottom_menu;
@@ -275,7 +258,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         tv_produce_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ProduceOrder();
             }
         });
     }
@@ -284,8 +267,23 @@ public class PurchaseGoodActivity extends BaseActivity {
      * 生成订单
      */
     private void ProduceOrder(){
+        UserApi.ProduceOrderApi(PurchaseGoodActivity.this, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(PurchaseGoodActivity.this,meg);
+                if(code.equals("200")){
+                    Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
+                    startActivity(intent);
+                }
+            }
 
+            @Override
+            public void onError(Exception e) {
 
+            }
+        });
     }
 
 

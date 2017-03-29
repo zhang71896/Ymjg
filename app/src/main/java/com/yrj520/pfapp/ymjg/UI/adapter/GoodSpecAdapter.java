@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
-import com.yrj520.pfapp.ymjg.UI.entity.GoodSize;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
@@ -37,7 +37,7 @@ import de.greenrobot.event.EventBus;
  */
 
 public class GoodSpecAdapter extends BaseAdapter {
-    private List<GoodSize.DataBean.SpecBean> mListArrayBean= new ArrayList<GoodSize.DataBean.SpecBean>();
+    private List<GoodSizeData.DataBean.SpecBean> mListArrayBean= new ArrayList<GoodSizeData.DataBean.SpecBean>();
     private LayoutInflater mInflater;
     private Context mContext;
     private List<GoodSizeBean> goodSizeBeanList=new ArrayList<GoodSizeBean>();
@@ -58,12 +58,12 @@ public class GoodSpecAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addAll(GoodSize goodSize) {
+    public void addAll(GoodSizeData goodSize) {
         mListArrayBean.clear();
         mListArrayBean.addAll(goodSize.getData().getSpec());
         goodSizeBeanList.clear();
         for(int i=0;i<goodSize.getData().getSpec().size();i++){
-            GoodSize.DataBean.SpecBean  specBean=getItem(i);
+            GoodSizeData.DataBean.SpecBean  specBean=getItem(i);
             GoodSizeBean goodSizeBean=new GoodSizeBean();
             goodSizeBean.setGood_num(0);
             goodSizeBean.setGood_price(Float.parseFloat(specBean.getPrice().toString()));
@@ -79,7 +79,7 @@ public class GoodSpecAdapter extends BaseAdapter {
     }
 
     @Override
-    public GoodSize.DataBean.SpecBean getItem(int position) {
+    public GoodSizeData.DataBean.SpecBean getItem(int position) {
         return mListArrayBean.get(position);
     }
 
@@ -98,7 +98,7 @@ public class GoodSpecAdapter extends BaseAdapter {
         }else {
             holder = (GoodSpecAdapter.ViewHolder) convertView.getTag();
         }
-        final GoodSize.DataBean.SpecBean data = getItem(position);
+        final GoodSizeData.DataBean.SpecBean data = getItem(position);
 
         if(!StringUtils.isEmpty(data.getKey_name())){
             holder.tv_keyname.setText(data.getKey_name());
@@ -150,7 +150,7 @@ public class GoodSpecAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void OperateGoodsNum(GoodSize.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
+    private void OperateGoodsNum(GoodSizeData.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
         if(store_num>=0) {
             String goodsNum = store_num + "";
             UserApi.OperateGoodsNumApi(mContext, good_id, data.getSgp_id().toString(), goodsNum, new HttpUtil.RequestBack() {
