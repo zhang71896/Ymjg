@@ -121,7 +121,7 @@ public class IndexActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initDatas();
+        /*initDatas();*/
     }
 
     @Override

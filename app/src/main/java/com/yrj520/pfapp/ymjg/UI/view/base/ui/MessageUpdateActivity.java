@@ -74,9 +74,9 @@ public class MessageUpdateActivity extends BaseActivity {
                 String meg=response.optString("meg");
                 ToastUtils.showShort(MessageUpdateActivity.this,meg);
                 if(code.equals("200")) {
+                    finish();
                     PersonalMessagEvent personalMessagEvent=new PersonalMessagEvent(MyConstant.UpdatePersonalMessage);
                     EventBus.getDefault().post(personalMessagEvent);
-                    finish();
                 }
             }
 

@@ -88,6 +88,7 @@ public class WebViewActivity extends BaseActivity {
         UserApi.SelectOrderAlipay(WebViewActivity.this, order_id, code, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
+                LogUtils.info("AfterSelectOrderAlipay",response.toString());
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 ToastUtils.showShort(WebViewActivity.this,meg);
@@ -135,9 +136,10 @@ public class WebViewActivity extends BaseActivity {
 
                     // Force links and redirects to open in the WebView instead of in a browse
                     //webView.addJavascriptInterface(new InJavaScriptLocalObj(),"local_obj");
+                    webView.setWebViewClient(new MyWebViewClient());
                     webView.loadDataWithBaseURL(null, response.toString(),
                             "text/html", "utf-8", null);
-                    webView.setWebViewClient(new MyWebViewClient());
+
                 }
 
                 @Override
@@ -151,7 +153,6 @@ public class WebViewActivity extends BaseActivity {
     final class MyWebViewClient extends WebViewClient {
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            LogUtils.info("WebResourceResponse",url);
 
             return super.shouldInterceptRequest(view, url);
         }
@@ -160,10 +161,6 @@ public class WebViewActivity extends BaseActivity {
 /*
             LogUtils.info("onPageStarted","onPageStarted");
 */
-            super.onPageStarted(view, url, favicon);
-        }
-
-        public void onPageFinished(WebView view, String url) {
             final PayTask task = new PayTask(WebViewActivity.this);
             final String ex = task.fetchOrderInfoFromH5PayUrl(url);
             LogUtils.info("WebResourceResponse ex:","here"+ex);
@@ -188,6 +185,11 @@ public class WebViewActivity extends BaseActivity {
             } else {
 
             }
+            super.onPageStarted(view, url, favicon);
+        }
+
+        public void onPageFinished(WebView view, String url) {
+
             super.onPageFinished(view, url);
 
         }

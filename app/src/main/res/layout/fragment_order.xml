@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/iv_order"
         android:src="@mipmap/order"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="60dp"
         android:layout_height="60dp"
         />
@@ -24,7 +24,7 @@
             android:id="@+id/tv_no_order"
             android:text="暂时没有订单"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="30dp" />
         </RelativeLayout>
 
     <ListView
