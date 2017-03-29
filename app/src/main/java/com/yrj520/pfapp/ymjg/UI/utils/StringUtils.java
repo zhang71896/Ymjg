@@ -88,7 +88,7 @@ public class StringUtils {
     public static boolean checkPwd(String pwd) {
         boolean flag;
         try {
-            Pattern regex = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$");
+            Pattern regex = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$");
             Matcher matcher = regex.matcher(pwd);
             flag = matcher.matches();
         } catch (Exception e) {
