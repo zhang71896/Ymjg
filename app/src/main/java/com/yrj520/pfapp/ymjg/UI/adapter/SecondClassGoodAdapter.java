@@ -43,7 +43,13 @@ public class SecondClassGoodAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
     public void addAll(List<OneTwoClassGoodData.DataBean.ArrayBean> list) {
+        mListArrayBean.clear();
         mListArrayBean.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void clearSelectedIndex(){
+        states.put(String.valueOf(selectedIndex), false);
         notifyDataSetChanged();
     }
 
@@ -84,34 +90,31 @@ public class SecondClassGoodAdapter extends BaseAdapter {
             holder = (SecondClassGoodAdapter.ViewHolder) convertView.getTag();
         }
         final OneTwoClassGoodData.DataBean.ArrayBean data = getItem(position);
-        holder.rb_second_class.setText(data.getName());
+           if(data.getName()!=null&&data.getName().length()>0) {
+               holder.rb_second_class.setText(data.getName());
+           }
+            holder.rb_second_class.setOnClickListener(new View.OnClickListener() {
 
-
-        holder.rb_second_class.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                //重置，确保最多只有一项被选中
-                for(String key:states.keySet()){
-                    states.put(key, false);
+                public void onClick(View v) {
+                    //重置，确保最多只有一项被选中
+                    for (String key : states.keySet()) {
+                        states.put(key, false);
+                    }
+                    selectedIndex = position;
+                    states.put(String.valueOf(position), holder.rb_second_class.isChecked());
+                    SecondClassGoodAdapter.this.notifyDataSetChanged();
+                    int firstGoodInex = PurchaseGoodActivity.getFirstGoodPosition();
+                    GoodsFragment goodsFragment = GoodFragmentAdapter.getFragmentList().get(firstGoodInex);
+                    goodsFragment.ChangeThridGoodsFragment(selectedIndex);
                 }
-                selectedIndex=position;
-                states.put(String.valueOf(position),  holder.rb_second_class.isChecked());
-                SecondClassGoodAdapter.this.notifyDataSetChanged();
-                int firstGoodInex= PurchaseGoodActivity.getFirstGoodPosition();
-                GoodsFragment goodsFragment=GoodFragmentAdapter.getFragmentList().get(firstGoodInex);
-                goodsFragment.ChangeThridGoodsFragment(selectedIndex);
-
-            }
-        });
-
-        boolean res=false;
-        if(states.get(String.valueOf(position)) == null || states.get(String.valueOf(position))== false){
-            res=false;
-            states.put(String.valueOf(position), false);
-        }
-        else
-            res = true;
-        holder.rb_second_class.setChecked(res);
+            });
+            boolean res = false;
+            if (states.get(String.valueOf(position)) == null || states.get(String.valueOf(position)) == false) {
+                res = false;
+                states.put(String.valueOf(position), false);
+            } else
+                res = true;
+            holder.rb_second_class.setChecked(res);
         return convertView;
     }
 

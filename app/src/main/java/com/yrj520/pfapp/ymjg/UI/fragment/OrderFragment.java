@@ -2,7 +2,6 @@ package com.yrj520.pfapp.ymjg.UI.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,13 @@ import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
+import com.yrj520.pfapp.ymjg.UI.view.base.BaseFragment;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.OrderCooperateActivity;
 
 import org.json.JSONObject;
+
+import okhttp3.Request;
 
 /**
  * Title:
@@ -31,7 +34,7 @@ import org.json.JSONObject;
  * @version 1.0
  */
 
-public class OrderFragment extends Fragment {
+public class OrderFragment extends BaseFragment {
     private View viewContent;
     private RelativeLayout rl_no_order;
     private ListView order_lv;
@@ -67,11 +70,25 @@ public class OrderFragment extends Fragment {
                     Gson gson=new Gson();
                     mOrderData=gson.fromJson(response.toString(),OrderData.class);
                     setViews();
+                    return;
                 }
+                ToastUtils.showShort(getActivity(),"没有数据了。。");
             }
             @Override
             public void onError(Exception e) {
 
+            }
+
+            @Override
+            public void onBefore(Request request) {
+                super.onBefore(request);
+                showLoading(getActivity(),"正在加载中..");
+            }
+
+            @Override
+            public void onAfter() {
+                super.onAfter();
+                closeLoading();
             }
         });
 

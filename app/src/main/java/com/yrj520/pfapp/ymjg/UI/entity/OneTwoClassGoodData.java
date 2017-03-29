@@ -1,5 +1,6 @@
 package com.yrj520.pfapp.ymjg.UI.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,7 @@ public class OneTwoClassGoodData {
 
 
     /**
-     * 获取一二级商品目录
-     * data : [{"cid":"2","level":"1","name":"绿植","array":[{"cid":"6","level":"2","name":"树木盆景"},{"cid":"7","level":"2","name":"树木盆景"}]},{"cid":"1","level":"1","name":"鲜切花","array":[{"cid":"3","level":"2","name":"花束"},{"cid":"4","level":"2","name":"花篮"},{"cid":"5","level":"2","name":"花盒"}]}]
+     * data : [{"cid":"32","level":"1","name":"配材配草","array":[{"cid":"31","level":"2","name":"鲜切花","array":[]},{"cid":"11","level":"2","name":"鲜花速递","array":[]}]},{"cid":"9","level":"1","name":"鲜花","array":[{"cid":"31","level":"2","name":"鲜切花","array":[]},{"cid":"11","level":"2","name":"鲜花速递","array":[]}]}]
      * code : 200
      */
 
@@ -36,16 +36,16 @@ public class OneTwoClassGoodData {
 
     public static class DataBean {
         /**
-         * cid : 2
+         * cid : 32
          * level : 1
-         * name : 绿植
-         * array : [{"cid":"6","level":"2","name":"树木盆景"},{"cid":"7","level":"2","name":"树木盆景"}]
+         * name : 配材配草
+         * array : [{"cid":"31","level":"2","name":"鲜切花","array":[]},{"cid":"11","level":"2","name":"鲜花速递","array":[]}]
          */
 
         private String cid;
         private String level;
         private String name;
-        private List<ArrayBean> array;
+        private List<ArrayBean> array=new ArrayList<ArrayBean>();
 
         public String getCid() {
             return cid;
@@ -81,14 +81,16 @@ public class OneTwoClassGoodData {
 
         public static class ArrayBean {
             /**
-             * cid : 6
+             * cid : 31
              * level : 2
-             * name : 树木盆景
+             * name : 鲜切花
+             * array : []
              */
 
             private String cid;
             private String level;
             private String name;
+            private List<?> array;
 
             public String getCid() {
                 return cid;
@@ -112,6 +114,14 @@ public class OneTwoClassGoodData {
 
             public void setName(String name) {
                 this.name = name;
+            }
+
+            public List<?> getArray() {
+                return array;
+            }
+
+            public void setArray(List<?> array) {
+                this.array = array;
             }
         }
     }

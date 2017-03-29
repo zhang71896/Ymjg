@@ -1,5 +1,6 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -36,13 +37,19 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         GoodsFragment fragment=new GoodsFragment();
-        fragment.SetFirstPosition(position);
+        Bundle args=new Bundle();
+        args.putString("mFirstPosition",position+"");
+        fragment.setArguments(args);
         fragmentList.add(fragment);
         return fragment;
     }
 
     public void refrashDatas(int position){
-        fragmentList.get(position).initDatas();
+            fragmentList.get(position).initThridDatas();
+    }
+
+    public void refreshAllDatas(int position){
+        fragmentList.get(position).initAllThridDatas();
     }
 
     @Override

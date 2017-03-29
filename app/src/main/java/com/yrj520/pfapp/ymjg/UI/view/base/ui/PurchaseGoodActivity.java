@@ -143,7 +143,6 @@ public class PurchaseGoodActivity extends BaseActivity {
             firstGoodtitles.add(mOneTwoClassGoodData.getData().get(i).getName());
         }
         goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles,mOneTwoClassGoodData);
-
         vp_essence.setAdapter(goodFragmentAdapter);
 
         //将TabLayout和ViewPager关联起来
@@ -153,8 +152,9 @@ public class PurchaseGoodActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mPosition=tab.getPosition();
                 vp_essence.setCurrentItem(tab.getPosition());
+                goodFragmentAdapter.refreshAllDatas(mPosition);
 
-        }
+            }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -212,7 +212,11 @@ public class PurchaseGoodActivity extends BaseActivity {
         UserApi.Get12GoodsDirectlyApi(PurchaseGoodActivity.this,new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                String code=response.optString("code");
+                String code="";
+                if(response!=null){
+
+                }
+                code=response.optString("code");
                 //获取数据成功
                 if(code.equals("200")) {
                     ToastUtils.showShort(PurchaseGoodActivity.this, "获取数据成功!");
@@ -223,6 +227,7 @@ public class PurchaseGoodActivity extends BaseActivity {
                     }else{
                         goodFragmentAdapter.refrashDatas(mPosition);
                     }
+
                     return;
                 }
                 //获取失败
@@ -327,6 +332,17 @@ public class PurchaseGoodActivity extends BaseActivity {
             @Override
             public void onError(Exception e) {
 
+            }
+            @Override
+            public void onBefore(Request request) {
+                super.onBefore(request);
+                showLoading("正在生成中....");
+            }
+
+            @Override
+            public void onAfter() {
+                super.onAfter();
+                closeLoading();
             }
         });
     }

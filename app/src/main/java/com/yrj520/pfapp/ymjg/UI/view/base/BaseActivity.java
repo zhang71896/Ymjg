@@ -44,6 +44,9 @@ public class BaseActivity extends FragmentActivity {
         onCreateDialog(text);
     }
 
+
+
+
     /**
      * Description: 全屏变暗的dialog
      *

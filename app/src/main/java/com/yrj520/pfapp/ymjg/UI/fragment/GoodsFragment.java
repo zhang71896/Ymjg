@@ -3,7 +3,6 @@ package com.yrj520.pfapp.ymjg.UI.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,8 @@ import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
+import com.yrj520.pfapp.ymjg.UI.view.base.BaseFragment;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ import okhttp3.Request;
  * Created by zry on 17/4/2.
  */
 
-public class GoodsFragment extends Fragment {
+public class GoodsFragment extends BaseFragment {
 
     private View viewContent;
 
@@ -49,7 +50,7 @@ public class GoodsFragment extends Fragment {
 
     private  ThridGoodsData thridGoodsData;
 
-    private   int mSecondGoodPoistion=0;
+    private   int mSecondGoodPoistion=-1;
 
     private   int mFirstPosition=0;
 
@@ -59,42 +60,74 @@ public class GoodsFragment extends Fragment {
         viewContent = inflater.inflate(R.layout.fragment_goods, container, false);
         initViews();
         initAdapter();
-        initDatas();
+        InitSecondMenuData();
         return viewContent;
     }
 
-    public void initDatas() {
-        String pid=PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray().get(mSecondGoodPoistion).getCid();
-        if(!StringUtils.isEmpty(pid)) {
-            UserApi.Get3GoodsApi(SuperApplication.getInstance().getApplicationContext(), pid, new HttpUtil.RequestBack() {
-                @Override
-                public void onSuccess(JSONObject response) {
-                    String code = response.optString("code");
-                    if (code.equals("200")) {
-                        Gson gson = new Gson();
-                        thridGoodsData=gson.fromJson(response.toString(),ThridGoodsData.class);
-                        List<ThridGoodsData.DataBean> dataBeanList=thridGoodsData.getData();
-                        thridAdapter.clearAll();
-                        thridAdapter.addAll(dataBeanList);
-                    }
+    /**
+     * 通过二级菜单,初始化第三级菜单
+     */
+    public void initThridDatas() {
+        //切换为所有商品
+            if (PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray() != null) {
+                String pid = PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray().get(mSecondGoodPoistion).getCid();
+                if (!StringUtils.isEmpty(pid)) {
+                    Get3Goods(pid);
                 }
-
-                @Override
-                public void onError(Exception e) {
-
-                }
-
-                @Override
-                public void onBefore(Request request) {
-                    super.onBefore(request);
-                }
-
-                @Override
-                public void onAfter() {
-                    super.onAfter();
-                }
-            });
+            }
         }
+
+
+    private void Get3Goods(String pid) {
+        UserApi.Get3GoodsApi(SuperApplication.getInstance().getApplicationContext(), pid, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code = response.optString("code");
+                if (code.equals("200")) {
+                    Gson gson = new Gson();
+                    thridGoodsData = gson.fromJson(response.toString(), ThridGoodsData.class);
+                    List<ThridGoodsData.DataBean> dataBeanList = thridGoodsData.getData();
+                    thridAdapter.clearAll();
+                    thridAdapter.addAll(dataBeanList);
+                    return;
+                }
+                ToastUtils.showShort(getActivity(),"没有数据了。。");
+            }
+            @Override
+            public void onError(Exception e) {
+
+            }
+            @Override
+            public void onBefore(Request request) {
+                super.onBefore(request);
+                showLoading(getActivity(),"正在加载中..");
+
+            }
+
+            @Override
+            public void onAfter() {
+                super.onAfter();
+                closeLoading();
+            }
+        });
+    }
+
+
+    public void InitSecondMenuData(){
+        String position=getArguments().getString("mFirstPosition","0");
+        mFirstPosition=Integer.parseInt(position);
+
+        mArrayBeanList= PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray();
+        if(mArrayBeanList!=null&&mArrayBeanList.size()>0) {
+            if(secondAdapter!=null) {
+                secondAdapter.addAll(mArrayBeanList);
+            }
+            // secondAdapter.setSelectedIndex(0);
+        }
+        if(mFirstPosition==0){
+            initAllThridDatas();
+        }
+
     }
 
     @Override
@@ -105,14 +138,8 @@ public class GoodsFragment extends Fragment {
     }
 
     private void initAdapter() {
-        secondAdapter=new SecondClassGoodAdapter(SuperApplication.getInstance().getApplicationContext());
-        mFirstPosition=PurchaseGoodActivity.getFirstGoodPosition();
-        mArrayBeanList= PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray();
+        secondAdapter=new SecondClassGoodAdapter(getActivity());
         lv_second_goods.setAdapter(secondAdapter);
-        if(mArrayBeanList!=null) {
-            secondAdapter.addAll(mArrayBeanList);
-        }
-        secondAdapter.setSelectedIndex(0);
         thridAdapter=new ThridClassGoodAdapter(getActivity());
         gv_thrid_goods.setAdapter(thridAdapter);
         gv_thrid_goods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,16 +157,20 @@ public class GoodsFragment extends Fragment {
 
     public void ChangeThridGoodsFragment(int position){
         mSecondGoodPoistion=position;
-        initDatas();
+        initThridDatas();
     }
 
-    public void SetFirstPosition(int position){
-        mFirstPosition=position;
+    /**
+     * 初始化所有的三级菜单
+     */
+    public void  initAllThridDatas(){
+        if(PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray()!=null) {
+            String pid = PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getCid();
+            if (!StringUtils.isEmpty(pid)) {
+                secondAdapter.clearSelectedIndex();
+                Get3Goods(pid);
+            }
+        }
     }
-
-
-
-
-
 }
 
