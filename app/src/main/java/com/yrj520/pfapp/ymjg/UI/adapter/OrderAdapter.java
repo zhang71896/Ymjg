@@ -115,9 +115,13 @@ public class OrderAdapter extends BaseAdapter {
         String myOrderStatus=dataBean.getOrder_status();
         String payStatus=dataBean.getPay_status();
 
-        //判断当前是哪一种类型 等待付款
-        if(myOrderStatus.equals("0")&&(mType==0||mType==1)){
-            //待付款
+        //getAuditings 1:等待审核 0：审核通过
+        //pay status 1:代表已经付款 0：代表未付款
+        //$order_status=0 待付款  $order_status=1 全部   $order_status=2 待收货  $order_status=3 已取消 $order_status=4 已完成
+
+        //全部订单栏位的情况
+        //全部订单中 未发货&&待付款 mType是当前栏位 0 待付款 1 全部 2 待收货 3 已取消 4 已完成
+        if((myOrderStatus.equals("0")&&(mType==1))){
             holder.btn_cancel.setText("取消订单");
             if(dataBean.getAuditings().equals("1")) {
                 holder.btn_pay.setText("等待审核");
@@ -126,30 +130,63 @@ public class OrderAdapter extends BaseAdapter {
                 holder.btn_pay.setText("立即付款");
             }
         }
-        if(myOrderStatus.equals("2")||mType==2||mType==1){
+
+        //全部订单中 已发货&&(待付款||已付款)
+        if((myOrderStatus.equals("2")&&(mType==1)))
+        {
+            //(未收货)
+            if(payStatus.equals("0")) {
+                //不存在审核
+                holder.btn_cancel.setText("收货");
+                holder.btn_pay.setText("立即付款");
+            }else{
+                holder.btn_cancel.setVisibility(View.INVISIBLE);
+                holder.btn_pay.setText("收货");
+            }
+
+        }
+
+        //全部订单中 已完成||已取消
+        if(((myOrderStatus.equals("3")||(myOrderStatus.equals("4"))&&(mType==1)))){
+            holder.btn_cancel.setVisibility(View.INVISIBLE);
+            holder.btn_pay.setText("删除订单");
+        }
+
+        //待收货
+        if(mType==2){
             //待收货
             //已经付款
             if(dataBean.getPay_status().equals("1")){
                 holder.btn_cancel.setVisibility(View.INVISIBLE);
                 holder.btn_pay.setText("已收货");
             }else{//未付款
-                holder.btn_cancel.setText("收货待付");
-                holder.btn_cancel.setEnabled(false);
+                holder.btn_cancel.setText("已收货");
+                /*holder.btn_cancel.setEnabled(false);*/
                 holder.btn_pay.setText("立即付款");
             }
         }
-        if(myOrderStatus.equals("3")||mType==3){
+        //待付款
+        if(mType==0){
+
+
+        }
+        //已取消
+        if(mType==3){
             //已取消
             holder.btn_cancel.setVisibility(View.INVISIBLE);
             holder.btn_pay.setText("删除订单");
         }
-        if(myOrderStatus.equals("4")||mType==4){
-            //已完成
-            //已付款
-            if(dataBean.getPay_status().equals("1")){
+        if(mType==4){
+            //已完成 已经付款
+            if(dataBean.getPay_status().equals("1")) {
                 holder.btn_cancel.setVisibility(View.INVISIBLE);
                 holder.btn_pay.setText("删除订单");
+            }else{//未付款
+                holder.btn_cancel.setText("收货待付");
+                holder.btn_cancel.setEnabled(false);
+                holder.btn_pay.setText("立即付款");
             }
+
         }
         final OrderData.DataBean.SpecBean specBean=getItem(position).getSpec().get(0);
         int sumNumber=0;
@@ -192,7 +229,7 @@ public class OrderAdapter extends BaseAdapter {
         holder.btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //1. 已经取消    2.已经完成已经支付状态下   3.所有订单支付完成之后
+              /*  //1. 已经取消    2.已经完成已经支付状态下   3.所有订单支付完成之后
                 if(mType==3||(dataBean.getPay_status().equals("1")&&dataBean.getOrder_status().equals("4"))||dataBean.getOrder_status().equals("3")){
                     DeleteOrder(dataBean.getOrder_id(),position);
 
@@ -201,20 +238,80 @@ public class OrderAdapter extends BaseAdapter {
                     GetGood(dataBean.getOrder_id(),position);
                 }else{
                     PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
+                }*/
+                //全部订单中 未发货&&待付款&&审核通过 按钮含义:立即付款
+                if(dataBean.getOrder_status().equals("0")&&(mType==1)&&dataBean.getAuditings().equals("0")){
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
+                }
+                //全部订单中 已发货&&(待付款) 按钮含义:立即付款
+                if((dataBean.getOrder_status().equals("2")&&(mType==1)&&dataBean.getPay_status().equals("0"))){
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
+                }
+
+                //全部订单中 已发货&&(已付款) 按钮含义: 已收货
+                if((dataBean.getOrder_status().equals("2")&&(mType==1)&&dataBean.getPay_status().equals("1"))){
+                    GetGood(dataBean.getOrder_id(),position,"4");
+                }
+
+                //全部订单中 已取消||已删除 按钮含义:删除订单
+                if((dataBean.getOrder_status().equals("3")||(dataBean.getOrder_status().equals("4"))&&(mType==1))){
+                    DeleteOrder(dataBean.getOrder_id(),position);
+                }
+
+                //待收货 已经付款  按钮含义:已收货
+                if(mType==2&&dataBean.getPay_status().equals("1")){
+                    GetGood(dataBean.getOrder_id(),position,"4");
+                }
+
+                //待收货 未付款  按钮含义:付款
+                if(mType==2&&dataBean.getPay_status().equals("0")){
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
+                }
+                //已经取消 按钮含义:删除订单
+                if(mType==3){
+                    DeleteOrder(dataBean.getOrder_id(),position);
+                }
+
+                //已经完成  已经付款 按钮含义:删除订单
+                if(mType==4&&dataBean.getPay_status().equals("1")){
+                    DeleteOrder(dataBean.getOrder_id(),position);
+                }
+
+                //已经完成  未付款 按钮含义:立即付款
+                if(mType==4&&dataBean.getPay_status().equals("0")){
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
                 }
             }
         });
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CancelOrder(dataBean.getOrder_id(),position);
+                //全部订单中 未发货&&待付款 按钮含义:取消订单
+                if((dataBean.getOrder_status().equals("0")&&(mType==1))) {
+                    CancelOrder(dataBean.getOrder_id(), position);
+                }
+                //全部订单中 已发货&&(待付款) 按钮含义:已收货
+                if(((dataBean.getOrder_status().equals("2")&&(mType==1)&&dataBean.getPay_status().equals("0")))){
+                    GetGood(dataBean.getOrder_id(),position,"0");
+                }
+                //待收货 已经付款  按钮含义:已收货
+                if(mType==2&&dataBean.getPay_status().equals("0")) {
+                    GetGood(dataBean.getOrder_id(),position,"4");
+                }
             }
         });
         return convertView;
     }
 
-    private void GetGood(String orderId,final int position){
-        UserApi.ChangeOrderStatus(mContext, orderId, "4", new HttpUtil.RequestBack() {
+    /**
+     * 已收货
+     * @param orderId 订单ID
+     * @param position 订单的位置
+     * @param type 0未付款 1付款
+     */
+    private void GetGood(String orderId,final int position,String type){
+        //4代表收货完成  0代表收货待付款
+        UserApi.ChangeOrderStatus(mContext, orderId, type, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
                 String code=response.optString("code");
