@@ -2,6 +2,7 @@ package com.yrj520.pfapp.ymjg.UI.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 
@@ -32,13 +33,17 @@ public class SuperApplication extends Application {
     private static Stack<Activity> activityStack;
     private static SuperApplication singleton;
     public static boolean isUnity = true;//如果在unity环境下打包则为true，否则为false
+    public static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context=this.getApplicationContext();
         singleton = this;
         LogUtils.isDebug = true;
     }
+
+
 
 
     public static SuperApplication getInstance() {

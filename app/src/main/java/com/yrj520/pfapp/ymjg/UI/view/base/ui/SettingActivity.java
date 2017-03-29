@@ -66,7 +66,7 @@ public class SettingActivity extends BaseActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CasheUtil.cleanInternalCache(SettingActivity.this);
-                        setDataTv();
+                        tv_clear_data.setText("0KB");
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override

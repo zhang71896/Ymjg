@@ -99,30 +99,8 @@ public class VerifyActivity extends BaseActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserApi.IndexApi(VerifyActivity.this, new HttpUtil.RequestBack() {
-                    @Override
-                    public void onSuccess(JSONObject response) {
-                        String code=response.optString("code");
-                        ToastUtils.showShort(VerifyActivity.this,code);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-
-                    @Override
-                    public void onBefore(Request request) {
-                        super.onBefore(request);
-                        showLoading("加载中");
-                    }
-
-                    @Override
-                    public void onAfter() {
-                        super.onAfter();
-                        closeLoading();
-                    }
-                });
+                Intent intent=new Intent(VerifyActivity.this,IndexActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -95,7 +95,10 @@ public class HttpUtil {
                               Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
         OkHttpUtils.post()
-                .url(reqUrl).addHeader("Cookie", "PHPSESSID=9391rrdevkeqaigcis8pakt7c4")
+/*
+                .url(reqUrl).addHeader("Cookie", AppData.getAppData(context).getTokenValue())
+*/
+                .url(reqUrl).addHeader("Cookie", "PHPSESSID=f3otklh7oiupmhkhe585gr5ci0")
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }

@@ -1,5 +1,7 @@
 package com.yrj520.pfapp.ymjg.UI.net.okhttp;
 
+import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
+import com.yrj520.pfapp.ymjg.UI.config.AppData;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.builder.GetBuilder;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.builder.HeadBuilder;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.builder.OtherRequestBuilder;
@@ -12,9 +14,11 @@ import com.yrj520.pfapp.ymjg.UI.net.okhttp.utils.Platform;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import okhttp3.Call;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
@@ -108,7 +112,20 @@ public class OkHttpUtils {
 
             @Override
             public void onResponse(final Call call, final Response response) {
-                LogUtils.info("response: "+response.headers("Set-Cookie"));
+                LogUtils.info("response: "+response.headers());
+                Headers headers=response.headers();
+                List<String> cookies = headers.values("Set-Cookie");
+                LogUtils.info("responseCount: "+cookies.size());
+                if(cookies.size()>0) {
+                    for (String str : cookies) {
+                        if (str.startsWith("PHPSESSID")) {
+                            //将sessionId保存到本地
+                            String tokenValue=str.split(";")[0];
+                            AppData.getAppData(SuperApplication.getInstance().getApplicationContext()).setTokenValue(tokenValue);
+                        }
+                    }
+                }
+
                 try {
                     if (call.isCanceled()) {
                         sendFailResultCallback(call, new IOException("Canceled!"), finalCallback, id);

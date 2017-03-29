@@ -147,6 +147,7 @@
                 android:layout_marginRight="25dp"
                 android:textColor="@color/white"
                 android:background="@color/colororange"
+                android:layout_marginBottom="40dp"
                 />
         </LinearLayout>
     </ScrollView>

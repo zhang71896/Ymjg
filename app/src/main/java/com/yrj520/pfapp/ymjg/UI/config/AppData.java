@@ -2,6 +2,7 @@ package com.yrj520.pfapp.ymjg.UI.config;
 
 import android.content.Context;
 
+import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.utils.SPUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 
@@ -26,12 +27,13 @@ public class AppData {
     private static final String USER_ACTIVE_DEGREE = "user_active_degree ";
     private static final String PAY_STATUS = "pay_status";
 
-    private AppData(Context context) {
-        this.context = context;
+    private AppData() {
+
+        this.context = SuperApplication.getInstance().getApplicationContext();
     }
 
     public static AppData getAppData(Context context) {
-        return new AppData(context);
+        return new AppData();
     }
 
     /**
