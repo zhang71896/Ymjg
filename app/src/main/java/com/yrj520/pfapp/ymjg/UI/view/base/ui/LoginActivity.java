@@ -86,14 +86,14 @@ public class LoginActivity extends BaseActivity {
         mUserName=et_username.getText().toString();
         mPassWord=et_password.getText().toString();
 
-        if(StringUtils.isEmpty(mUserName)&&!StringUtils.checkMobileNumber(mUserName)){
+        if(StringUtils.isEmpty(mUserName)||!StringUtils.checkMobileNumber(mUserName)){
             ToastUtils.showShort(this,R.string.input_right_mobile_number);
             et_username.requestFocus();
             return;
         }
 
         if(StringUtils.isEmpty(mPassWord)&&!StringUtils.checkPwd(mPassWord)){
-            ToastUtils.showShort(this,R.string.input_right_mobile_number);
+            ToastUtils.showShort(this,R.string.input_right_password);
             et_password.requestFocus();
             return;
         }
@@ -104,6 +104,8 @@ public class LoginActivity extends BaseActivity {
                         String code=response.optString("code");
                         String message=response.optString("message");
                         String auditstate=response.optString("auditstate");
+                        Intent intent=new Intent(LoginActivity.this,IndexActivity.class);
+                        startActivity(intent);
                 }
 
                 @Override

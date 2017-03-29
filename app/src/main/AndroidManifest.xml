@@ -10,6 +10,7 @@
 
 
     <application
+        android:name=".UI.application.SuperApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,6 +25,10 @@
         </activity>
         <activity android:name=".UI.view.base.ui.RegisterActivity"
                   android:screenOrientation="portrait" />
+        <activity android:name=".UI.view.base.ui.SettingActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".UI.view.base.ui.IndexActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

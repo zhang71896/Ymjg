@@ -6,7 +6,7 @@
     android:background="@color/black_de"
     >
     <TextView
-        android:id="@+id/iv_left"
+        android:id="@+id/tv_left"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:layout_alignParentLeft="true"
