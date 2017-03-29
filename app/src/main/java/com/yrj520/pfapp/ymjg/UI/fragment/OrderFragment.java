@@ -15,10 +15,8 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseFragment;
-import com.yrj520.pfapp.ymjg.UI.view.base.ui.OrderCooperateActivity;
 
 import org.json.JSONObject;
 
@@ -56,7 +54,7 @@ public class OrderFragment extends BaseFragment {
     private void initViews() {
         rl_no_order=(RelativeLayout) viewContent.findViewById(R.id.rl_no_order);
         order_lv=(ListView) viewContent.findViewById(R.id.order_lv);
-        orderAdapter=new OrderAdapter(OrderCooperateActivity.getActivity());
+        orderAdapter=new OrderAdapter(getActivity());
         order_lv.setAdapter(orderAdapter);
     }
 
@@ -64,31 +62,28 @@ public class OrderFragment extends BaseFragment {
         UserApi.OrderListApi(SuperApplication.getInstance().getApplicationContext(),myType+"", new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                LogUtils.info("OrderListApi",response.toString());
-                String code=response.optString("code");
+                String code="";
+                code=response.optString("code");
                 if(code.equals("200")){
                     Gson gson=new Gson();
                     mOrderData=gson.fromJson(response.toString(),OrderData.class);
                     setViews();
-                    return;
+                }else {
+                    ToastUtils.showShort(getActivity(), "没有数据了。。");
                 }
-                ToastUtils.showShort(getActivity(),"没有数据了。。");
             }
             @Override
             public void onError(Exception e) {
-
             }
 
             @Override
             public void onBefore(Request request) {
                 super.onBefore(request);
-                showLoading(getActivity(),"正在加载中..");
             }
 
             @Override
             public void onAfter() {
                 super.onAfter();
-                closeLoading();
             }
         });
 

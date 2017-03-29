@@ -91,9 +91,7 @@ public class OrderCooperateActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mPosition=tab.getPosition();
-                //LogUtils.info("onTabSelected",""+mPosition+"titlesGroup"+titlesGroup[mPosition]+"titlesIndex"+titlesIndex[mPosition]);
                 vp_essence.setCurrentItem(tab.getPosition());
-
             }
 
             @Override
