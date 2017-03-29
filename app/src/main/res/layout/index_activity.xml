@@ -96,18 +96,7 @@
                 android:layout_height="100dp"
                 android:layout_weight="1"
                 >
-                    <TextView
-                        android:id="@+id/tv_message_count"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:textColor="@color/colorWhite"
-                        android:background="@drawable/design_re_point"
-                        android:gravity="center"
-                        android:text="0"
-                        android:visibility="invisible"
-                        android:layout_alignParentTop="true"
-                        />
+
 
                 <TextView
                     android:layout_alignParentBottom="true"
@@ -124,6 +113,19 @@
                     android:background="@mipmap/order_icon"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
+                <TextView
+                    android:id="@+id/tv_message_count"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/design_re_point"
+                    android:gravity="center"
+                    android:text="0"
+                    android:visibility="invisible"
+                    android:layout_alignParentTop="true"
+                    />
             </RelativeLayout>
             <LinearLayout
                 android:id="@+id/ll_account_manage"

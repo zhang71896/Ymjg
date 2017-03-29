@@ -18,6 +18,7 @@ import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -308,9 +309,15 @@ public class PurchaseGoodActivity extends BaseActivity {
                 String meg=response.optString("meg");
                 ToastUtils.showShort(PurchaseGoodActivity.this,meg);
                 if(code.equals("200")){
+                    //获取购物车
                     GetShopCart();
+                    //获取商品选中状态
+                    goodFragmentAdapter.refrashDatas(mPosition);
+                    //修改主页个人信息
+                    EventBus.getDefault().post(new PersonalMessagEvent(MyConstant.UpdatePersonalMessage));
                     Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
                     startActivity(intent);
+
                 }
             }
 

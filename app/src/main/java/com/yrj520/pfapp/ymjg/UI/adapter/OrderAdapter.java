@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.dialog.PayMessageDialog;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
-import com.yrj520.pfapp.ymjg.UI.fragment.OrderFragment;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Title:
@@ -110,10 +112,12 @@ public class OrderAdapter extends BaseAdapter {
         holder.btn_cancel.setVisibility(View.VISIBLE);
         holder.btn_pay.setEnabled(true);
         holder.btn_cancel.setEnabled(true);
-        LogUtils.info("mType","mType: "+mType);
+        String myOrderStatus=dataBean.getOrder_status();
+        String payStatus=dataBean.getPay_status();
+
         //判断当前是哪一种类型 等待付款
-        if(mType==0){
-            //未审核通过
+        if(myOrderStatus.equals("0")&&(mType==0||mType==1)){
+            //待付款
             holder.btn_cancel.setText("取消订单");
             if(dataBean.getAuditings().equals("1")) {
                 holder.btn_pay.setText("等待审核");
@@ -121,33 +125,29 @@ public class OrderAdapter extends BaseAdapter {
             }else{
                 holder.btn_pay.setText("立即付款");
             }
-        }else if(mType==1){
-            //全部
-            holder.btn_cancel.setText("取消订单");
-            holder.btn_pay.setText("立即付款");
-        }else if(mType==2){
+        }
+        if(myOrderStatus.equals("2")||mType==2||mType==1){
             //待收货
             //已经付款
-            holder.btn_cancel.setText("已收货");
-            holder.btn_cancel.setEnabled(false);
             if(dataBean.getPay_status().equals("1")){
-                holder.btn_pay.setVisibility(View.INVISIBLE);
-            }else{//未付款
-                holder.btn_pay.setText("立即付款");
-            }
-        }else if(mType==3){
-            //已取消
-            holder.btn_cancel.setVisibility(View.INVISIBLE);
-            holder.btn_pay.setText("删除订单");
-        }else if(mType==4){
-            //已完成
-            //已付款
-            if(dataBean.getPay_status().equals("1")){
-                holder.btn_pay.setText("删除订单");
+                holder.btn_cancel.setVisibility(View.INVISIBLE);
+                holder.btn_pay.setText("已收货");
             }else{//未付款
                 holder.btn_cancel.setText("收货待付");
                 holder.btn_cancel.setEnabled(false);
                 holder.btn_pay.setText("立即付款");
+            }
+        }
+        if(myOrderStatus.equals("3")){
+            //已取消
+            holder.btn_cancel.setVisibility(View.INVISIBLE);
+            holder.btn_pay.setText("删除订单");
+        }
+        if(myOrderStatus.equals("4")){
+            //已完成
+            //已付款
+            if(dataBean.getPay_status().equals("1")){
+                holder.btn_pay.setText("删除订单");
             }
         }
         final OrderData.DataBean.SpecBean specBean=getItem(position).getSpec().get(0);
@@ -192,9 +192,11 @@ public class OrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //已经取消或者已经完成已经支付状态下
-                if(mType==3||(dataBean.getPay_status().equals("1")&&mType==4)){
+                if(dataBean.getOrder_status().equals("3")||(dataBean.getPay_status().equals("1")&&dataBean.getOrder_status().equals("4"))){
 
                     DeleteOrder(dataBean.getOrder_id(),position);
+                }else if(dataBean.getOrder_status().equals("2")&&dataBean.getPay_status().equals("1")){
+                    GetGood();
                 }else{
                     PayOrder(dataBean.getMoney(),dataBean.getOrder_id());
                 }
@@ -208,6 +210,26 @@ public class OrderAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
+    private void GetGood(String orderId,final int position){
+        UserApi.ChangeOrderStatus(mContext, orderId, "5", new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(mContext,meg);
+                if(code.equals("200")){
+                    refreshUI(position);
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
+    }
+
     //支付订单
     private void PayOrder(String totalPrices,String orderId){
         PayMessageDialog dialog=new PayMessageDialog(mContext,orderId);
@@ -237,13 +259,20 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     private void  refreshUI(int position){
+/*
         int mFragmentPosition= OrderCooperateActivity.getmPosition();
+*/
         //移除当前列表中的数据
         removeOneData(position);
-        OrderFragment orderFragment=OrderFragmentAdapter.getFragmentList().get(mFragmentPosition);
-        int type=OrderCooperateActivity.titlesIndex[mFragmentPosition];
-        orderFragment.setType(type);
-        orderFragment.initDatas();
+        for(int i=0;i<OrderFragmentAdapter.getFragmentList().size();i++){
+            if(i!=position) {
+                OrderFragmentAdapter.getFragmentList().get(i).initDatas();
+            }
+        }
+     /*  .get(mFragmentPosition);
+    *//*    int type=OrderCooperateActivity.titlesIndex[mFragmentPosition];
+        orderFragment.setType(type);*//*
+        orderFragment.initDatas();*/
     }
 
     private void CancelOrder(String orderId, final int position){
@@ -254,7 +283,9 @@ public class OrderAdapter extends BaseAdapter {
                 String meg=response.optString("meg");
                 ToastUtils.showShort(mContext,meg);
                 if(code.equals("200")){
-                  refreshUI(position);
+                    //修改主页个人信息
+                    EventBus.getDefault().post(new PersonalMessagEvent(MyConstant.UpdatePersonalMessage));
+                    refreshUI(position);
                 }
             }
 

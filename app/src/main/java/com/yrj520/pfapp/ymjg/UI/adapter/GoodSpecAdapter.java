@@ -1,13 +1,15 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -116,7 +118,7 @@ public class GoodSpecAdapter extends BaseAdapter {
                 store_num = Integer.parseInt(store_num_str);
             }
 
-            holder.iv_add.setOnClickListener(new View.OnClickListener() {
+            holder.rl_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(max_store_num>store_num) {
@@ -126,7 +128,7 @@ public class GoodSpecAdapter extends BaseAdapter {
                 }
             });
 
-            holder.iv_minus.setOnClickListener(new View.OnClickListener() {
+            holder.rl_minus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (store_num > 0) {
@@ -138,17 +140,30 @@ public class GoodSpecAdapter extends BaseAdapter {
                 }
             });
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getStore_count().toString())});
-            holder.et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            holder.et_store_num.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    store_num = Integer.parseInt(holder.et_store_num.getText().toString());
-                    OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
+                        store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                        OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                    }
                 }
             });
         }
 
         return convertView;
     }
+
 
     private void OperateGoodsNum(GoodSizeData.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
         if(store_num>=0) {
@@ -193,18 +208,18 @@ public class GoodSpecAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView tv_keyname;
         TextView tv_stock;
-        ImageView iv_add;
+        RelativeLayout rl_add;
         EditText et_store_num;
-        ImageView iv_minus;
+        RelativeLayout rl_minus;
         TextView tv_good_price;
         final View root;
         ViewHolder(View root) {
             this.root = root;
             tv_keyname=(TextView)root.findViewById(R.id.tv_keyname);
             tv_stock=(TextView)root.findViewById(R.id.tv_stock);
-            iv_add=(ImageView)root.findViewById(R.id.iv_add);
+            rl_add=(RelativeLayout)root.findViewById(R.id.rl_add);
             et_store_num=(EditText) root.findViewById(R.id.et_store_num);
-            iv_minus=(ImageView) root.findViewById(R.id.iv_minus);
+            rl_minus=(RelativeLayout) root.findViewById(R.id.rl_minus);
             tv_good_price=(TextView)root.findViewById(R.id.tv_good_price);
         }
     }

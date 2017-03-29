@@ -26,20 +26,27 @@
             android:textColor="@color/black_de"
             android:text="(库存:1)"
             />
-        <ImageView
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_height="50dp"
+            android:layout_width="20dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
+            >
+        <ImageView
+
             android:layout_centerVertical="true"
             android:id="@+id/iv_add"
             android:background="@mipmap/add"
             android:layout_width="15dp"
             android:layout_height="15dp"
             />
+        </RelativeLayout>
         <EditText
             android:layout_marginRight="5dp"
             android:gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_add"
+            android:layout_toLeftOf="@+id/rl_add"
             android:inputType="number"
             android:maxLength="4"
             android:focusableInTouchMode="true"
@@ -50,20 +57,26 @@
             android:text="0"
             android:id="@+id/et_store_num"
             />
-        <ImageView
-           android:layout_marginRight="5dp"
+        <RelativeLayout
+            android:layout_marginRight="5dp"
+            android:id="@+id/rl_minus"
             android:layout_toLeftOf="@+id/et_store_num"
+            android:layout_height="50dp"
+            android:layout_width="20dp"
+            >
+        <ImageView
             android:layout_centerVertical="true"
            android:id="@+id/iv_minus"
            android:background="@mipmap/jian"
            android:layout_width="15dp"
            android:layout_height="15dp"
            />
+        </RelativeLayout>
          <TextView
              android:id="@+id/tv_good_price"
              android:layout_marginRight="5dp"
              android:layout_centerVertical="true"
-             android:layout_toLeftOf="@+id/iv_minus"
+             android:layout_toLeftOf="@+id/rl_minus"
              android:textColor="@color/colorred"
              android:textSize="16sp"
              android:text="¥ 0"
