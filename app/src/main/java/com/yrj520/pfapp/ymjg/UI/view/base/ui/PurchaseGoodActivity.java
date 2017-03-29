@@ -42,10 +42,12 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private TabLayout tab_essence;
 
-     private ViewPager vp_essence;
 
+    private ViewPager vp_essence;
 
-    private OneTwoClassGoodData mOneTwoClassGoodData;
+    private static int mPosition=0;
+
+    private static  OneTwoClassGoodData  mOneTwoClassGoodData;
 
     private List<String> titles = new ArrayList<>();
 
@@ -65,7 +67,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         for(int i=0;i<mOneTwoClassGoodData.getData().size();i++){
             firstGoodtitles.add(mOneTwoClassGoodData.getData().get(i).getName());
         }
-        GoodFragmentAdapter goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles);
+        GoodFragmentAdapter goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles,mOneTwoClassGoodData);
 
         vp_essence.setAdapter(goodFragmentAdapter);
 
@@ -73,12 +75,14 @@ public class PurchaseGoodActivity extends BaseActivity {
         tab_essence.setupWithViewPager(vp_essence);
 
 
+
         tab_essence.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 vp_essence.setCurrentItem(tab.getPosition());
 
-            }
+        }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -120,6 +124,19 @@ public class PurchaseGoodActivity extends BaseActivity {
         }
     };
 
+    public static OneTwoClassGoodData getOneTwoClassGoodData(){
+
+        return mOneTwoClassGoodData;
+    }
+
+    public static int getFirstGoodPosition(){
+        return mPosition;
+    }
+
+    public static void setFirstGoodPosition(int position){
+        mPosition=position;
+    }
+
     private void initLinearLayout() {
         LinearLayout layout=new LinearLayout(this);
         LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(
@@ -128,6 +145,8 @@ public class PurchaseGoodActivity extends BaseActivity {
         layout.setOrientation(LinearLayout.VERTICAL);//所有组件垂直摆放
 
     }
+
+
 
     private void initDatas() {
         UserApi.Get12GoodsDirectlyApi(PurchaseGoodActivity.this,new HttpUtil.RequestBack() {

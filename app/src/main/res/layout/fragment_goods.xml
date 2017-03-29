@@ -6,8 +6,16 @@
     <ListView
         android:layout_marginTop="5dp"
         android:id="@+id/lv_second_goods"
+        android:divider="@null"
+        android:padding="2dp"
         android:layout_width="100dp"
         android:layout_height="match_parent"/>
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:background="@color/gray_e5"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        />
     <GridView
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"

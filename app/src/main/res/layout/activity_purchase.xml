@@ -17,12 +17,11 @@
 
 
     <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tab_essence"
         android:id="@+id/vp_essence"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+       />
 
 </RelativeLayout>

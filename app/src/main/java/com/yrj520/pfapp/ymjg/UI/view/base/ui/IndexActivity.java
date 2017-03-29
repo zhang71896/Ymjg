@@ -19,6 +19,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.MessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
 import com.yrj520.pfapp.ymjg.UI.net.Host;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.GlideCircleTransform;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
@@ -103,7 +104,7 @@ public class IndexActivity extends BaseActivity {
                 String nickNmae=indexData.getUser().getUsername();
                 if(!StringUtils.isEmpty(imgUrl))
                 Glide.with(this)
-                .load(imgUrl)
+                .load(imgUrl).transform(new GlideCircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .centerCrop()
                 .placeholder(R.mipmap.header)

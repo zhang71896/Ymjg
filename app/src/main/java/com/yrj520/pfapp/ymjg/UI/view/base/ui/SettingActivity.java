@@ -115,7 +115,6 @@ public class SettingActivity extends BaseActivity{
                     public void onSuccess(JSONObject response) {
                         String code=response.optString("code");
                         String message=response.optString("message");
-                        LogUtils.info("logResponse",response.toString());
                         ToastUtils.showShort(SettingActivity.this,message);
                         if(code.equals("200")){
                             AppData.getAppData(SettingActivity.this).setTokenValue("");

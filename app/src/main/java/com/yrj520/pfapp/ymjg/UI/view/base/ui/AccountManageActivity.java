@@ -18,8 +18,10 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.PersonMessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
+import com.yrj520.pfapp.ymjg.UI.net.Host;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.photo.MediaChoseActivity;
+import com.yrj520.pfapp.ymjg.UI.utils.GlideCircleTransform;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PermissionUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -89,10 +91,10 @@ public class AccountManageActivity extends BaseActivity {
 
     private void setViews() {
         tv_center.setText("账户管理");
-        String imgUrl=mUserData.getUserimg();
+        String imgUrl= Host.HOST+mUserData.getUserimg();
         if(!StringUtils.isEmpty(imgUrl)) {
             Glide.with(this)
-                    .load(imgUrl)
+                    .load(imgUrl).transform(new GlideCircleTransform(this))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .centerCrop()
                     .placeholder(R.mipmap.header)

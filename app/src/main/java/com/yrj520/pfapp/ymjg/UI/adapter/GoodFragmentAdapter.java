@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.fragment.GoodsFragment;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import java.util.List;
 
@@ -17,19 +19,19 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
 
     private List<String> mTitles;
 
-    public GoodFragmentAdapter(FragmentManager fm, List<String> titles) {
+    private OneTwoClassGoodData mOneTwoClassGoodData;
+
+
+
+    public GoodFragmentAdapter(FragmentManager fm, List<String> titles, OneTwoClassGoodData oneTwoClassGoodData) {
         super(fm);
         mTitles=titles;
+        mOneTwoClassGoodData=oneTwoClassGoodData;
     }
-
-
-
-
-
     @Override
     public Fragment getItem(int position) {
+        PurchaseGoodActivity.setFirstGoodPosition(position);
         GoodsFragment fragment=new GoodsFragment();
-        GoodsFragment.setPosition(position);
         return fragment;
     }
 

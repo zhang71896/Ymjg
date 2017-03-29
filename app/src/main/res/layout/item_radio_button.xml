@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RadioButton
+        android:id="@+id/rb_second_class"
+        android:text="第二类"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="36dp"
+        android:textSize="14sp"
+        android:button="@null"
+        android:checked="false"
+        android:textColor="@drawable/color_radiobutton"
+        android:background="@drawable/radio_button_selector"
+        />
+</LinearLayout>
