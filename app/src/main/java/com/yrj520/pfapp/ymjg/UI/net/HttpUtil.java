@@ -1,14 +1,11 @@
 package com.yrj520.pfapp.ymjg.UI.net;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.config.AppData;
-import com.yrj520.pfapp.ymjg.UI.config.Constant;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.OkHttpUtils;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.callback.JsonCallback;
-/*import com.yrj520.pfapp.ymjg.UI.ui.login.LoginActivity;*/
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.NetUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -23,16 +20,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-/**
- * Title: HttpUtil
- * Description: 网络工具类
- * Copyright: Copyright(c)2017
- * Company: 成都华域天府数据科技有限公司
- * CreateTime: 2017/1/10 15:45
- *
- * @author hc
- * @version 1.0
- */
 public class HttpUtil {
 
     private static class MyJsonCallback extends JsonCallback {
@@ -89,8 +76,7 @@ public class HttpUtil {
     public static void doGet(Context context, Integer id, String reqUrl,
                              Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: GET\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
-        OkHttpUtils.get().id(id).addHeader("productId", "10")
-                .addHeader("Authorization", AppData.getAppData(context).getTokenValue())
+        OkHttpUtils.get()
                 .url(reqUrl).params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }
@@ -107,8 +93,7 @@ public class HttpUtil {
     public static void doPost(Context context, Integer id, String reqUrl,
                               Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
-        OkHttpUtils.post().id(id).addHeader("productId", "10")
-                .addHeader("Authorization", AppData.getAppData(context).getTokenValue())
+        OkHttpUtils.post().addHeader("Authorization", AppData.getAppData(context).getTokenValue())
                 .url(reqUrl)
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
@@ -184,24 +169,26 @@ public class HttpUtil {
     private static void handleResponse(Context context, JSONObject response, RequestBack onBack, int requestId) {
         LogUtils.info(response.toString());
         if (StringUtils.isEmpty(response.toString())) return;
-        //判断请求接口是否有返回参数
+        onBack.onSuccess(response);
+
+       /* //判断请求接口是否有返回参数
         if (requestId == Constant.REQUEST_ID_NULL_RETURN) return;
-        int status = response.optJSONObject("result").optInt("status");
-        String msg = response.optJSONObject("result").optString("msg");
+      *//*  int status = response.optJSONObject("result").optInt("status");
+        String msg = response.optJSONObject("result").optString("msg");*//*
         if (StringUtils.isResponseOk(status)) {
             onBack.onSuccess(response);
         } else if (StringUtils.isInvalidToken(status)) {//判断token失效
-            ToastUtils.showShort(context, R.string.login_lose_efficacy);
+            *//*ToastUtils.showShort(context, R.string.login_lose_efficacy);
             AppData.getAppData(context).setTokenValue("");
             Intent intent = new Intent(context, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             //intent.putExtra("GO_PAGE", context.getClass().getSimpleName());
-            context.startActivity(intent);
+            context.startActivity(intent);*//*
         } else if (status == 2000) {
             ToastUtils.showShort(context, R.string.net_status);
         } else {
             ToastUtils.showShort(context, msg);
-        }
+        }*/
     }
 
     /**

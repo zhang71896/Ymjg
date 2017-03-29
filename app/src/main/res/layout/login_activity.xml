@@ -10,8 +10,8 @@
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:src="@mipmap/logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         />
     <EditText
         android:id="@+id/et_username"
@@ -23,10 +23,11 @@
         android:hint="手机号码"
         android:drawableLeft="@mipmap/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         />
+
     <EditText
         android:id="@+id/et_password"
         android:layout_marginTop="20dp"
@@ -37,15 +38,16 @@
         android:hint="密码输入"
         android:drawableLeft="@mipmap/lock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         />
+
     <Button
         android:layout_marginTop="20dp"
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="@color/colorWhite"
@@ -57,12 +59,12 @@
         android:layout_marginTop="20dp"
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="@null"
-        android:text="登 录"
-        android:textSize="18sp"
+        android:text="注 册"
+        android:textSize="16sp"
         android:textColor="@color/colorWhite"
         />
     <Button

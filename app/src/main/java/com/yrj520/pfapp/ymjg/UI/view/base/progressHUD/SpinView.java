@@ -21,7 +21,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.CTC.SystematicAnatomy.Android.R;
+import com.yrj520.pfapp.ymjg.R;
 
 
 class SpinView extends ImageView implements Indeterminate {
