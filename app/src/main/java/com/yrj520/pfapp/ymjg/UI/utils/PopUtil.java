@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.PopupWindow;
 
+import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.popwindow.CartPopWindow;
+import com.yrj520.pfapp.ymjg.UI.popwindow.GoodDetailPopWindow;
 import com.yrj520.pfapp.ymjg.UI.popwindow.GoodSizePopWindow;
+
+import java.util.List;
 
 /**
  * Title:
@@ -23,21 +27,27 @@ public class PopUtil {
     private static PopupWindow currentPopWindow;
 
     public static void ShowGoodSizePopWindow(ThridGoodsData.DataBean dataBean, Activity mContext,View parent){
-        HiddenCurrentWindow();
+        //HiddenCurrentWindow();
         GoodSizePopWindow goodSizePopWindow=new GoodSizePopWindow(mContext);
         goodSizePopWindow.InitDatas(dataBean);
         goodSizePopWindow.showPopupWindow(parent);
-        currentPopWindow=goodSizePopWindow;
+        //currentPopWindow=goodSizePopWindow;
     }
 
     public static void ShowShopCartPopWindow(Activity mContext,View parent){
-        HiddenCurrentWindow();
+        //HiddenCurrentWindow();
         CartPopWindow cartPopWindow=new CartPopWindow(mContext);
         cartPopWindow.InitDatas();
         cartPopWindow.showPopupWindow(parent);
-        currentPopWindow=cartPopWindow;
-
+        //currentPopWindow=cartPopWindow;
     }
+
+    public static void ShowGoodDetailPopWindow(Activity mContext, View parent, List<OrderData.DataBean.SpecBean > specBeanList){
+        GoodDetailPopWindow goodDetail=new GoodDetailPopWindow(mContext);
+        goodDetail.InitDatas(specBeanList);
+        goodDetail.showPopupWindow(parent);
+    }
+
 
     private static void HiddenCurrentWindow(){
         if(currentPopWindow!=null){

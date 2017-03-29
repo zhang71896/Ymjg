@@ -42,7 +42,6 @@ public class CartPopWindow extends PopupWindow {
 
     public CartPopWindow(final Activity context){
         mContext=context;
-        mContext=context;
         view = LayoutInflater.from(mContext).inflate(R.layout.pop_cart, null);
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();

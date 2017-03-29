@@ -1,5 +1,6 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -32,17 +33,32 @@ public class OrderCooperateActivity extends BaseActivity {
     private TabLayout tab_essence;
     private ViewPager vp_essence;
     private OrderFragmentAdapter mOrderFragmentAdapter;
-    private int mPosition=0;
+
+    public static int getmPosition() {
+        return mPosition;
+    }
+
+    public void setmPosition(int mPosition) {
+        this.mPosition = mPosition;
+    }
+
+    private static int mPosition=0;
     private TextView tv_left;
     private  TextView tv_center;
     List<String> titles=new ArrayList<String>();
     String[] titlesGroup={"全部","待付款","待收货","已完成","已取消"};
     public static int [] titlesIndex={1,0,2,4,3};
+    private static Activity activity;
+
+    public static  Activity getActivity(){
+        return activity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        activity=this;
         EventBus.getDefault().register(this);
         initViews();
         initClickListenner();
@@ -67,7 +83,6 @@ public class OrderCooperateActivity extends BaseActivity {
 
         //将TabLayout和ViewPager关联起来
         tab_essence.setupWithViewPager(vp_essence);
-
         tab_essence.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -86,6 +101,7 @@ public class OrderCooperateActivity extends BaseActivity {
 
             }
         });
+        vp_essence.setCurrentItem(1);
     }
 
     private void initClickListenner() {

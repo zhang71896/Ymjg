@@ -164,7 +164,6 @@ public class GoodSpecAdapter extends BaseAdapter {
                         et_store_num.setText(goods_num);
                         goodSizeBeanList.get(position).setGood_num(num);
                         ChangeTotalPrices();
-
                     }
                 }
 
