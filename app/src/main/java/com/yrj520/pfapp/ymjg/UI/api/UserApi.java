@@ -335,6 +335,7 @@ public class UserApi {
     public static void SetDefaultAddressApi(Context context,String address_id,RequestBack onBack){
         Map<String, String> params = new HashMap<>();
         params.put("address_id",address_id);
+        params.put("default","1");
         HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_SET_DEFAULT_ADDRESS,params,onBack);
     }
 

@@ -38,7 +38,6 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
         GoodsFragment fragment=new GoodsFragment();
         fragment.SetFirstPosition(position);
         fragmentList.add(fragment);
-
         return fragment;
     }
 

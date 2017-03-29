@@ -196,7 +196,7 @@ public class OrderAdapter extends BaseAdapter {
 
                     DeleteOrder(dataBean.getOrder_id(),position);
                 }else{
-                    PayOrder();
+                    PayOrder(dataBean.getMoney());
                 }
             }
         });
@@ -209,27 +209,9 @@ public class OrderAdapter extends BaseAdapter {
         return convertView;
     }
     //支付订单
-    private void PayOrder(){
-     /*   AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage("这个就是自定义的提示框");
-        builder.setTitle("提示");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //设置你的操作事项
-            }
-        });
-
-        builder.setNegativeButton("取消",
-                new android.content.DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builder.create().show();*/
-
+    private void PayOrder(String totalPrices){
         PayMessageDialog dialog=new PayMessageDialog(mContext);
+        dialog.initDatas(totalPrices);
         dialog.show();
     }
 
@@ -258,7 +240,6 @@ public class OrderAdapter extends BaseAdapter {
         int mFragmentPosition= OrderCooperateActivity.getmPosition();
         //移除当前列表中的数据
         removeOneData(position);
-
         OrderFragment orderFragment=OrderFragmentAdapter.getFragmentList().get(mFragmentPosition);
         int type=OrderCooperateActivity.titlesIndex[mFragmentPosition];
         orderFragment.setType(type);

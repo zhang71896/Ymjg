@@ -221,7 +221,6 @@ public class ActivityAddAddress extends BaseActivity{
         tv_place=(TextView)findViewById(R.id.tv_place);
         tv_center.setText("新增收货地址");
         initCityChoice();
-
     }
 
     private void initCityChoice() {
@@ -246,18 +245,13 @@ public class ActivityAddAddress extends BaseActivity{
                     item2.add((ArrayList<RegionInfo>) RegionDAO.getProvencesOrCityOnParent(regionInfo.getId()));
 
                 }
-
                 for (ArrayList<RegionInfo> arrayList : item2)
                 {
                     ArrayList<ArrayList<RegionInfo>> list2 = new ArrayList<ArrayList<RegionInfo>>();
                     for (RegionInfo regionInfo : arrayList)
                     {
-
-
-
                         ArrayList<RegionInfo> q = (ArrayList<RegionInfo>) RegionDAO.getProvencesOrCityOnParent(regionInfo.getId());
                         list2.add(q);
-
                     }
                     item3.add(list2);
                 }

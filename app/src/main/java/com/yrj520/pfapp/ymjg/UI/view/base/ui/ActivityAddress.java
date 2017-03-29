@@ -69,7 +69,7 @@ public class ActivityAddress extends BaseActivity {
     public void onEventMainThread(AddressEvent addressEvent){
         String msgType=addressEvent.getmMsg();
         if(msgType.equals(MyConstant.AddAddress)){
-            //initDatas();
+            initDatas();
             return;
         }
     }
@@ -80,11 +80,13 @@ public class ActivityAddress extends BaseActivity {
             public void onSuccess(JSONObject response) {
                 String code=response.optString("code");
                 String meg=response.optString("meg");
-                ToastUtils.showShort(ActivityAddress.this,meg);
                 if(code.equals("200")){
+                    ToastUtils.showShort(ActivityAddress.this,"刷新成功");
                     Gson gson=new Gson();
                     addressData=gson.fromJson(response.toString(),AddressData.class);
                     setViews();
+                }else{
+                    ToastUtils.showShort(ActivityAddress.this,"刷新失败");
                 }
             }
 

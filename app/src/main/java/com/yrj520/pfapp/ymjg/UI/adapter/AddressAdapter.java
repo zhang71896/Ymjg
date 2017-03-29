@@ -98,7 +98,7 @@ public class AddressAdapter extends BaseAdapter {
         if(!StringUtils.isEmpty(dataBean.getSh_phone())){
             holder.tv_phone.setText(dataBean.getSh_phone());
         }
-        holder.tv_address.setText(dataBean.getProvicename()+dataBean.getCityname()+dataBean.getDistrictname());
+        holder.tv_address.setText(dataBean.getProvicename()+dataBean.getCityname()+dataBean.getDistrictname()+dataBean.getSh_address());
         if(dataBean.getDefaultX().equals("1")){
             holder.rb_default.setChecked(true);
             holder.rb_default.setText("收货地址");
@@ -132,10 +132,8 @@ public class AddressAdapter extends BaseAdapter {
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 ToastUtils.showShort(mContext,meg);
-                if(code.equals("200")){
-                    AddressEvent addressEvent=new AddressEvent(MyConstant.AddAddress);
-                    EventBus.getDefault().post(addressEvent);
-                }
+                AddressEvent addressEvent=new AddressEvent(MyConstant.AddAddress);
+                EventBus.getDefault().post(addressEvent);
             }
 
             @Override

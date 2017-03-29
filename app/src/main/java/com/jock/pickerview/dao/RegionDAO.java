@@ -1,6 +1,5 @@
 package com.jock.pickerview.dao;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -14,47 +13,47 @@ public class RegionDAO {
 	public static List<RegionInfo> getProvencesOrCityOnId(int id){
 		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DBManager.DB_PATH + "/" + DBManager.DB_NAME, null);
 		List<RegionInfo> regionInfos = new ArrayList<RegionInfo>();//String.valueOf(type)
-		Cursor cursor = db.rawQuery("select * from REGIONS where _id="+id,null);
+		Cursor cursor = db.rawQuery("select * from newRegion where id="+id,null);
 	
 		while (cursor.moveToNext()) {
 			RegionInfo regionInfo = new RegionInfo();
-			int _id = cursor.getInt(cursor
-					.getColumnIndex("_id"));
-			int parent = cursor.getInt(cursor
-					.getColumnIndex("parent"));
-			String name = cursor.getString(cursor
-					.getColumnIndex("name"));
-			int type1 = cursor.getInt(cursor
-					.getColumnIndex("type"));
+			String _id = cursor.getString(cursor
+					.getColumnIndex("id"));
+			String parentid = cursor.getString(cursor
+					.getColumnIndex("parentid"));
+			String areaname = cursor.getString(cursor
+					.getColumnIndex("areaname"));
+			String level = cursor.getString(cursor
+					.getColumnIndex("level"));
 			regionInfo.setId(_id);
-			regionInfo.setParent(parent);
-			regionInfo.setName(name);
-			regionInfo.setType(type1);
+			regionInfo.setParentid(parentid);
+			regionInfo.setAreaname(areaname);
+			regionInfo.setLevel(level);
 			regionInfos.add(regionInfo);
 		}
 		cursor.close();
 		db.close();
 		return regionInfos;
 	}
-	public static List<RegionInfo> getProvencesOrCity(int type){
+	public static List<RegionInfo> getProvencesOrCity(int level){
 		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DBManager.DB_PATH + "/" + DBManager.DB_NAME, null);
 		List<RegionInfo> regionInfos = new ArrayList<RegionInfo>();//String.valueOf(type)
-		Cursor cursor = db.rawQuery("select * from REGIONS where type="+type,null);
+		Cursor cursor = db.rawQuery("select * from newRegion where level="+level,null);
 	
 		while (cursor.moveToNext()) {
 			RegionInfo regionInfo = new RegionInfo();
-			int _id = cursor.getInt(cursor
-					.getColumnIndex("_id"));
-			int parent = cursor.getInt(cursor
-					.getColumnIndex("parent"));
-			String name = cursor.getString(cursor
-					.getColumnIndex("name"));
-			int type1 = cursor.getInt(cursor
-					.getColumnIndex("type"));
+			String _id = cursor.getString(cursor
+					.getColumnIndex("id"));
+			String parentid = cursor.getString(cursor
+					.getColumnIndex("parentid"));
+			String areaname = cursor.getString(cursor
+					.getColumnIndex("areaname"));
+			String mlevel = cursor.getString(cursor
+					.getColumnIndex("level"));
 			regionInfo.setId(_id);
-			regionInfo.setParent(parent);
-			regionInfo.setName(name);
-			regionInfo.setType(type1);
+			regionInfo.setParentid(parentid);
+			regionInfo.setAreaname(areaname);
+			regionInfo.setLevel(mlevel);
 			regionInfos.add(regionInfo);
 		}
 		cursor.close();
@@ -62,25 +61,25 @@ public class RegionDAO {
 		return regionInfos;
 	}
 	
-	public static List<RegionInfo> getProvencesOrCityOnParent(int parent){
+	public static List<RegionInfo> getProvencesOrCityOnParent(String parent){
 		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DBManager.DB_PATH + "/" + DBManager.DB_NAME, null);
 		List<RegionInfo> regionInfos = new ArrayList<RegionInfo>();//String.valueOf(type)
-		Cursor cursor = db.rawQuery("select * from REGIONS where parent="+parent,null);
+		Cursor cursor = db.rawQuery("select * from newRegion where parentid="+parent,null);
 	
 		while (cursor.moveToNext()) {
 			RegionInfo regionInfo = new RegionInfo();
-			int _id = cursor.getInt(cursor
-					.getColumnIndex("_id"));
-			int parent1 = cursor.getInt(cursor
-					.getColumnIndex("parent"));
-			String name = cursor.getString(cursor
-					.getColumnIndex("name"));
-			int type = cursor.getInt(cursor
-					.getColumnIndex("type"));
+			String _id = cursor.getString(cursor
+					.getColumnIndex("id"));
+			String parentid = cursor.getString(cursor
+					.getColumnIndex("parentid"));
+			String areaname = cursor.getString(cursor
+					.getColumnIndex("areaname"));
+			String level = cursor.getString(cursor
+					.getColumnIndex("level"));
 			regionInfo.setId(_id);
-			regionInfo.setParent(parent1);
-			regionInfo.setName(name);
-			regionInfo.setType(type);
+			regionInfo.setParentid(parentid);
+			regionInfo.setAreaname(areaname);
+			regionInfo.setLevel(level);
 			regionInfos.add(regionInfo);
 		}
 		cursor.close();
@@ -89,35 +88,29 @@ public class RegionDAO {
 	}
 	
 	
-	//插入  ，不用
-	public static void insertRegion(SQLiteDatabase db, RegionInfo ri) {
-		ContentValues values = new ContentValues();
-		values.put("parent", ri.getParent());
-		values.put("name", ri.getName());
-		values.put("type", ri.getType());
-		db.insert("REGIONS", null, values);
-	}
+
 
 	//返回所有的省市信息
 	public static List<RegionInfo> queryAllInfo() {
 		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DBManager.DB_PATH + "/" + DBManager.DB_NAME, null);
 		List<RegionInfo> regionInfos = new ArrayList<RegionInfo>();
-		Cursor cursor = db.rawQuery("select * from REGIONS", null);
+		Cursor cursor = db.rawQuery("select * from newRegion", null);
 	
 		while (cursor.moveToNext()) {
 			RegionInfo regionInfo = new RegionInfo();
-			int _id = cursor.getInt(cursor
-					.getColumnIndex("_id"));
-			int parent = cursor.getInt(cursor
-					.getColumnIndex("parent"));
-			String name = cursor.getString(cursor
-					.getColumnIndex("name"));
-			int type = cursor.getInt(cursor
-					.getColumnIndex("type"));
+			String _id = cursor.getString(cursor
+					.getColumnIndex("id"));
+			String parentid = cursor.getString(cursor
+					.getColumnIndex("parentid"));
+			String areaname = cursor.getString(cursor
+					.getColumnIndex("areaname"));
+			String level = cursor.getString(cursor
+					.getColumnIndex("level"));
 			regionInfo.setId(_id);
-			regionInfo.setParent(parent);
-			regionInfo.setName(name);
-			regionInfo.setType(type);
+			regionInfo.setParentid(parentid);
+			regionInfo.setAreaname(areaname);
+			regionInfo.setLevel(level);
+			regionInfos.add(regionInfo);
 			
 			
 			/*kcontent = cursor.getString(cursor

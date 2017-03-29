@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,7 +37,7 @@ public class PayMessageDialog extends Dialog{
     private TextView tv_close;
     private TextView tv_phone;
     private TextView tv_lianxiren;
-    private DefaultAddressData defaultAddressData;
+    private DefaultAddressData defaultAddressData=null;
     private TextView tv_address;
     private  TextView tv_pay_value;
     private RelativeLayout rl_address;
@@ -61,7 +60,7 @@ public class PayMessageDialog extends Dialog{
         lp.width = (int) (d.widthPixels * 0.8); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(lp);
         initClickListenner();
-        initDatas();
+
     }
 
     public PayMessageDialog(Context context) {
@@ -69,11 +68,6 @@ public class PayMessageDialog extends Dialog{
         mContext=context;
     }
 
-    private void setCustomView() {
-        View view= LayoutInflater.from(getContext()).inflate(R.layout.dialog_pay_choice,null);
-        this.setContentView(view);
-
-    }
 
     private void initClickListenner() {
         btn_pay.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +89,7 @@ public class PayMessageDialog extends Dialog{
             public void onClick(View v) {
                 Intent intent =new Intent(mContext, ActivityAddress.class);
                 mContext.startActivity(intent);
+                dismiss();
             }
         });
     }
@@ -110,16 +105,25 @@ public class PayMessageDialog extends Dialog{
         super.dismiss();
     }
 
-    private void initDatas() {
+    public void initDatas(final String totalPrices) {
         UserApi.GetUserDefaultAddressApi(mContext, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
                 String code=response.optString("code");
+                JSONObject data=response.optJSONObject("data");
                 if(code.equals("200")){
                     Gson gson=new Gson();
-                     defaultAddressData=gson.fromJson(response.toString(),DefaultAddressData.class);
-                    setViews();
-                }
+                    if(data!=null) {
+                        defaultAddressData = gson.fromJson(response.toString(), DefaultAddressData.class);
+                    }
+                    if(defaultAddressData!=null)
+                       setViews(totalPrices);
+                    else{
+                        Intent intent =new Intent(mContext, ActivityAddress.class);
+                        mContext.startActivity(intent);
+                        dismiss();
+                    }
+                    }
             }
 
             @Override
@@ -129,21 +133,17 @@ public class PayMessageDialog extends Dialog{
         });
     }
 
-    private void setViews(){
+    private void setViews(String totalPrices){
         if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
             tv_phone.setText(defaultAddressData.getData().getSh_phone());
         }
         if(!StringUtils.isEmpty(defaultAddressData.getData().getConsignee())) {
             tv_lianxiren.setText(defaultAddressData.getData().getConsignee());
         }
-
-    }
-    /*public static class Builder {
-        public PayMessageDialog create() {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final PayMessageDialog dialog = new PayMessageDialog();
-            return dialog;
+        if(!StringUtils.isEmpty(defaultAddressData.getData().getProvicename())) {
+            tv_address.setText(defaultAddressData.getData().getProvicename() + defaultAddressData.getData().getCityname() + defaultAddressData.getData().getDistrictname() + defaultAddressData.getData().getSh_address());
         }
-    }*/
+           tv_pay_value.setText("¥ "+totalPrices);
+    }
+
 }
