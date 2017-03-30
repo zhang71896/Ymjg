@@ -22,6 +22,8 @@ import okhttp3.Request;
 
 
 /**
+ * 注册和找回密码界面
+ *
  * Created by zry on 17/3/28.
  */
 

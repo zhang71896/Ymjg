@@ -10,7 +10,7 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 /**
- * Title:
+ * Title:等待验证界面
  * Description:
  * Copyright:
  * Company:

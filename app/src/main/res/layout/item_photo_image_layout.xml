@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#404245" >
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#10111111"
+        android:visibility="visible" />
+
+    <View
+        android:id="@+id/alpha_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#90999999"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/checkimages"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:scaleType="center"
+        android:src="@drawable/ck_style" />
+
+</FrameLayout>

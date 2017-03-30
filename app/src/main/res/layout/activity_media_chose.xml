@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.yrj520.pfapp.ymjg.UI.view.base.MyBarView
+        android:id="@+id/mb_account_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bar:centerText="选择图片"
+        bar:isShowReturnIcon="true" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyActionBar1">
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
+        <attr name="centerText" format="string" />
+        <attr name="isShowReturnIcon" format="boolean" />
+        <attr name="background1" format="color" />
+        <attr name="leftColor" format="color" />
+        <attr name="centerColor" format="color" />
+        <attr name="rightColor" format="color" />
+        <attr name="search" format="boolean" />
+        <attr name="showLine" format="boolean" />
+        <attr name="rightImage" format="reference|color" />
+    </declare-styleable>
+
+    <attr name="cropImageStyle" format="reference" />
+    <declare-styleable name="CropImageView">
+        <attr name="highlightColor" format="reference|color" />
+        <attr name="showThirds" format="boolean" />
+        <attr name="showCircle" format="boolean" />
+        <attr name="showHandles">
+            <enum name="changing" value="0" />
+            <enum name="always" value="1" />
+            <enum name="never" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LoadingViewFinal">
+        <attr name="loadMoreMode">
+            <flag name="click" value="0x0" />
+            <flag name="scroll" value="0x1" />
+        </attr>
+        <attr name="loadMoreView" format="string"/>
+        <attr name="noLoadMoreHideView" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="PtrFrameLayout">
+        <!-- Optional. If you put header and content in xml, you can you these to specify them. -->
+        <attr name="ptr_header" format="reference" />
+        <attr name="ptr_content" format="reference" />
+
+        <!-- the resistance when you are moving the frame -->
+        <attr name="ptr_resistance" format="float" />
+
+        <!-- the ration of the height of the header to trigger refresh -->
+        <attr name="ptr_ratio_of_header_height_to_refresh" format="float" />
+
+        <attr name="ptr_duration_to_close" format="integer" />
+        <attr name="ptr_duration_to_close_header" format="integer" />
+
+        <!-- pull to refresh, otherwise release to refresh, default is release to refresh -->
+        <attr name="ptr_pull_to_fresh" format="boolean" />
+
+        <!-- keep header when refreshing-->
+        <attr name="ptr_keep_header_when_refresh" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="PtrClassicHeader">
+        <attr name="ptr_rotate_ani_time" format="integer" />
+    </declare-styleable>
+
+</resources>

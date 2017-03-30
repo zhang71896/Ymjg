@@ -9,8 +9,8 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 /**
- * Title:
- * Description:
+ * Title:网页访问界面
+ * Description:0代表协议 1代表支付界面
  * Copyright:
  * Company:
  *

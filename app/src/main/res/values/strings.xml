@@ -15,6 +15,12 @@
     <string name="input_same_password">两次密码请保持一致</string>
     <string name="please_input_messagecode">请输入短信验证码</string>
     <string name="return_btn">返回</string>
+    <string name="error_button">重试</string>
+    <string name="crop__done">完成</string>
+    <string name="crop__cancel">取消</string>
+    <string name="crop__saving">保存中…</string>
+    <string name="crop__wait">请稍等…</string>
+    <string name="crop__pick_error">No image sources available</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
