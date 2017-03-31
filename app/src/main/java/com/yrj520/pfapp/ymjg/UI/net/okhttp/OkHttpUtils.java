@@ -9,6 +9,7 @@ import com.yrj520.pfapp.ymjg.UI.net.okhttp.builder.PostStringBuilder;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.callback.Callback;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.request.RequestCall;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.utils.Platform;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -107,6 +108,7 @@ public class OkHttpUtils {
 
             @Override
             public void onResponse(final Call call, final Response response) {
+                LogUtils.info("response: "+response.headers("Set-Cookie"));
                 try {
                     if (call.isCanceled()) {
                         sendFailResultCallback(call, new IOException("Canceled!"), finalCallback, id);

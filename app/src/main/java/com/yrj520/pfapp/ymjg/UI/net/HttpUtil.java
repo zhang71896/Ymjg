@@ -95,7 +95,7 @@ public class HttpUtil {
                               Map<String, String> params, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
         OkHttpUtils.post()
-                .url(reqUrl).addHeader("Cookie","")
+                .url(reqUrl).addHeader("Cookie", "PHPSESSID=9391rrdevkeqaigcis8pakt7c4")
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }
@@ -113,7 +113,7 @@ public class HttpUtil {
     public static void doPostFile(Context context, Integer id, String reqUrl,
                                   Map<String, String> params, File file, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
-        OkHttpUtils.post()
+        OkHttpUtils.post().addHeader("Cookie", "PHPSESSID=9391rrdevkeqaigcis8pakt7c4")
                 .addFile("file", "file213.jpg", file)
                 .url(reqUrl).params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
