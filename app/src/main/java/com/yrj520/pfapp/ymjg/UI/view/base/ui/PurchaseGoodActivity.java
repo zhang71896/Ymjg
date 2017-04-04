@@ -47,6 +47,9 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private OneTwoClassGoodData mOneTwoClassGoodData;
 
+    private List<String> titles = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +66,31 @@ public class PurchaseGoodActivity extends BaseActivity {
             firstGoodtitles.add(mOneTwoClassGoodData.getData().get(i).getName());
         }
         GoodFragmentAdapter goodFragmentAdapter=new GoodFragmentAdapter(getSupportFragmentManager(),firstGoodtitles);
+
         vp_essence.setAdapter(goodFragmentAdapter);
 
         //将TabLayout和ViewPager关联起来
         tab_essence.setupWithViewPager(vp_essence);
+
+
+        tab_essence.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vp_essence.setCurrentItem(tab.getPosition());
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
 //        for (int i = 0; i < tab_essence.getTabCount(); i++) {
 //            TabLayout.Tab tab = tab_essence.getTabAt(i);
