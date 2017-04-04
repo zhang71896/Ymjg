@@ -98,7 +98,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void Get12GoodsDirectlyApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_GET_12GOODS_DIRECTLY,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_GET_12GOODS_DIRECTLY,params,onBack);
     }
 
     /**
@@ -207,9 +208,16 @@ public class UserApi {
         HttpUtil.doPut(context, Constant.REQUEST_ID_RETURN, requestBody, Host.URL_UPLOAD_IMAGE, onBack);
     }
 
-    public static void uploadResApi(Context context, File file, RequestBack onBack) {
+    /**
+     * 上传图片资源
+     * @param context 上下文对象
+     * @param fileName 文件名称
+     * @param file 文件
+     * @param onBack 回调函数
+     */
+    public static void uploadResApi(Context context,String fileName, File file, RequestBack onBack) {
         Map<String, String> params = new HashMap<>();
-        HttpUtil.doPostFile(context, Constant.REQUEST_ID_RETURN, Host.URL_UPLOAD_IMAGE, params, file, onBack);
+        HttpUtil.doPostFile(context, Constant.REQUEST_ID_RETURN,fileName,Host.URL_UPLOAD_IMAGE, params, file, onBack);
     }
 
     /**
@@ -277,7 +285,8 @@ public class UserApi {
      * @param onBack 回调函数
      */
     public static void AddressManageApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ADDRESS_MANAGE,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ADDRESS_MANAGE,params,onBack);
     }
 
     /**
@@ -295,7 +304,7 @@ public class UserApi {
         params.put(consigneeData.Keyprovice,consigneeData.getProvice());
         params.put(consigneeData.Keysh_address,consigneeData.getSh_address());
         params.put(consigneeData.Keysh_phone,consigneeData.getSh_phone());
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_UPDATE_ADDRESS,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_UPDATE_ADDRESS,params,onBack);
     }
 
     /**
@@ -307,7 +316,7 @@ public class UserApi {
     public static void SetDefaultAddressApi(Context context,String address_id,RequestBack onBack){
         Map<String, String> params = new HashMap<>();
         params.put("address_id",address_id);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_SET_DEFAULT_ADDRESS,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_SET_DEFAULT_ADDRESS,params,onBack);
     }
 
     /**
@@ -316,7 +325,8 @@ public class UserApi {
      * @param onBack
      */
     public static void GetUserDefaultAddressApi(Context context,RequestBack onBack){
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_QUERY_DEFAULT_ADDRESS,null,onBack);
+        Map<String, String> params = new HashMap<>();
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_QUERY_DEFAULT_ADDRESS,params,onBack);
 
     }
 
@@ -329,7 +339,7 @@ public class UserApi {
     public static void DeleteAddressApi(Context context,String address_id,RequestBack onBack){
         Map<String, String> params = new HashMap<>();
         params.put("address_id",address_id);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_DELETE_DEFAULT_ADDRESS,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_DELETE_DEFAULT_ADDRESS,params,onBack);
     }
 
     /**
@@ -343,7 +353,7 @@ public class UserApi {
         Map<String, String> params = new HashMap<>();
         params.put("feedcontent",feedcontent);
         params.put("phone",phone);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_FEEDBACKS,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_FEEDBACKS,params,onBack);
     }
 
     /**
@@ -358,7 +368,7 @@ public class UserApi {
         Map<String, String> params = new HashMap<>();
         params.put("order_id",order_id);
         params.put("order_status",order_status);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_UPDATE_ORDER_STATUS,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_UPDATE_ORDER_STATUS,params,onBack);
     }
 
     /**
@@ -372,7 +382,7 @@ public class UserApi {
         Map<String, String> params = new HashMap<>();
         params.put("order_id",order_id);
         params.put("address_id",address_id);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_ALIPAY,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_ALIPAY,params,onBack);
 
     }
 
@@ -387,6 +397,6 @@ public class UserApi {
         Map<String, String> params = new HashMap<>();
         params.put("order_id",order_id);
         params.put("code",code);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_AFTERPAY,null,onBack);
+        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_AFTERPAY,params,onBack);
     }
 }

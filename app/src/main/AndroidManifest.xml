@@ -46,15 +46,17 @@
 
             </activity>
         <activity android:name=".UI.view.base.ui.IndexActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".UI.view.base.ui.WebViewActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".UI.view.base.ui.VerifyActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
+            </activity>
+        <activity android:name=".UI.view.base.ui.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".UI.view.base.ui.VerifyActivity"
+            android:screenOrientation="portrait" >
+
             </activity>
         <activity android:name=".UI.view.base.ui.WaitingVerifyActivity"
             android:screenOrientation="portrait" >
@@ -72,6 +74,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".UI.view.base.ui.ActivityAboutUs"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".UI.view.base.ui.MessageUpdateActivity"
+        android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".UI.view.base.ui.ActivityFeedBack"
             android:screenOrientation="portrait" >
         </activity>
     </application>

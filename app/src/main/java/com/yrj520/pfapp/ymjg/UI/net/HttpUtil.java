@@ -113,11 +113,11 @@ public class HttpUtil {
      * @param file    请求文件
      * @param onBack  回调
      */
-    public static void doPostFile(Context context, Integer id, String reqUrl,
+    public static void doPostFile(Context context, Integer id, String fileName,String reqUrl,
                                   Map<String, String> params, File file, RequestBack onBack) {
         LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
         OkHttpUtils.post().addHeader("Cookie", "PHPSESSID=9391rrdevkeqaigcis8pakt7c4")
-                .addFile("file", "file213.jpg", file)
+                .addFile(fileName, "file213.jpg", file)
                 .url(reqUrl).params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
     }

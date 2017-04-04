@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.entity.IndexData;
 import com.yrj520.pfapp.ymjg.UI.entity.MessageData;
+import com.yrj520.pfapp.ymjg.UI.entity.UserData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -39,6 +43,8 @@ public class IndexActivity extends BaseActivity {
     private RelativeLayout rl_setting;
 
     private TextView tv_nickname;
+
+    private ImageView iv_header;
 
     private RelativeLayout rl_centerimage;
 
@@ -92,6 +98,18 @@ public class IndexActivity extends BaseActivity {
                       mTimeCount = new TimeCount(totalTime, intervalTime);// 构造CountDownTimer对象
                       mTimeCount.start();// 开始计时
                   }
+                String imgUrl=indexData.getUser().getUserimg();
+                String nickNmae=indexData.getUser().getUsername();
+                if(!StringUtils.isEmpty(imgUrl))
+                Glide.with(this)
+                .load(imgUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .centerCrop()
+                .placeholder(R.mipmap.header)
+                .error(R.mipmap.header)
+                .skipMemoryCache(true) //跳过内存缓存
+                .into(iv_header);
+                tv_nickname.setText(nickNmae);
 
     }
 
@@ -142,7 +160,9 @@ public class IndexActivity extends BaseActivity {
         return indexData.getMesage();
     }
 
-
+    public static UserData getUserData(){
+        return indexData.getUser();
+    }
     private void initClickListenner() {
         rl_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +213,7 @@ public class IndexActivity extends BaseActivity {
         ll_account_manage=(LinearLayout) findViewById(R.id.ll_account_manage);
         rl_order_cooperate=(RelativeLayout)findViewById(R.id.rl_order_cooperate);
         tv_message_count=(TextView)findViewById(R.id.tv_message_count);
+        iv_header=(ImageView) findViewById(R.id.iv_header);
     }
 
     //倒计时计数

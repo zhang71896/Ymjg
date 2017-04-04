@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.photo.MediaChoseActivity;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
@@ -57,6 +58,8 @@ public class VerifyActivity extends BaseActivity {
     private boolean isUploadSuccess=false;
 
     private Button btn_submit;
+
+    private String myFileName;
 
     //0:iv_idz 1:iv_idf 2:iv_bussiness_lience
     private int photoType=0;
@@ -183,7 +186,7 @@ public class VerifyActivity extends BaseActivity {
 
     //上传头像
     private void uploadRes(File file) {
-        UserApi.uploadResApi(this, file, new HttpUtil.RequestBack() {
+        UserApi.uploadResApi(this,myFileName, file, new HttpUtil.RequestBack() {
             @Override
             public void onBefore(Request request) {
                 super.onBefore(request);
@@ -214,12 +217,15 @@ public class VerifyActivity extends BaseActivity {
 
     private ImageView getImageViewByPhotoType(){
         if(photoType==1){
+            myFileName= MyConstant.FileUserCard;
             return iv_idz;
         }
         if(photoType==2){
+            myFileName= MyConstant.FileUserImage;
             return iv_idf;
         }
         if(photoType==3){
+            myFileName= MyConstant.FileNameBussiness;
             return iv_bussiness_lience;
         }
         return null;

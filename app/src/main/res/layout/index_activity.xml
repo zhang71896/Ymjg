@@ -27,7 +27,7 @@
         android:layout_below="@+id/rl_setting"
         android:layout_centerHorizontal="true"
         android:id="@+id/iv_header"
-        android:background="@mipmap/header_default"
+        android:background="@mipmap/header"
         android:layout_width="90dp"
         android:layout_height="90dp"
         />

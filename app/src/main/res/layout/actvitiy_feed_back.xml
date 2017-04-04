@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/bg_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/header_bar" android:id="@+id/include" />
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:background="@color/bg_white"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <EditText
+            android:id="@+id/et_feedback"
+            android:hint="亲爱的用户，请输入您宝贵的意见和建议～"
+            android:background="@null"
+            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:maxLength="140"
+            android:gravity="top"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/tv_limit"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="限140字"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_mobile"
+        android:background="@color/bg_white"
+        android:paddingLeft="10dp"
+        android:layout_toRightOf="@+id/tv_mobile"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:maxLength="11"
+        android:hint="请输入您的手机号"
+        android:inputType="phone"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        />
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/btn_submit"
+        android:textSize="20sp"
+        android:text="提交"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:background="@color/colorpurple"
+        />
+</LinearLayout>

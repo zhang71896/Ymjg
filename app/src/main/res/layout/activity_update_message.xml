@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    >
+    <include layout="@layout/header_bar" android:id="@+id/include" />
+    <EditText
+        android:background="@color/bg_white"
+        android:id="@+id/et_message"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:maxLength="18"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        />
+    <Button
+        android:layout_marginTop="40dp"
+        android:id="@+id/btn_save"
+        android:textSize="20sp"
+        android:text="保存"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:background="@color/colorpurple"
+        android:layout_marginBottom="40dp"
+        />
+</LinearLayout>

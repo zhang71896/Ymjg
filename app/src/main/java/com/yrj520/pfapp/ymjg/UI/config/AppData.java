@@ -27,6 +27,7 @@ public class AppData {
     private static final String USER_ACTIVE_DEGREE = "user_active_degree ";
     private static final String PAY_STATUS = "pay_status";
 
+
     private AppData() {
 
         this.context = SuperApplication.getInstance().getApplicationContext();
