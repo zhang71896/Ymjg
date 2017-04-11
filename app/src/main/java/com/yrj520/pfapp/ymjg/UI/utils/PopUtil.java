@@ -19,7 +19,7 @@ import com.yrj520.pfapp.ymjg.UI.popwindow.CartPopWindow;
 public class PopUtil {
 
     public static void showCartPopWindow(ThridGoodsData.DataBean dataBean, Activity mContext,View parent){
-        CartPopWindow cartPopWindow=CartPopWindow.getInstance(mContext);
+        CartPopWindow cartPopWindow=new CartPopWindow(mContext);
         cartPopWindow.InitDatas(dataBean);
         cartPopWindow.showPopupWindow(parent);
     }

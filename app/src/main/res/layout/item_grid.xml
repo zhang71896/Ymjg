@@ -65,7 +65,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/tv_market_price"
         android:gravity="center"
-        android:layout_toRightOf="@+id/tv_now_price"
+        android:layout_toRightOf="@+id/tv_market_price"
         android:id="@+id/tv_now_price_value"
         android:textColor="@color/colorred"
         android:layout_width="wrap_content"

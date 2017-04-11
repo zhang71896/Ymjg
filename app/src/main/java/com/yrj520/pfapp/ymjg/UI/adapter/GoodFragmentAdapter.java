@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
 import com.yrj520.pfapp.ymjg.UI.fragment.GoodsFragment;
-import com.yrj520.pfapp.ymjg.UI.view.base.ui.PurchaseGoodActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
-        PurchaseGoodActivity.setFirstGoodPosition(position);
         GoodsFragment fragment=new GoodsFragment();
         fragmentList.add(fragment);
 

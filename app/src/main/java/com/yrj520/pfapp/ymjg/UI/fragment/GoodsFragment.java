@@ -39,8 +39,6 @@ public class GoodsFragment extends Fragment {
 
     private  List<OneTwoClassGoodData.DataBean.ArrayBean> mArrayBeanList;
 
-    private String[] list_second_goods;
-
     private ListView lv_second_goods;
 
     private GridView gv_thrid_goods;
@@ -99,6 +97,12 @@ public class GoodsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSecondGoodPoistion=0;
+        mFirstPosition=0;
+    }
 
     private void initAdapter() {
         secondAdapter=new SecondClassGoodAdapter(SuperApplication.getInstance().getApplicationContext());

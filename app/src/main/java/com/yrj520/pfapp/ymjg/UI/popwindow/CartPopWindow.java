@@ -17,6 +17,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.GoodSize;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ public class CartPopWindow extends PopupWindow {
 
     private Activity mContext;
     private View view;
-    private ThridGoodsData.DataBean mDataBean;
+    //private ThridGoodsData.DataBean mDataBean;
     private GoodSize goodSize;
     private GoodSpecAdapter goodSpecAdapter;
     private  static CartPopWindow mCartPopWindow=null;
@@ -91,8 +92,7 @@ public class CartPopWindow extends PopupWindow {
 
 
     public void  InitDatas(ThridGoodsData.DataBean dataBean){
-        mDataBean=dataBean;
-        String sizeId=mDataBean.getGoods_id().toString();
+        String sizeId=dataBean.getGoods_id().toString();
         UserApi.GetGoodsSpecApi(mContext, sizeId, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -112,28 +112,28 @@ public class CartPopWindow extends PopupWindow {
         });
     }
     private void setViews(){
-        if(!StringUtils.isEmpty(mDataBean.getImage_url())) {
-            ImageUtils.loadCommonPic(mContext, mDataBean.getImage_url(), iv_pic);
+        if(!StringUtils.isEmpty(goodSize.getData().getImage_url())) {
+            ImageUtils.loadCommonPic(mContext, goodSize.getData().getImage_url(), iv_pic);
         }
 
-        if(!StringUtils.isEmpty(mDataBean.getGoods_name())){
-            tv_good_name.setText(mDataBean.getGoods_name());
+        if(!StringUtils.isEmpty(goodSize.getData().getGoods_name())){
+            tv_good_name.setText(goodSize.getData().getGoods_name());
         }
 
-        if(!StringUtils.isEmpty(mDataBean.getGoods_num())){
-            tv_good_num.setText("总库存: "+mDataBean.getGoods_num());
+        if(!StringUtils.isEmpty(goodSize.getData().getSumstore_count())){
+            tv_good_num.setText("总库存: "+goodSize.getData().getSumstore_count());
         }
 
-        if(!StringUtils.isEmpty(mDataBean.getShop_price())){
-            tv_now_price.setText("¥ "+mDataBean.getShop_price());
+        if(!StringUtils.isEmpty(goodSize.getData().getShop_price())){
+            tv_now_price.setText("¥ "+goodSize.getData().getShop_price());
         }
 
-        if(!StringUtils.isEmpty(mDataBean.getMarket_price())){
-            tv_shop_price.setText("¥ "+mDataBean.getMarket_price());
+        if(!StringUtils.isEmpty(goodSize.getData().getShop_price())){
+            tv_shop_price.setText("¥ "+goodSize.getData().getMarket_price());
         }
 
-        if(!StringUtils.isEmpty(mDataBean.getImage_url())){
-            String ImageUrl=ImageUtils.getImageUrl(mDataBean.getImage_url());
+        if(!StringUtils.isEmpty(goodSize.getData().getImage_url())){
+            String ImageUrl=ImageUtils.getImageUrl(goodSize.getData().getImage_url());
             ImageUtils.loadCommonPic(mContext,ImageUrl,iv_pic);
         }
         goodSpecAdapter.addAll(goodSize);

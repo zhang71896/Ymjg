@@ -31,7 +31,7 @@ public class SecondClassGoodAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
     HashMap<String,Boolean> states=new HashMap<String,Boolean>();
-    private static int selectedIndex;
+    private  int selectedIndex=0;
 
     public SecondClassGoodAdapter(Context context) {
         mContext = context;

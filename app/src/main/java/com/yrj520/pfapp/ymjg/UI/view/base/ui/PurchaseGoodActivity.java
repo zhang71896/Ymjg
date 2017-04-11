@@ -15,6 +15,7 @@ import com.yrj520.pfapp.ymjg.UI.adapter.GoodFragmentAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
+import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
@@ -81,10 +82,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         if(msgType.equals(MyConstant.UpdateShopCart)){
             //获取购物车相关的信息
             GetShopCart();
-            int totalNum=cartRefreshEvent.getTotalCount();
-            float totalPrices=cartRefreshEvent.getTotalPrices();
-            tv_total_goods_num.setText("共计商品"+totalNum+"件");
-            tv_total_price.setText("¥ "+totalPrices);
+
             return;
         }
         if(msgType.equals(MyConstant.UpdatePrices)){
@@ -98,10 +96,14 @@ public class PurchaseGoodActivity extends BaseActivity {
         UserApi.ShoppingCatApi(PurchaseGoodActivity.this, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                LogUtils.info("ShoppingCatApi",response.toString());
                 String code=response.optString("code");
                 if(code.equals("200")){
-
+                    Gson gson=new Gson();
+                    ShopCartData shopCartData=gson.fromJson(response.toString(),ShopCartData.class);
+                    String sumprice=response.optString("sumprice");
+                    String goods_num=response.optString("goods_num");
+                    tv_total_goods_num.setText("共计商品"+goods_num+"件");
+                    tv_total_price.setText("¥ "+sumprice);
                 }
             }
 
@@ -161,6 +163,7 @@ public class PurchaseGoodActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPosition=0;
         EventBus.getDefault().unregister(this);
     }
 

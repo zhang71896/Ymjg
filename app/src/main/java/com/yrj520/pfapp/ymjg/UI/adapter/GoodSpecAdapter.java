@@ -17,6 +17,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.GoodSize;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 
 import org.json.JSONObject;
@@ -108,9 +109,9 @@ public class GoodSpecAdapter extends BaseAdapter {
             holder.tv_good_price.setText("¥ "+data.getPrice());
         }
         holder.et_store_num.setText(goodSizeBeanList.get(position).getGood_num()+"");
-        if(!StringUtils.isEmpty(data.getGoods_num())) {
-            holder.tv_stock.setText("(库存:" + data.getGoods_num() + ")");
-            max_store_num=Integer.parseInt(data.getGoods_num().toString());
+        if(!StringUtils.isEmpty(data.getStore_count())) {
+            holder.tv_stock.setText("(库存:" + data.getStore_count() + ")");
+            max_store_num=Integer.parseInt(data.getStore_count().toString());
             String store_num_str = holder.et_store_num.getText().toString();
             if (!StringUtils.isEmpty(store_num_str)) {
                 store_num = Integer.parseInt(store_num_str);
@@ -137,7 +138,7 @@ public class GoodSpecAdapter extends BaseAdapter {
                     OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
                 }
             });
-            holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getGoods_num().toString())});
+            holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getStore_count().toString())});
             holder.et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -155,6 +156,7 @@ public class GoodSpecAdapter extends BaseAdapter {
         UserApi.OperateGoodsNumApi(mContext,good_id,data.getSgp_id().toString(),goodsNum,new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
+                LogUtils.info("operate_good",response.toString());
                 String code=response.optString("code");
                 String goods_num="0";
                 if(code.equals("200")){
@@ -163,7 +165,6 @@ public class GoodSpecAdapter extends BaseAdapter {
                     et_store_num.setText(goods_num);
                     goodSizeBeanList.get(position).setGood_num(num);
                     ChangeTotalPrices();
-
 
                 }
             }
