@@ -38,7 +38,7 @@ public class OrderFragmentAdapter extends FragmentStatePagerAdapter {
         fragment.setType(position);
         fragmentList.add(fragment);
 
-        return fragmentList.get(position);
+        return fragment;
     }
 
     @Override

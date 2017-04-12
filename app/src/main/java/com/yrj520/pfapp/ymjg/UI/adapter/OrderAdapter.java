@@ -1,8 +1,12 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 
 /**
  * Title:
@@ -15,6 +19,13 @@ import android.widget.BaseAdapter;
  */
 
 public class OrderAdapter extends BaseAdapter {
+
+    private OrderData mOrderData;
+
+    private Context mContext;
+
+    private LayoutInflater mInflater;
+
 
     public OrderAdapter(){
 

@@ -12,11 +12,15 @@ import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.adapter.ShopCartAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.ShopCartData;
+import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Title:
@@ -79,6 +83,8 @@ public class CartPopWindow extends PopupWindow {
                         ToastUtils.showShort(mContext,meg);
                         if(code.equals("200")){
                             mShopCartAdapter.clearAll();
+                            CartRefreshEvent cartRefreshEvent =new CartRefreshEvent(MyConstant.UpdateShopCart);
+                            EventBus.getDefault().post(cartRefreshEvent);
                         }
                     }
 

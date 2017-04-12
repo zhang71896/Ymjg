@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,6 +65,8 @@ public class PurchaseGoodActivity extends BaseActivity {
 
     private TextView tv_produce_order;
 
+    private RadioButton rb_order_manage;
+
     private static RelativeLayout rl_bottom_menu;
 
     private static int mPosition=0;
@@ -106,8 +109,15 @@ public class PurchaseGoodActivity extends BaseActivity {
                     String goods_num=response.optString("goods_num");
                     if(!StringUtils.isEmpty(goods_num)) {
                         tv_total_goods_num.setText("共计商品" + goods_num + "件");
+                    }else
+                    {
+                        tv_total_goods_num.setText("共计商品" + 0 + "件");
                     }
                     if(!StringUtils.isEmpty(sumprice)) {
+                        if(sumprice.equals("null"))
+                        {
+                            sumprice="0";
+                        }
                         tv_total_price.setText("¥ " + sumprice);
                     }
                 }
@@ -229,7 +239,9 @@ public class PurchaseGoodActivity extends BaseActivity {
     }
 
     private void initViews() {
+        rb_order_manage=(RadioButton) findViewById(R.id.rb_order_manage);
         rl_bottom_menu=(RelativeLayout)findViewById(R.id.rl_bottom_menu);
+        tv_produce_order=(TextView)findViewById(R.id.tv_produce_order);
         iv_cart=(ImageView)findViewById(R.id.iv_cart);
         tv_produce_order=(TextView)findViewById(R.id.tv_produce_order);
         tv_total_price=(TextView)findViewById(R.id.tv_total_price);
@@ -259,6 +271,13 @@ public class PurchaseGoodActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ProduceOrder();
+            }
+        });
+        rb_order_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
+                startActivity(intent);
             }
         });
     }

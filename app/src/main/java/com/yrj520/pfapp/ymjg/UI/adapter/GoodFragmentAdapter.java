@@ -29,6 +29,7 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
 
     public GoodFragmentAdapter(FragmentManager fm, List<String> titles, OneTwoClassGoodData oneTwoClassGoodData) {
         super(fm);
+        fragmentList.clear();
         mTitles=titles;
         mOneTwoClassGoodData=oneTwoClassGoodData;
     }
@@ -38,7 +39,7 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
         fragment.SetFirstPosition(position);
         fragmentList.add(fragment);
 
-        return fragmentList.get(position);
+        return fragment;
     }
 
     @Override

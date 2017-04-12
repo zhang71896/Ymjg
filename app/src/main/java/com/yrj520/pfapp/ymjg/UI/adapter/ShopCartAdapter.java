@@ -1,7 +1,9 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +55,8 @@ public class ShopCartAdapter extends BaseAdapter {
     }
 
     public void clearAll(){
-        mListArrayBean.clear();
         goodSizeBeanList.clear();
+        mListArrayBean.clear();
         notifyDataSetChanged();
     }
 
@@ -142,10 +144,19 @@ public class ShopCartAdapter extends BaseAdapter {
                 }
             });
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getStore_count().toString())});
-            holder.et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            holder.et_store_num.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
                     OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
                 }
             });
@@ -167,8 +178,10 @@ public class ShopCartAdapter extends BaseAdapter {
                         goods_num = response.optString("goods_num");
                         int num = Integer.parseInt(goods_num);
                         et_store_num.setText(goods_num);
-                        goodSizeBeanList.get(position).setGood_num(num);
-                        ChangeTotalPrices();
+                        if(goodSizeBeanList.size()>0) {
+                            goodSizeBeanList.get(position).setGood_num(num);
+                            ChangeTotalPrices();
+                        }
 
                     }
                 }
