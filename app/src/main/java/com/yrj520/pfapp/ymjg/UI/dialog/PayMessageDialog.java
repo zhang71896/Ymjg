@@ -26,7 +26,7 @@ public class PayMessageDialog extends Dialog{
     }
 
     private void setCustomView() {
-        View view= LayoutInflater.from(getContext()).inflate(R.layout.item_order_detail,null);
+        View view= LayoutInflater.from(getContext()).inflate(R.layout.dialog_pay_choice,null);
         super.setContentView(view);
     }
     /*public static class Builder {

@@ -19,8 +19,6 @@ import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 
 import org.json.JSONObject;
 
-import static android.R.attr.type;
-
 /**
  * Title:
  * Description:
@@ -82,7 +80,7 @@ public class OrderFragment extends Fragment {
         }else{
             iv_order.setVisibility(View.VISIBLE);
         }
-        orderAdapter.addAll(mOrderData,type);
+        orderAdapter.addAll(mOrderData,myType);
     }
 
     public void setType(int type){

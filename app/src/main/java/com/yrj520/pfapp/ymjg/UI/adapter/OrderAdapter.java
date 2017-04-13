@@ -15,6 +15,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.fragment.OrderFragment;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
@@ -108,11 +109,12 @@ public class OrderAdapter extends BaseAdapter {
         holder.btn_cancel.setVisibility(View.VISIBLE);
         holder.btn_pay.setEnabled(true);
         holder.btn_cancel.setEnabled(true);
+        LogUtils.info("mType","mType: "+mType);
         //判断当前是哪一种类型 等待付款
         if(mType==0){
             //未审核通过
             holder.btn_cancel.setText("取消订单");
-            if(dataBean.getAuditings().equals("1")) {
+            if(dataBean.getAuditings().equals("0")) {
                 holder.btn_pay.setText("等待审核");
                 holder.btn_pay.setEnabled(false);
             }else{
@@ -188,10 +190,12 @@ public class OrderAdapter extends BaseAdapter {
         holder.btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //已经取消或者已经完成已经支付状态下
+                if(mType==3||(dataBean.getPay_status().equals("1")&&mType==4)){
 
-                if(mType==3){
-
-
+                    DeleteOrder(dataBean.getOrder_id(),position);
+                }else{
+                    PayOrder();
                 }
             }
         });
@@ -203,6 +207,43 @@ public class OrderAdapter extends BaseAdapter {
         });
         return convertView;
     }
+    //支付订单
+    private void PayOrder(){
+
+    }
+
+    private void DeleteOrder(String orderId,final int position){
+
+        UserApi.ChangeOrderStatus(mContext, orderId, "5", new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(mContext,meg);
+                if(code.equals("200")){
+                   refreshUI(position);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
+    }
+
+    private void  refreshUI(int position){
+        int mFragmentPosition= OrderCooperateActivity.getmPosition();
+        //移除当前列表中的数据
+        removeOneData(position);
+
+        OrderFragment orderFragment=OrderFragmentAdapter.getFragmentList().get(mFragmentPosition);
+        int type=OrderCooperateActivity.titlesIndex[mFragmentPosition];
+        orderFragment.setType(type);
+        orderFragment.initDatas();
+    }
+
     private void CancelOrder(String orderId, final int position){
         UserApi.ChangeOrderStatus(mContext, orderId, "3", new HttpUtil.RequestBack() {
             @Override
@@ -211,14 +252,7 @@ public class OrderAdapter extends BaseAdapter {
                 String meg=response.optString("meg");
                 ToastUtils.showShort(mContext,meg);
                 if(code.equals("200")){
-                    int mFragmentPosition= OrderCooperateActivity.getmPosition();
-                    //移除当前列表中的数据
-                    removeOneData(position);
-
-                    OrderFragment orderFragment=OrderFragmentAdapter.getFragmentList().get(mFragmentPosition);
-                    int type=OrderCooperateActivity.titlesIndex[mFragmentPosition];
-                    orderFragment.setType(type);
-                    orderFragment.initDatas();
+                  refreshUI(position);
                 }
             }
 
