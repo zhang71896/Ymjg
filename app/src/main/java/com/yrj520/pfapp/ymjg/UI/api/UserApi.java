@@ -315,6 +315,7 @@ public class UserApi {
      */
     public  static void UpdateAddressApi(Context context, ConsigneeData consigneeData, RequestBack onBack){
         Map<String, String> params = new HashMap<>();
+        params.put(consigneeData.Keyaddress_id,consigneeData.getAddress_id());
         params.put(consigneeData.Keyarea_id,consigneeData.getArea_id());
         params.put(consigneeData.Keycity,consigneeData.getCity());
         params.put(consigneeData.Keyconsignee,consigneeData.getConsignee());

@@ -27,7 +27,19 @@ public class ConsigneeData {
 
     public String Keyarea_id="area_id";
 
-    public String KeyisDefault="isDefault";
+    public String KeyisDefault="default";
+
+    public String Keyaddress_id="adress_id";
+
+    public String getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(String address_id) {
+        this.address_id = address_id;
+    }
+
+    private String address_id;
 
     private String consignee;
 

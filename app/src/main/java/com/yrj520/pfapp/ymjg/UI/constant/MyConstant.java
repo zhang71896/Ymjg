@@ -40,5 +40,12 @@ public class MyConstant {
      */
     public static final String FileNameBussiness="businessfile";
 
+    /**
+     * 添加地址
+     */
+    public static final String AddAddress="addAddress";
+
+
+
 
 }

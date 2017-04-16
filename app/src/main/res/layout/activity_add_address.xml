@@ -86,6 +86,13 @@
             android:layout_height="40dp"
             android:gravity="center_vertical"
             />
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_centerInParent="true"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
         <ImageView
             android:layout_centerVertical="true"
             android:id="@+id/iv_right_arrow"
@@ -146,4 +153,16 @@
             android:layout_width="100dp"
             />
         </RelativeLayout>
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/colorpurple"
+        android:text="保存"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        />
 </LinearLayout>

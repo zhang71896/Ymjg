@@ -6,7 +6,11 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import org.json.JSONObject;
 
 /**
  * Title:网页访问界面
@@ -30,6 +34,10 @@ public class WebViewActivity extends BaseActivity {
      * 0 代表跳转到协议 1代表跳转到支付界面
      */
     private int mType=0;
+
+    private String address_id;
+
+    private String order_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +53,24 @@ public class WebViewActivity extends BaseActivity {
             }
         });
         mType=getIntent().getIntExtra("type",0);
+        address_id=getIntent().getStringExtra("address_id");
+        order_id=getIntent().getStringExtra("order_id");
         if(mType==0) {
             webView.loadUrl("file:///android_asset/guestsAgreement.html");
         }else{
-            //webView.loadUrl("file:///android_asset/WebContent/index.html");
+            UserApi.ProduceOrderAlipay(WebViewActivity.this,address_id,order_id,new HttpUtil.RequestBack(){
+
+                @Override
+                public void onSuccess(JSONObject response) {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+            webView.loadUrl("");
         }
     }
 }

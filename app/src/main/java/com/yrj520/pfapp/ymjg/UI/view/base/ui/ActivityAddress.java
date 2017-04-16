@@ -6,14 +6,20 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.adapter.AddressAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.entity.AddressData;
+import com.yrj520.pfapp.ymjg.UI.event.AddressEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Title:
@@ -29,11 +35,14 @@ public class ActivityAddress extends BaseActivity {
     private TextView tv_center;
     private TextView tv_left;
     private TextView tv_add_address;
+    private AddressData addressData;
+    private AddressAdapter addressAdapter;
     private ListView lv_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+        EventBus.getDefault().register(this);
         initViews();
         initClickListenner();
         initDatas();
@@ -43,7 +52,7 @@ public class ActivityAddress extends BaseActivity {
         tv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
         tv_add_address.setOnClickListener(new View.OnClickListener() {
@@ -56,16 +65,26 @@ public class ActivityAddress extends BaseActivity {
 
     }
 
+
+    public void onEventMainThread(AddressEvent addressEvent){
+        String msgType=addressEvent.getmMsg();
+        if(msgType.equals(MyConstant.AddAddress)){
+            //initDatas();
+            return;
+        }
+    }
+
     private void initDatas(){
         UserApi.AddressManageApi(ActivityAddress.this, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                LogUtils.info("AddressManageApi :",response.toString());
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 ToastUtils.showShort(ActivityAddress.this,meg);
                 if(code.equals("200")){
-
+                    Gson gson=new Gson();
+                    addressData=gson.fromJson(response.toString(),AddressData.class);
+                    setViews();
                 }
             }
 
@@ -77,10 +96,17 @@ public class ActivityAddress extends BaseActivity {
     }
 
     private void initViews(){
+        addressAdapter=new AddressAdapter(ActivityAddress.this);
         tv_center=(TextView)findViewById(R.id.tv_center);
         tv_left=(TextView)findViewById(R.id.tv_left);
         tv_add_address=(TextView)findViewById(R.id.tv_add_address);
         lv_list=(ListView)findViewById(R.id.lv_list);
+        lv_list.setAdapter(addressAdapter);
         tv_center.setText("用户地址管理");
+    }
+
+    private void setViews(){
+        addressAdapter.addAll(addressData);
+
     }
 }

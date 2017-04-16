@@ -13,8 +13,15 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.entity.DefaultAddressData;
+import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.ActivityAddress;
+
+import org.json.JSONObject;
 
 /**
  * Title:
@@ -31,6 +38,7 @@ public class PayMessageDialog extends Dialog{
     private TextView tv_close;
     private TextView tv_phone;
     private TextView tv_lianxiren;
+    private DefaultAddressData defaultAddressData;
     private TextView tv_address;
     private  TextView tv_pay_value;
     private RelativeLayout rl_address;
@@ -103,6 +111,31 @@ public class PayMessageDialog extends Dialog{
     }
 
     private void initDatas() {
+        UserApi.GetUserDefaultAddressApi(mContext, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                if(code.equals("200")){
+                    Gson gson=new Gson();
+                     defaultAddressData=gson.fromJson(response.toString(),DefaultAddressData.class);
+                    setViews();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
+
+    private void setViews(){
+        if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
+            tv_phone.setText(defaultAddressData.getData().getSh_phone());
+        }
+        if(!StringUtils.isEmpty(defaultAddressData.getData().getConsignee())) {
+            tv_lianxiren.setText(defaultAddressData.getData().getConsignee());
+        }
 
     }
     /*public static class Builder {
