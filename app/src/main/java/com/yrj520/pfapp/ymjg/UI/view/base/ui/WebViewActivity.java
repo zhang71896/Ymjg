@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 import org.json.JSONObject;
@@ -55,6 +56,7 @@ public class WebViewActivity extends BaseActivity {
         mType=getIntent().getIntExtra("type",0);
         address_id=getIntent().getStringExtra("address_id");
         order_id=getIntent().getStringExtra("order_id");
+
         if(mType==0) {
             webView.loadUrl("file:///android_asset/guestsAgreement.html");
         }else{
@@ -63,14 +65,17 @@ public class WebViewActivity extends BaseActivity {
                 @Override
                 public void onSuccess(JSONObject response) {
 
+                    LogUtils.info("aliPay","address_id"+address_id+"order_id"+order_id);
+
                 }
 
                 @Override
                 public void onError(Exception e) {
+                    LogUtils.info("aliPay","address_id"+address_id+"order_id"+order_id);
 
                 }
             });
-            webView.loadUrl("");
+            //webView.loadUrl(Host.URL_ORDER_ALIPAY);
         }
     }
 }

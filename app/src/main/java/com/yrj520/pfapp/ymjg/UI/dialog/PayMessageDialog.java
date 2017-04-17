@@ -19,6 +19,7 @@ import com.yrj520.pfapp.ymjg.UI.entity.DefaultAddressData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.ActivityAddress;
+import com.yrj520.pfapp.ymjg.UI.view.base.ui.WebViewActivity;
 
 import org.json.JSONObject;
 
@@ -42,6 +43,8 @@ public class PayMessageDialog extends Dialog{
     private  TextView tv_pay_value;
     private RelativeLayout rl_address;
     private Button btn_pay;
+    private String mAddress_id;
+    private String mOrder_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,10 @@ public class PayMessageDialog extends Dialog{
 
     }
 
-    public PayMessageDialog(Context context) {
+    public PayMessageDialog(Context context,String order_id) {
         super(context);
         mContext=context;
+        mOrder_id=order_id;
     }
 
 
@@ -73,7 +77,11 @@ public class PayMessageDialog extends Dialog{
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(mContext, WebViewActivity.class);
+                intent.putExtra("type",1);
+                intent.putExtra("address_id",mAddress_id);
+                intent.putExtra("order_id",mOrder_id);
+                mContext.startActivity(intent);
             }
         });
 
@@ -134,6 +142,7 @@ public class PayMessageDialog extends Dialog{
     }
 
     private void setViews(String totalPrices){
+        mAddress_id=defaultAddressData.getData().getAddress_id();
         if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
             tv_phone.setText(defaultAddressData.getData().getSh_phone());
         }

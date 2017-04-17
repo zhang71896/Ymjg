@@ -196,7 +196,7 @@ public class OrderAdapter extends BaseAdapter {
 
                     DeleteOrder(dataBean.getOrder_id(),position);
                 }else{
-                    PayOrder(dataBean.getMoney());
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id());
                 }
             }
         });
@@ -209,8 +209,8 @@ public class OrderAdapter extends BaseAdapter {
         return convertView;
     }
     //支付订单
-    private void PayOrder(String totalPrices){
-        PayMessageDialog dialog=new PayMessageDialog(mContext);
+    private void PayOrder(String totalPrices,String orderId){
+        PayMessageDialog dialog=new PayMessageDialog(mContext,orderId);
         dialog.initDatas(totalPrices);
         dialog.show();
     }
