@@ -172,7 +172,6 @@ public class RegisterActivity extends BaseActivity {
                 }
                 timeCount = new TimeCount(60000, 1000);// 构造CountDownTimer对象
                 timeCount.start();// 开始计时
-                btn_get_message_code.setEnabled(false);
             }
 
             @Override

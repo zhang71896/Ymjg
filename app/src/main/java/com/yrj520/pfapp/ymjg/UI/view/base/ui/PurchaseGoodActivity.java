@@ -276,6 +276,7 @@ public class PurchaseGoodActivity extends BaseActivity {
         rb_order_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
                 startActivity(intent);
             }
@@ -293,6 +294,7 @@ public class PurchaseGoodActivity extends BaseActivity {
                 String meg=response.optString("meg");
                 ToastUtils.showShort(PurchaseGoodActivity.this,meg);
                 if(code.equals("200")){
+                    GetShopCart();
                     Intent intent=new Intent(PurchaseGoodActivity.this,OrderCooperateActivity.class);
                     startActivity(intent);
                 }

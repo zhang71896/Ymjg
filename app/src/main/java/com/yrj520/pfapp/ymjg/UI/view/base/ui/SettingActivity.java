@@ -14,7 +14,6 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.config.AppData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.CasheUtil;
-import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
@@ -118,7 +117,7 @@ public class SettingActivity extends BaseActivity{
                         ToastUtils.showShort(SettingActivity.this,message);
                         if(code.equals("200")){
                             AppData.getAppData(SettingActivity.this).setTokenValue("");
-                            LogUtils.info("tokenValue","tokenValue: "+AppData.getAppData(SettingActivity.this).getTokenValue());
+                            AppData.getAppData(SettingActivity.this).setUserIdToken("3","");
                             Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                             //清空之前栈内的acitivity
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

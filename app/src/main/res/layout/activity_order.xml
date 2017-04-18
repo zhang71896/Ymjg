@@ -16,13 +16,24 @@
         app:tabTextColor="@color/black_de"
         app:tabIndicatorColor="@color/black_de"/>
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_essence"
+        android:layout_above="@+id/lv_bottom"
+        android:layout_below="@+id/tab_essence"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
     <LinearLayout
         android:id="@+id/lv_bottom"
         android:background="@color/bg_white"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:layout_height="30dp"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <RadioButton
             android:id="@+id/rb_goods"
             android:layout_weight="1"
@@ -49,12 +60,4 @@
             android:background="@drawable/radio_button_selector"
             />
     </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_essence"
-        android:layout_above="@+id/lv_bottom"
-        android:layout_below="@+id/tab_essence"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
 </RelativeLayout>

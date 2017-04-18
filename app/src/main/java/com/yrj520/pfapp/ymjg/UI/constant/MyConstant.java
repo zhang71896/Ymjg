@@ -45,7 +45,14 @@ public class MyConstant {
      */
     public static final String AddAddress="addAddress";
 
+    /**
+     * 支付完成之后
+     */
+    public static final String AfterPay="AfterPay";
 
-
+    /**
+     * 修改个人信息
+     */
+    public static final String UpdatePersonalMessage="UpdatePersonalMessage";
 
 }

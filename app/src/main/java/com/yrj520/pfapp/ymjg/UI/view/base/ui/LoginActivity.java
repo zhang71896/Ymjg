@@ -45,10 +45,14 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //如果本地存在登录令牌
         if(!StringUtils.isEmpty(AppData.getAppData(LoginActivity.this).getTokenValue())){
-            Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
-            //清空之前栈内的acitivity
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            String currentToken=AppData.getAppData(LoginActivity.this).getTokenValue();
+            String defaultToken=AppData.getAppData(LoginActivity.this).getUserIdToken("3");
+            if(currentToken.equals(defaultToken)) {
+                Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
+                //清空之前栈内的acitivity
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
         }
         setContentView(R.layout.login_activity);
         initView();
@@ -155,6 +159,7 @@ public class LoginActivity extends BaseActivity {
             }
 
             if(auditstate.equals("3")){
+                AppData.getAppData(LoginActivity.this).setUserIdToken("3",AppData.getAppData(LoginActivity.this).getTokenValue());
                 Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                 //清空之前栈内的acitivity
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

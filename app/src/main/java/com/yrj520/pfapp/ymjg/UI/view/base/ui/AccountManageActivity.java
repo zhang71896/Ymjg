@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.entity.PersonData;
 import com.yrj520.pfapp.ymjg.UI.entity.PersonMessageData;
-import com.yrj520.pfapp.ymjg.UI.entity.UserData;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.Host;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.photo.MediaChoseActivity;
@@ -34,6 +34,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
 /**
@@ -73,30 +74,61 @@ public class AccountManageActivity extends BaseActivity {
 
     private TextView tv_center;
 
-    private UserData mUserData;
-
     private Uri picPath;
 
     private String myImgUrl;
+
+    private PersonData personData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_manage);
-        mUserData=IndexActivity.getUserData();
+        EventBus.getDefault().register(this);
+        initDatas();
         initViews();
         initClickListenner();
-        setViews();
+
     }
+
+    private void initDatas() {
+        UserApi.QueryPersonalMessageApi(AccountManageActivity.this, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                if(code.equals("200")){
+                    Gson gson=new Gson();
+                    personData=gson.fromJson(response.toString(),PersonData.class);
+                    setViews();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
+
+    public void onEventMainThread(PersonalMessagEvent personalMessagEvent){
+        String msgType=personalMessagEvent.getmMsg();
+        if(msgType.equals(MyConstant.UpdatePersonalMessage)){
+            //获取购物车相关的信息
+            initDatas();
+            return;
+        }
+    }
+
+
 
     private void setViews() {
         tv_center.setText("账户管理");
-        String imgUrl= Host.HOST+mUserData.getUserimg();
-        if(!StringUtils.isEmpty(mUserData.getUserimg())) {
+        String imgUrl= Host.HOST+personData.getData().getUserimg();
+        if(!StringUtils.isEmpty(personData.getData().getUserimg())){
             ImageUtils.loadCirclePic(AccountManageActivity.this,imgUrl,iv_header,R.mipmap.header);
-            tv_shop_name.setText(mUserData.getUsername());
-            tv_account.setText(mUserData.getPhone());
-
+            tv_shop_name.setText(personData.getData().getLianxiren());
+            tv_account.setText(personData.getData().getPhone());
         }
     }
 
@@ -112,7 +144,7 @@ public class AccountManageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(AccountManageActivity.this,MessageUpdateActivity.class);
-                intent.putExtra("shopName",mUserData.getUsername());
+                intent.putExtra("shopName",personData.getData().getLianxiren());
                 startActivity(intent);
             }
         });
@@ -136,14 +168,16 @@ public class AccountManageActivity extends BaseActivity {
         rl_my_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(AccountManageActivity.this,OrderCooperateActivity.class);
+                startActivity(intent);
             }
         });
 
         rl_address_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(AccountManageActivity.this,ActivityAddress.class);
+                startActivity(intent);
             }
         });
 
@@ -190,19 +224,14 @@ public class AccountManageActivity extends BaseActivity {
             if(picPath!=null) {
 
                 try {
-                    uploadRes(MyConstant.FileNameHeader,new File(new URI(picPath.toString())));
+                    uploadRes(MyConstant.FileNameBussiness,new File(new URI(picPath.toString())));
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                     LogUtils.info("printStackTrace: "+e.getMessage());
                 }
-                Glide.with(AccountManageActivity.this)
-                        .load(picPath)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .centerCrop()
-                        .placeholder(R.mipmap.add)
-                        .error(R.mipmap.add)
-                        .skipMemoryCache(true) //跳过内存缓存
-                        .into(iv_header);
+
+                ImageUtils.loadCirclePic(AccountManageActivity.this,picPath.toString(),iv_header,R.mipmap.header);
+
             }
 
 
@@ -251,6 +280,10 @@ public class AccountManageActivity extends BaseActivity {
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 ToastUtils.showShort(AccountManageActivity.this,meg);
+                if(code.equals("200")){
+                    PersonalMessagEvent personalMessagEvent=new PersonalMessagEvent(MyConstant.UpdatePersonalMessage);
+                    EventBus.getDefault().post(personalMessagEvent);
+                }
             }
 
             @Override

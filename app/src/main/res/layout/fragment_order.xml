@@ -2,6 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/rl_no_order"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        >
     <ImageView
         android:id="@+id/iv_order"
         android:src="@mipmap/order"
@@ -9,6 +15,17 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         />
+        <TextView
+            android:layout_below="@id/iv_order"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black_de"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_no_order"
+            android:text="暂时没有订单"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
 
     <ListView
         android:layout_marginTop="2dp"

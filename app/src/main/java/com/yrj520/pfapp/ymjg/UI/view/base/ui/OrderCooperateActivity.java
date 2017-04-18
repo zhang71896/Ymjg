@@ -1,10 +1,12 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -49,7 +51,7 @@ public class OrderCooperateActivity extends BaseActivity {
     String[] titlesGroup={"全部","待付款","待收货","已完成","已取消"};
     public static int [] titlesIndex={1,0,2,4,3};
     private static Activity activity;
-
+    private RadioButton rb_goods;
     public static  Activity getActivity(){
         return activity;
     }
@@ -105,6 +107,14 @@ public class OrderCooperateActivity extends BaseActivity {
     }
 
     private void initClickListenner() {
+        rb_goods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent=new Intent(OrderCooperateActivity.this,PurchaseGoodActivity.class);
+                startActivity(intent);
+            }
+        });
         tv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +124,7 @@ public class OrderCooperateActivity extends BaseActivity {
     }
 
     private void initViews(){
+        rb_goods=(RadioButton) findViewById(R.id.rb_goods);
         tab_essence = (TabLayout)findViewById(R.id.tab_essence);
         vp_essence = (ViewPager) findViewById(R.id.vp_essence);
         tv_center=(TextView)findViewById(R.id.tv_center);

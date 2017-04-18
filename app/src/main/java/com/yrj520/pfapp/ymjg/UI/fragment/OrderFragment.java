@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 public class OrderFragment extends Fragment {
     private View viewContent;
-    private ImageView iv_order;
+    private RelativeLayout rl_no_order;
     private ListView order_lv;
     private OrderAdapter orderAdapter;
     private OrderData mOrderData;
@@ -51,7 +51,7 @@ public class OrderFragment extends Fragment {
     }
 
     private void initViews() {
-        iv_order=(ImageView) viewContent.findViewById(R.id.iv_order);
+        rl_no_order=(RelativeLayout) viewContent.findViewById(R.id.rl_no_order);
         order_lv=(ListView) viewContent.findViewById(R.id.order_lv);
         orderAdapter=new OrderAdapter(OrderCooperateActivity.getActivity());
         order_lv.setAdapter(orderAdapter);
@@ -77,9 +77,9 @@ public class OrderFragment extends Fragment {
     }
     private void setViews() {
         if(mOrderData.getData().size()>0){
-            iv_order.setVisibility(View.GONE);
+            rl_no_order.setVisibility(View.GONE);
         }else{
-            iv_order.setVisibility(View.VISIBLE);
+            rl_no_order.setVisibility(View.VISIBLE);
         }
         orderAdapter.addAll(mOrderData,myType);
     }

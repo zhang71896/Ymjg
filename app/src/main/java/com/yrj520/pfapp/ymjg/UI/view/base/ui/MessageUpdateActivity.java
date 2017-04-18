@@ -7,7 +7,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
+import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.entity.PersonMessageData;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
+import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by zry on 17/4/4.
@@ -54,6 +64,26 @@ public class MessageUpdateActivity extends BaseActivity {
     }
 
     private void save() {
+        PersonMessageData personMessageData=new PersonMessageData();
+        personMessageData.setLianxiren(et_message.getText().toString());
+        UserApi.UpdatePersonalMessageApi(MessageUpdateActivity.this, personMessageData, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(MessageUpdateActivity.this,meg);
+                if(code.equals("200")) {
+                    PersonalMessagEvent personalMessagEvent=new PersonalMessagEvent(MyConstant.UpdatePersonalMessage);
+                    EventBus.getDefault().post(personalMessagEvent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
     }
 
     private void setViews() {

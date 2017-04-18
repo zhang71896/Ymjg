@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.IndexData;
 import com.yrj520.pfapp.ymjg.UI.entity.MessageData;
 import com.yrj520.pfapp.ymjg.UI.entity.UserData;
+import com.yrj520.pfapp.ymjg.UI.event.PersonalMessagEvent;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -25,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
 /**
@@ -71,10 +74,18 @@ public class IndexActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.index_activity);
+        EventBus.getDefault().register(this);
         initDatas();
         initViews();
         initClickListenner();
-        setViews();
+    }
+    public void onEventMainThread(PersonalMessagEvent personalMessagEvent){
+        String msgType=personalMessagEvent.getmMsg();
+        if(msgType.equals(MyConstant.UpdatePersonalMessage)){
+            //获取购物车相关的信息
+            initDatas();
+            return;
+        }
     }
 
     private void setViews() {
@@ -94,24 +105,22 @@ public class IndexActivity extends BaseActivity {
                   }
               }
                   if (indexData.getMesage() != null && indexData.getMesage().size() > 0) {
+                      mTimeCount=null;
                       mTimeCount = new TimeCount(totalTime, intervalTime);// 构造CountDownTimer对象
                       mTimeCount.start();// 开始计时
                   }
                 String imgUrl=indexData.getUser().getUserimg();
-                String nickNmae=indexData.getUser().getUsername();
+                String nickNmae=indexData.getUser().getLianxiren();
                 if(!StringUtils.isEmpty(imgUrl)){
                     ImageUtils.loadCirclePic(IndexActivity.this,ImageUtils.getImageUrl(imgUrl),iv_header,R.mipmap.header);
                 }
-              /*  Glide.with(this)
-                .load(imgUrl).transform(new GlideCircleTransform(this))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .centerCrop()
-                .placeholder(R.mipmap.header)
-                .error(R.mipmap.header)
-                .skipMemoryCache(true) //跳过内存缓存
-                .into(iv_header);*/
                 tv_nickname.setText(nickNmae);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     /**
@@ -222,6 +231,7 @@ public class IndexActivity extends BaseActivity {
         }
         @Override
         public void onFinish() {// 计时完毕时触发
+            mTimeCount.cancel();
             mTimeCount=null;
             mTimeCount = new TimeCount(totalTime, intervalTime);// 构造CountDownTimer对象
             mTimeCount.start();// 开始计时

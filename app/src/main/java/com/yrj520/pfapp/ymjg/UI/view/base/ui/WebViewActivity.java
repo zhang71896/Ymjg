@@ -1,7 +1,10 @@
 package com.yrj520.pfapp.ymjg.UI.view.base.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -20,6 +23,8 @@ import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.ToastUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
+
+import org.json.JSONObject;
 
 /**
  * Title:网页访问界面
@@ -52,6 +57,51 @@ public class WebViewActivity extends BaseActivity {
 
     private String order_id;
 
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==1){
+                String code=msg.obj.toString();
+
+                if(code.equals("9000")){
+                    ToastUtils.showShort(WebViewActivity.this,"支付成功!");
+                    changeOrder(code);
+                    return;
+
+                }else if(code.equals("8000")){
+                    ToastUtils.showShort(WebViewActivity.this,"正在处理中!");
+                    finish();
+                    return;
+                }else{
+                    ToastUtils.showShort(WebViewActivity.this,"支付失败!");
+                    finish();
+                    return;
+                }
+            }
+        }
+
+    };
+
+    private  void changeOrder(String code){
+        UserApi.SelectOrderAlipay(WebViewActivity.this, order_id, code, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                String code=response.optString("code");
+                String meg=response.optString("meg");
+                ToastUtils.showShort(WebViewActivity.this,meg);
+                if(code.equals("200")){
+                    Intent intent=new Intent(WebViewActivity.this,OrderCooperateActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +158,17 @@ public class WebViewActivity extends BaseActivity {
                     public void run() {
                         H5PayResultModel result = task.h5Pay(ex, true);
                         //处理返回结果
-                        if (!TextUtils.isEmpty(result.getReturnUrl())) {
-                            ToastUtils.showShort(WebViewActivity.this, result.getReturnUrl());
-                        }
+
+                            String code=result.getResultCode();
+                            Message message=mHandler.obtainMessage();
+                            message.what=1;
+                            message.obj=code;
+                            mHandler.sendMessage(message);
+
                     }
                 }).start();
             } else {
-                //view.loadUrl(url);
+
             }
             return super.shouldInterceptRequest(view, url);
         }
