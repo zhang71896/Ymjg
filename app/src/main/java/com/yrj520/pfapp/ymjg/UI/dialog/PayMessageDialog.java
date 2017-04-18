@@ -43,8 +43,8 @@ public class PayMessageDialog extends Dialog{
     private  TextView tv_pay_value;
     private RelativeLayout rl_address;
     private Button btn_pay;
-    private String mAddress_id;
-    private String mOrder_id;
+    private String mAddressId;
+    private String mOrderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +66,10 @@ public class PayMessageDialog extends Dialog{
 
     }
 
-    public PayMessageDialog(Context context,String order_id) {
+    public PayMessageDialog(Context context,String orderId) {
         super(context);
+        mOrderId=orderId;
         mContext=context;
-        mOrder_id=order_id;
     }
 
 
@@ -79,9 +79,10 @@ public class PayMessageDialog extends Dialog{
             public void onClick(View v) {
                 Intent intent=new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("type",1);
-                intent.putExtra("address_id",mAddress_id);
-                intent.putExtra("order_id",mOrder_id);
+                intent.putExtra("address_id",mAddressId);
+                intent.putExtra("order_id",mOrderId);
                 mContext.startActivity(intent);
+
             }
         });
 
@@ -125,7 +126,7 @@ public class PayMessageDialog extends Dialog{
                         defaultAddressData = gson.fromJson(response.toString(), DefaultAddressData.class);
                     }
                     if(defaultAddressData!=null)
-                       setViews(totalPrices);
+                       setViews(totalPrices,defaultAddressData.getData().getAddress_id());
                     else{
                         Intent intent =new Intent(mContext, ActivityAddress.class);
                         mContext.startActivity(intent);
@@ -141,8 +142,8 @@ public class PayMessageDialog extends Dialog{
         });
     }
 
-    private void setViews(String totalPrices){
-        mAddress_id=defaultAddressData.getData().getAddress_id();
+    private void setViews(String totalPrices,String addressId){
+        mAddressId=addressId;
         if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
             tv_phone.setText(defaultAddressData.getData().getSh_phone());
         }

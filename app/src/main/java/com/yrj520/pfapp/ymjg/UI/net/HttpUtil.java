@@ -7,6 +7,7 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.config.AppData;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.OkHttpUtils;
 import com.yrj520.pfapp.ymjg.UI.net.okhttp.callback.JsonCallback;
+import com.yrj520.pfapp.ymjg.UI.net.okhttp.callback.StringCallback;
 import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.NetUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -67,6 +68,24 @@ public class HttpUtil {
         }
     }
 
+    private static class MyStringCallBack extends StringCallback{
+        private Context context;
+        private StringRequestBack onBack;
+        public MyStringCallBack(Context context, StringRequestBack onBack) {
+            this.context = context;
+            this.onBack = onBack;
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            onBack.onSuccess(response);
+        }
+    }
     /* *
      * 通过get从服务器获取数据
      *
@@ -99,6 +118,15 @@ public class HttpUtil {
                 .url(reqUrl).addHeader("Cookie", AppData.getAppData(context).getTokenValue())
                 .params(params).build()
                 .execute(new MyJsonCallback(context, onBack));
+    }
+
+    public  static void doPostString(Context context, Integer id, String reqUrl,
+                                     Map<String, String> params,StringRequestBack onBack){
+        LogUtils.info("method: POST\nreqUrl:" + reqUrl + "\nparams:" + params.toString());
+        OkHttpUtils.post()
+                .url(reqUrl).addHeader("Cookie", AppData.getAppData(context).getTokenValue())
+                .params(params).build()
+                .execute(new MyStringCallBack(context,onBack));
     }
 
     /**
@@ -181,9 +209,7 @@ public class HttpUtil {
                 return;
             }
         }
-
         onBack.onSuccess(response);
-
 
     }
 
@@ -200,5 +226,18 @@ public class HttpUtil {
 
         public void onBefore(Request request) {
         }
+    }
+
+    public static abstract class StringRequestBack{
+        public abstract void onSuccess(String response);
+
+        public abstract void onError(Exception e);
+
+        public void onAfter() {
+        }
+
+        public void onBefore(Request request) {
+        }
+
     }
 }

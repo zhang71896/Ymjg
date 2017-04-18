@@ -150,12 +150,12 @@ public class OrderAdapter extends BaseAdapter {
                 holder.btn_pay.setText("立即付款");
             }
         }
-        final OrderData.DataBean.SpecBean specBean=dataBean.getSpec().get(0);
+        final OrderData.DataBean.SpecBean specBean=getItem(position).getSpec().get(0);
         int sumNumber=0;
-        for(int i=0;i<dataBean.getSpec().size();i++){
+        for(int i=0;i<getItem(position).getSpec().size();i++){
             int number=0;
-            if(!StringUtils.isEmpty(dataBean.getSpec().get(i).getGoods_num())) {
-                number = Integer.parseInt(dataBean.getSpec().get(i).getGoods_num());
+            if(!StringUtils.isEmpty(getItem(position).getSpec().get(i).getGoods_num())) {
+                number = Integer.parseInt(getItem(position).getSpec().get(i).getGoods_num());
             }
             sumNumber+=number;
         }

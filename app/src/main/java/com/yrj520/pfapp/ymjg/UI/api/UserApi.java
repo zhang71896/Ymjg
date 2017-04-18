@@ -398,11 +398,11 @@ public class UserApi {
      * @param address_id 地址id
      * @param onBack 回调函数
      */
-    public static void ProduceOrderAlipay(Context context,String order_id,String address_id,RequestBack onBack){
+    public static void ProduceOrderAlipay(Context context,String order_id,String address_id,HttpUtil.StringRequestBack onBack){
         Map<String, String> params = new HashMap<>();
         params.put("order_id",order_id);
         params.put("address_id",address_id);
-        HttpUtil.doPost(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_ALIPAY,params,onBack);
+        HttpUtil.doPostString(context,Constant.REQUEST_ID_RETURN,Host.URL_ORDER_ALIPAY,params,onBack);
 
     }
 
