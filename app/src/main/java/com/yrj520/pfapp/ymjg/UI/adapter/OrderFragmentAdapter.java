@@ -36,6 +36,7 @@ public class OrderFragmentAdapter extends FragmentStatePagerAdapter {
         OrderFragment fragment=new OrderFragment();
         int type= OrderCooperateActivity.titlesIndex[position];
         fragment.setType(type);
+        fragment.initDatas();
         fragmentList.add(fragment);
 
         return fragment;

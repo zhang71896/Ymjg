@@ -42,7 +42,6 @@ public class OrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewContent = inflater.inflate(R.layout.fragment_order, container, false);
         initViews();
-        initDatas();
         return viewContent;
     }
 

@@ -92,7 +92,6 @@ public class WebViewActivity extends BaseActivity {
         UserApi.SelectOrderAlipay(WebViewActivity.this, order_id, code, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
-                LogUtils.info("AfterSelectOrderAlipay",response.toString());
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 ToastUtils.showShort(WebViewActivity.this,meg);
@@ -168,30 +167,7 @@ public class WebViewActivity extends BaseActivity {
 /*
             LogUtils.info("onPageStarted","onPageStarted");
 */
-            final PayTask task = new PayTask(WebViewActivity.this);
-            final String ex = task.fetchOrderInfoFromH5PayUrl(url);
-            LogUtils.info("WebResourceResponse ex:","here"+ex);
-            if (!TextUtils.isEmpty(ex)) {
-                //调用支付接口进行支付
-                new Thread(new Runnable() {
-                    public void run() {
-                        H5PayResultModel result = task.h5Pay(ex, true);
-                        //处理返回结果
-                        LogUtils.info("H5PayResultModel",result.getResultCode().toString());
-                        if(!StringUtils.isEmpty(result.getResultCode())){
-                            String code=result.getResultCode();
-                            if(code.equals("9000")){
-                                Message message=mHandler.obtainMessage();
-                                message.what=1;
-                                message.obj=code;
-                                mHandler.sendMessage(message);
-                            }
-                        }
-                    }
-                }).start();
-            } else {
 
-            }
             super.onPageStarted(view, url, favicon);
         }
 
@@ -219,19 +195,27 @@ public class WebViewActivity extends BaseActivity {
              6002——网络连接出错
              */
             final String ex = task.fetchOrderInfoFromH5PayUrl(url);
+            LogUtils.info("WebResourceResponse ex:","here"+ex);
             if (!TextUtils.isEmpty(ex)) {
                 //调用支付接口进行支付
                 new Thread(new Runnable() {
                     public void run() {
                         H5PayResultModel result = task.h5Pay(ex, true);
                         //处理返回结果
-                        if (!TextUtils.isEmpty(result.getReturnUrl())) {
-                            view.loadUrl(result.getReturnUrl());
+                        LogUtils.info("H5PayResultModel",result.getResultCode().toString());
+                        if(!StringUtils.isEmpty(result.getResultCode())){
+                            String code=result.getResultCode();
+                            if(code.equals("9000")){
+                                Message message=mHandler.obtainMessage();
+                                message.what=1;
+                                message.obj=code;
+                                mHandler.sendMessage(message);
+                            }
                         }
                     }
                 }).start();
             } else {
-                view.loadUrl(url);
+
             }
 
             return true;
