@@ -127,6 +127,8 @@ public class IndexActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
     }
 
     /**
@@ -245,11 +247,14 @@ public class IndexActivity extends BaseActivity {
         @Override
         public void onTick(long millisUntilFinished) {// 计时过程显示
             count++;
-            if(count==indexData.getMesage().size()-1){
-                count=0;
-            }
             tv_center_message.setClickable(false);
-            tv_center_message.setText(indexData.getMesage().get(count).getTitle());
-        }
+            if(indexData!=null) {
+                if(indexData.getMesage()!=null&&indexData.getMesage().size()>0)
+                    if(count==indexData.getMesage().size()-1){
+                        count=0;
+                    }
+                tv_center_message.setText(indexData.getMesage().get(count).getTitle());
+            }
+            }
     }
 }

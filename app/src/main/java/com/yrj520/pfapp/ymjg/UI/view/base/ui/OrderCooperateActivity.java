@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.adapter.OrderFragmentAdapter;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
-import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
+import com.yrj520.pfapp.ymjg.UI.event.AlipayEvent;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -68,10 +68,11 @@ public class OrderCooperateActivity extends BaseActivity {
         initDatas();
     }
 
-    public void onEventMainThread(CartRefreshEvent cartRefreshEvent){
-        String msgType=cartRefreshEvent.getMsg();
-        if(msgType.equals(MyConstant.UpdateShopCart)){
+    public void onEventMainThread(AlipayEvent alipayEvent){
+        String msgType=alipayEvent.getmMsg();
+        if(msgType.equals(MyConstant.AfterPay)){
             //获取购物车相关的信息
+            initDatas();
             return;
         }
     }
@@ -133,5 +134,11 @@ public class OrderCooperateActivity extends BaseActivity {
         rl_left=(RelativeLayout) findViewById(R.id.rl_left);
         tv_center.setText("订单管理");
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

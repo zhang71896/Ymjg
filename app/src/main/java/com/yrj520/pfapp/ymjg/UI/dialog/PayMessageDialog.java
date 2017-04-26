@@ -45,6 +45,8 @@ public class PayMessageDialog extends Dialog{
     private Button btn_pay;
     private String mAddressId;
     private String mOrderId;
+    private String mMoney;
+    private String mOrderNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +68,12 @@ public class PayMessageDialog extends Dialog{
 
     }
 
-    public PayMessageDialog(Context context,String orderId) {
+    public PayMessageDialog(Context context,String orderId,String orderNum,String money) {
         super(context);
         mOrderId=orderId;
         mContext=context;
+        mOrderNum=orderNum;
+        mMoney=money;
     }
 
 
@@ -79,9 +83,12 @@ public class PayMessageDialog extends Dialog{
             public void onClick(View v) {
                 Intent intent=new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("type",1);
+                intent.putExtra("money",mMoney);
+                intent.putExtra("orderNum",mOrderNum);
                 intent.putExtra("address_id",mAddressId);
                 intent.putExtra("order_id",mOrderId);
                 mContext.startActivity(intent);
+                dismiss();
 
             }
         });
@@ -126,7 +133,8 @@ public class PayMessageDialog extends Dialog{
                         defaultAddressData = gson.fromJson(response.toString(), DefaultAddressData.class);
                     }
                     if(defaultAddressData!=null)
-                       setViews(totalPrices,defaultAddressData.getData().getAddress_id());
+
+                    setViews(defaultAddressData.getData().getAddress_id());
                     else{
                         Intent intent =new Intent(mContext, ActivityAddress.class);
                         mContext.startActivity(intent);
@@ -142,7 +150,7 @@ public class PayMessageDialog extends Dialog{
         });
     }
 
-    private void setViews(String totalPrices,String addressId){
+    private void setViews(String addressId){
         mAddressId=addressId;
         if(!StringUtils.isEmpty(defaultAddressData.getData().getSh_phone())) {
             tv_phone.setText(defaultAddressData.getData().getSh_phone());
@@ -153,7 +161,7 @@ public class PayMessageDialog extends Dialog{
         if(!StringUtils.isEmpty(defaultAddressData.getData().getProvicename())) {
             tv_address.setText(defaultAddressData.getData().getProvicename() + defaultAddressData.getData().getCityname() + defaultAddressData.getData().getDistrictname() + defaultAddressData.getData().getSh_address());
         }
-           tv_pay_value.setText("¥ "+totalPrices);
+           tv_pay_value.setText("¥ "+mMoney);
     }
 
 }

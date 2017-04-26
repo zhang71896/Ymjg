@@ -100,6 +100,9 @@ public class PurchaseGoodActivity extends BaseActivity {
         }
     }
 
+
+
+
     private void GetShopCart() {
         UserApi.ShoppingCatApi(PurchaseGoodActivity.this, new HttpUtil.RequestBack() {
             @Override

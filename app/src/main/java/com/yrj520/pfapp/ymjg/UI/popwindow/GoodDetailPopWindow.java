@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
@@ -30,7 +31,7 @@ public class GoodDetailPopWindow extends PopupWindow {
     private View view;
     private ListView lv_good_list;
     private GoodDetailAdapter goodDetailAdapter;
-    private TextView tv_left;
+    private RelativeLayout rl_left;
     private TextView tv_center;
     public GoodDetailPopWindow(final Activity context){
         mContext=context;
@@ -55,12 +56,12 @@ public class GoodDetailPopWindow extends PopupWindow {
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
         lv_good_list=(ListView) view.findViewById(R.id.lv_good_list);
-        tv_left=(TextView)view.findViewById(R.id.tv_left);
+        rl_left=(RelativeLayout) view.findViewById(R.id.rl_left);
         tv_center=(TextView)view.findViewById(R.id.tv_center);
         tv_center.setText("详细商品列表");
         goodDetailAdapter=new GoodDetailAdapter(mContext);
         lv_good_list.setAdapter(goodDetailAdapter);
-        tv_left.setOnClickListener(new View.OnClickListener() {
+        rl_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hidden();

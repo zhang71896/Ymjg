@@ -37,8 +37,6 @@ import java.net.URISyntaxException;
 import de.greenrobot.event.EventBus;
 import okhttp3.Request;
 
-import static com.yrj520.pfapp.ymjg.R.id.tv_left;
-
 /**
  * Title:
  * Description:
@@ -122,7 +120,11 @@ public class AccountManageActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     private void setViews() {
         tv_center.setText("账户管理");

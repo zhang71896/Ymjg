@@ -138,15 +138,16 @@ public class OrderAdapter extends BaseAdapter {
                 holder.btn_pay.setText("立即付款");
             }
         }
-        if(myOrderStatus.equals("3")){
+        if(myOrderStatus.equals("3")||mType==3){
             //已取消
             holder.btn_cancel.setVisibility(View.INVISIBLE);
             holder.btn_pay.setText("删除订单");
         }
-        if(myOrderStatus.equals("4")){
+        if(myOrderStatus.equals("4")||mType==4){
             //已完成
             //已付款
             if(dataBean.getPay_status().equals("1")){
+                holder.btn_cancel.setVisibility(View.INVISIBLE);
                 holder.btn_pay.setText("删除订单");
             }
         }
@@ -191,14 +192,15 @@ public class OrderAdapter extends BaseAdapter {
         holder.btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //已经取消或者已经完成已经支付状态下
-                if(dataBean.getOrder_status().equals("3")||(dataBean.getPay_status().equals("1")&&dataBean.getOrder_status().equals("4"))){
-
+                //1. 已经取消    2.已经完成已经支付状态下   3.所有订单支付完成之后
+                if(mType==3||(dataBean.getPay_status().equals("1")&&dataBean.getOrder_status().equals("4"))||dataBean.getOrder_status().equals("3")){
                     DeleteOrder(dataBean.getOrder_id(),position);
-                }else if(dataBean.getOrder_status().equals("2")&&dataBean.getPay_status().equals("1")){
-                    GetGood();
+
+                }//1.所有订单 2.
+                else if((dataBean.getOrder_status().equals("2")||mType==2||mType==1)&&dataBean.getPay_status().equals("1")){
+                    GetGood(dataBean.getOrder_id(),position);
                 }else{
-                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id());
+                    PayOrder(dataBean.getMoney(),dataBean.getOrder_id(),dataBean.getOrdernumber(),dataBean.getMoney());
                 }
             }
         });
@@ -212,7 +214,7 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     private void GetGood(String orderId,final int position){
-        UserApi.ChangeOrderStatus(mContext, orderId, "5", new HttpUtil.RequestBack() {
+        UserApi.ChangeOrderStatus(mContext, orderId, "4", new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
                 String code=response.optString("code");
@@ -231,8 +233,8 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     //支付订单
-    private void PayOrder(String totalPrices,String orderId){
-        PayMessageDialog dialog=new PayMessageDialog(mContext,orderId);
+    private void PayOrder(String totalPrices,String orderId,String orderNum,String money){
+        PayMessageDialog dialog=new PayMessageDialog(mContext,orderId,orderNum,money);
         dialog.initDatas(totalPrices);
         dialog.show();
     }

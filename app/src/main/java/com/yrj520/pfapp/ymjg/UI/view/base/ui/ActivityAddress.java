@@ -75,6 +75,14 @@ public class ActivityAddress extends BaseActivity {
         }
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
+    }
+
     private void initDatas(){
         UserApi.AddressManageApi(ActivityAddress.this, new HttpUtil.RequestBack() {
             @Override
