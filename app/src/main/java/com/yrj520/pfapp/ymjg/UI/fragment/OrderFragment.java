@@ -16,6 +16,7 @@ import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
+import com.yrj520.pfapp.ymjg.UI.utils.LogUtils;
 import com.yrj520.pfapp.ymjg.UI.view.base.ui.OrderCooperateActivity;
 
 import org.json.JSONObject;
@@ -60,6 +61,7 @@ public class OrderFragment extends Fragment {
         UserApi.OrderListApi(SuperApplication.getInstance().getApplicationContext(),myType+"", new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
+                LogUtils.info("OrderListApi",response.toString());
                 String code=response.optString("code");
                 if(code.equals("200")){
                     Gson gson=new Gson();

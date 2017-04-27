@@ -62,7 +62,6 @@ public class IndexActivity extends BaseActivity {
 
     private static IndexData indexData;
 
-    private int count=0;
 
     private TimeCount mTimeCount;
 
@@ -234,6 +233,7 @@ public class IndexActivity extends BaseActivity {
 
     //倒计时计数
     class TimeCount extends CountDownTimer {
+        int count=0;
         private TimeCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);// 参数依次为总时长,和计时的时间间隔
         }

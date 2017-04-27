@@ -108,8 +108,10 @@ public class GoodsFragment extends Fragment {
         secondAdapter=new SecondClassGoodAdapter(SuperApplication.getInstance().getApplicationContext());
         mFirstPosition=PurchaseGoodActivity.getFirstGoodPosition();
         mArrayBeanList= PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray();
-        secondAdapter.addAll(mArrayBeanList);
         lv_second_goods.setAdapter(secondAdapter);
+        if(mArrayBeanList!=null) {
+            secondAdapter.addAll(mArrayBeanList);
+        }
         secondAdapter.setSelectedIndex(0);
         thridAdapter=new ThridClassGoodAdapter(getActivity());
         gv_thrid_goods.setAdapter(thridAdapter);
