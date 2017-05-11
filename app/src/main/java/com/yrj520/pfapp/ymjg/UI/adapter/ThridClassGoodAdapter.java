@@ -41,6 +41,7 @@ public class ThridClassGoodAdapter extends BaseAdapter {
     }
 
     public void addAll(List<ThridGoodsData.DataBean> list) {
+        dataBeanList.clear();
         dataBeanList.addAll(list);
         notifyDataSetChanged();
     }

@@ -143,7 +143,11 @@ public class ShopCartAdapter extends BaseAdapter {
                     OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
                 }
             });
-            holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getStore_count().toString())});
+            String storeCount="999";
+            if(data.getStore_count()!=null&&data.getStore_count().length()>0){
+                storeCount=data.getStore_count().toString();
+            }
+            holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeCount)});
             holder.et_store_num.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,7 +161,10 @@ public class ShopCartAdapter extends BaseAdapter {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
+                    if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
+                        store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                        OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                    }
                 }
             });
         }
@@ -168,7 +175,11 @@ public class ShopCartAdapter extends BaseAdapter {
     private void OperateGoodsNum(ShopCartData.DataBean data, TextView tv_stock, final EditText et_store_num, final int position) {
         if(store_num>=0) {
             String goodsNum = store_num + "";
-            UserApi.OperateGoodsNumApi(mContext, data.getGoods_id(), data.getSgp_id().toString(), goodsNum, new HttpUtil.RequestBack() {
+            String specId="";
+            if(data.getSgp_id()!=null){
+                specId=data.getSgp_id().toString();
+            }
+            UserApi.OperateGoodsNumApi(mContext, data.getGoods_id(), specId, goodsNum, new HttpUtil.RequestBack() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     LogUtils.info("operate_good", response.toString());

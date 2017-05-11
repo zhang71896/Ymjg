@@ -2,24 +2,34 @@ package com.yrj520.pfapp.ymjg.UI.popwindow;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.adapter.GoodSpecAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
+import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
+import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
+import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
 
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Title:
@@ -43,9 +53,22 @@ public class GoodSizePopWindow extends PopupWindow {
     private  TextView tv_good_num;
     private  TextView tv_now_price;
     private  TextView tv_shop_price;
+    private  TextView tv_good_size;
+    private RelativeLayout rl_contetnt;
+    private RelativeLayout rl_add;
+    private RelativeLayout rl_minus;
+    private EditText et_store_num;
     private ListView lv_size_list;
+    //是否有明细
+    private boolean hasSpec=false;
+    private int mGoodNum;
+    private String good_id;
 
-
+    /**
+     *   创建商品尺寸弹出框
+     * @param context 上下文对象
+     *
+     */
     public GoodSizePopWindow(Activity context){
         mContext=context;
         view = LayoutInflater.from(mContext).inflate(R.layout.pop_good_size, null);
@@ -68,14 +91,43 @@ public class GoodSizePopWindow extends PopupWindow {
         this.setBackgroundDrawable(dw);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
+        tv_good_size=(TextView)view.findViewById(R.id.tv_good_size);
+        rl_contetnt=(RelativeLayout) view.findViewById(R.id.rl_contetnt);
+        rl_add=(RelativeLayout) view.findViewById(R.id.rl_add);
+        rl_minus=(RelativeLayout) view.findViewById(R.id.rl_minus);
+        et_store_num=(EditText) view.findViewById(R.id.et_store_num);
         iv_pic=(ImageView)view.findViewById(R.id.iv_pic);
         tv_good_name=(TextView)view.findViewById(R.id.tv_good_name);
         tv_good_num=(TextView)view.findViewById(R.id.tv_good_num);
         tv_now_price=(TextView)view.findViewById(R.id.tv_now_price);
         tv_shop_price=(TextView)view.findViewById(R.id.tv_shop_price);
         lv_size_list=(ListView) view.findViewById(R.id.lv_size_list);
+
         goodSpecAdapter=new GoodSpecAdapter(mContext);
         lv_size_list.setAdapter(goodSpecAdapter);
+        initClickListenner();
+    }
+
+    private void initClickListenner() {
+        rl_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGoodNum++;
+                OperateGoodsNum();
+            }
+        });
+
+        rl_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mGoodNum > 0) {
+                    mGoodNum--;
+                } else {
+                    mGoodNum = 0;
+                }
+                OperateGoodsNum();
+            }
+        });
     }
 
     public void showPopupWindow(View parent) {
@@ -88,10 +140,36 @@ public class GoodSizePopWindow extends PopupWindow {
     }
 
 
+    private void OperateGoodsNum() {
+        if(mGoodNum>=0) {
+            String goodsNum = mGoodNum + "";
+            UserApi.OperateGoodsNumApi(mContext, good_id, "", goodsNum, new HttpUtil.RequestBack() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    String code = response.optString("code");
+                    String goods_num = "0";
+                    if (code.equals("200")) {
+                        goods_num = response.optString("goods_num");
+                        int num = Integer.parseInt(goods_num);
+                        et_store_num.setText(goods_num);
+                        CartRefreshEvent cartRefreshEvent =new CartRefreshEvent(MyConstant.UpdateShopCart);
+                        EventBus.getDefault().post(cartRefreshEvent);
+                    }
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+        }
+    }
+
+
 
     public void  InitDatas(ThridGoodsData.DataBean dataBean){
-        String sizeId=dataBean.getGoods_id().toString();
-        UserApi.GetGoodsSpecApi(mContext, sizeId, new HttpUtil.RequestBack() {
+        good_id=dataBean.getGoods_id().toString();
+        UserApi.GetGoodsSpecApi(mContext, good_id, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
                 String code=response.optString("code");
@@ -110,6 +188,16 @@ public class GoodSizePopWindow extends PopupWindow {
         });
     }
     private void setViews(){
+        if(goodSize.getData().getSpec().size()>0){
+            hasSpec=true;
+            tv_good_size.setText("规格列表");
+        }else{
+            hasSpec=false;
+            tv_good_size.setText("该商品为单品");
+        }
+        if(hasSpec){
+            rl_contetnt.setVisibility(View.GONE);
+        }
         if(!StringUtils.isEmpty(goodSize.getData().getImage_url())) {
             ImageUtils.loadCommonPic(mContext, goodSize.getData().getImage_url(), iv_pic);
         }
@@ -117,10 +205,31 @@ public class GoodSizePopWindow extends PopupWindow {
         if(!StringUtils.isEmpty(goodSize.getData().getGoods_name())){
             tv_good_name.setText(goodSize.getData().getGoods_name());
         }
-
+        String storeNum="999";
         if(!StringUtils.isEmpty(goodSize.getData().getSumstore_count())){
             tv_good_num.setText("总库存: "+goodSize.getData().getSumstore_count());
+
         }
+        et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeNum)});
+        et_store_num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!StringUtils.isEmpty(et_store_num.getText())) {
+                    mGoodNum = Integer.parseInt(et_store_num.getText().toString());
+                    OperateGoodsNum();
+                }
+            }
+        });
 
         if(!StringUtils.isEmpty(goodSize.getData().getShop_price())){
             tv_now_price.setText("¥ "+goodSize.getData().getShop_price());

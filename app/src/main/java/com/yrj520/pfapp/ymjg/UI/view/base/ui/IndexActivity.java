@@ -253,7 +253,9 @@ public class IndexActivity extends BaseActivity {
                     if(count==indexData.getMesage().size()-1){
                         count=0;
                     }
-                tv_center_message.setText(indexData.getMesage().get(count).getTitle());
+                if(count<indexData.getMesage().size()) {
+                    tv_center_message.setText(indexData.getMesage().get(count).getTitle());
+                }
             }
             }
     }

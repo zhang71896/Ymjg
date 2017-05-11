@@ -65,16 +65,87 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
-    <TextView
+    <RelativeLayout
         android:layout_marginTop="8dp"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
         android:background="@color/bg_white"
+        >
+    <TextView
+        android:id="@+id/tv_good_size"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textColor="@color/black_de"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:paddingLeft="5dp"
         android:text="规格列表"
         />
+        <RelativeLayout
+            android:id="@+id/rl_contetnt"
+            android:layout_toRightOf="@+id/tv_good_size"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            >
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_height="50dp"
+            android:layout_width="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            >
+            <ImageView
+
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_add"
+                android:background="@mipmap/add"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                />
+        </RelativeLayout>
+        <EditText
+            android:layout_marginRight="5dp"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rl_add"
+            android:inputType="number"
+            android:maxLength="4"
+            android:focusableInTouchMode="true"
+            android:textColor="@color/black_de"
+            android:textSize="12sp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/et_store_num"
+            />
+        <RelativeLayout
+            android:layout_marginRight="5dp"
+            android:id="@+id/rl_minus"
+            android:layout_toLeftOf="@+id/et_store_num"
+            android:layout_height="50dp"
+            android:layout_width="20dp"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_minus"
+                android:background="@mipmap/jian"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_good_price"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/rl_minus"
+            android:textColor="@color/colorred"
+            android:textSize="16sp"
+            android:text="购买单品"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+            </RelativeLayout>
+    </RelativeLayout>
     <ListView
         android:id="@+id/lv_size_list"
         android:layout_marginTop="1dp"

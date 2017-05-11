@@ -49,6 +49,7 @@ public class GoodSpecAdapter extends BaseAdapter {
     private int totalCount=0;
     private String good_id;
 
+
     public GoodSpecAdapter(Context context){
         mContext=context;
         mInflater = LayoutInflater.from(mContext);
@@ -64,6 +65,7 @@ public class GoodSpecAdapter extends BaseAdapter {
         mListArrayBean.clear();
         mListArrayBean.addAll(goodSize.getData().getSpec());
         goodSizeBeanList.clear();
+
         for(int i=0;i<goodSize.getData().getSpec().size();i++){
             GoodSizeData.DataBean.SpecBean  specBean=getItem(i);
             GoodSizeBean goodSizeBean=new GoodSizeBean();

@@ -52,7 +52,7 @@ public class GoodsFragment extends BaseFragment {
 
     private   int mSecondGoodPoistion=-1;
 
-    private   int mFirstPosition=0;
+    private    int mFirstPosition=0;
 
     @Nullable
     @Override
@@ -69,10 +69,17 @@ public class GoodsFragment extends BaseFragment {
      */
     public void initThridDatas() {
         //切换为所有商品
-            if (PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray() != null) {
-                String pid = PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray().get(mSecondGoodPoistion).getCid();
-                if (!StringUtils.isEmpty(pid)) {
-                    Get3Goods(pid);
+            if (mArrayBeanList!= null&&PurchaseGoodActivity.getOneTwoClassGoodData().getData().size()>0) {
+                if(mSecondGoodPoistion==-1){
+                    initAllThridDatas();
+                }
+                if(mSecondGoodPoistion>=0) {
+                    if(mArrayBeanList.size()>0) {
+                        String pid = mArrayBeanList.get(mSecondGoodPoistion).getCid();
+                        if (!StringUtils.isEmpty(pid)) {
+                            Get3Goods(pid);
+                        }
+                    }
                 }
             }
         }
@@ -87,11 +94,10 @@ public class GoodsFragment extends BaseFragment {
                     Gson gson = new Gson();
                     thridGoodsData = gson.fromJson(response.toString(), ThridGoodsData.class);
                     List<ThridGoodsData.DataBean> dataBeanList = thridGoodsData.getData();
-                    thridAdapter.clearAll();
                     thridAdapter.addAll(dataBeanList);
-                    return;
+                }else {
+                    ToastUtils.showShort(getActivity(), "没有数据了。。");
                 }
-                ToastUtils.showShort(getActivity(),"没有数据了。。");
             }
             @Override
             public void onError(Exception e) {
@@ -116,7 +122,6 @@ public class GoodsFragment extends BaseFragment {
     public void InitSecondMenuData(){
         String position=getArguments().getString("mFirstPosition","0");
         mFirstPosition=Integer.parseInt(position);
-
         mArrayBeanList= PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray();
         if(mArrayBeanList!=null&&mArrayBeanList.size()>0) {
             if(secondAdapter!=null) {
@@ -134,7 +139,6 @@ public class GoodsFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         mSecondGoodPoistion=0;
-        mFirstPosition=0;
     }
 
     private void initAdapter() {
@@ -164,7 +168,9 @@ public class GoodsFragment extends BaseFragment {
      * 初始化所有的三级菜单
      */
     public void  initAllThridDatas(){
-        if(PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getArray()!=null) {
+
+        if(mArrayBeanList!=null&&PurchaseGoodActivity.getOneTwoClassGoodData().getData().size()>0) {
+
             String pid = PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getCid();
             if (!StringUtils.isEmpty(pid)) {
                 secondAdapter.clearSelectedIndex();

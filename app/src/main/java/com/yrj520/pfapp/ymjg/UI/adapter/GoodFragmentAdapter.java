@@ -41,7 +41,7 @@ public class GoodFragmentAdapter extends FragmentStatePagerAdapter {
         args.putString("mFirstPosition",position+"");
         fragment.setArguments(args);
         fragmentList.add(fragment);
-        return fragment;
+        return fragmentList.get(position);
     }
 
     public void refrashDatas(int position){
