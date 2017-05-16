@@ -3,7 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/gray_e5"
     android:layout_height="match_parent">
+
     <RelativeLayout
+        android:id="@+id/rl_good_detail"
         android:background="@color/bg_white"
         android:layout_width="match_parent"
         android:layout_height="80dp">
@@ -65,6 +67,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_marginTop="8dp"
         android:layout_height="40dp"

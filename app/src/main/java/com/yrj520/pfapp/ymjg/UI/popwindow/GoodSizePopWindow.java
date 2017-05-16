@@ -19,6 +19,7 @@ import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.adapter.GoodSpecAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
+import com.yrj520.pfapp.ymjg.UI.dialog.GoodDetailDialog;
 import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
@@ -47,6 +48,7 @@ public class GoodSizePopWindow extends PopupWindow {
     //private ThridGoodsData.DataBean mDataBean;
     private GoodSizeData goodSize;
     private GoodSpecAdapter goodSpecAdapter;
+    private  RelativeLayout rl_good_detail;
     private  static GoodSizePopWindow mCartPopWindow=null;
     private ImageView iv_pic;
     private TextView tv_good_name;
@@ -102,6 +104,7 @@ public class GoodSizePopWindow extends PopupWindow {
         tv_now_price=(TextView)view.findViewById(R.id.tv_now_price);
         tv_shop_price=(TextView)view.findViewById(R.id.tv_shop_price);
         lv_size_list=(ListView) view.findViewById(R.id.lv_size_list);
+        rl_good_detail=(RelativeLayout)view.findViewById(R.id.rl_good_detail);
 
         goodSpecAdapter=new GoodSpecAdapter(mContext);
         lv_size_list.setAdapter(goodSpecAdapter);
@@ -126,6 +129,14 @@ public class GoodSizePopWindow extends PopupWindow {
                     mGoodNum = 0;
                 }
                 OperateGoodsNum();
+            }
+        });
+
+        rl_good_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodDetailDialog goodDetailDialog=new GoodDetailDialog(mContext,good_id);
+                goodDetailDialog.show();
             }
         });
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:text="标签"
+        android:layout_height="30dp"
+        android:layout_width="60dp"
+        />
+    <TextView
+        android:layout_toRightOf="@+id/tv_tag"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tv_divide_line"
+        android:background="@color/black_de"
+        android:layout_height="30dp"
+        android:layout_width="1dp"
+        />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/tv_divide_line"
+        android:gravity="center_vertical"
+        android:text="标签名"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        />
+</RelativeLayout>
