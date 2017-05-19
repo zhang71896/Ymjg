@@ -90,7 +90,6 @@ public class ActivityAddress extends BaseActivity {
                 String code=response.optString("code");
                 String meg=response.optString("meg");
                 if(code.equals("200")){
-                    ToastUtils.showShort(ActivityAddress.this,"刷新成功");
                     Gson gson=new Gson();
                     addressData=gson.fromJson(response.toString(),AddressData.class);
                     setViews();

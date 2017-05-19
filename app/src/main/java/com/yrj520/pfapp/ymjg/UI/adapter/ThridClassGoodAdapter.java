@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yrj520.pfapp.ymjg.R;
-import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodDataBean;
 import com.yrj520.pfapp.ymjg.UI.utils.ImageUtils;
 import com.yrj520.pfapp.ymjg.UI.utils.PopUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -33,20 +33,21 @@ public class ThridClassGoodAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private Activity mContext;
-    private List<ThridGoodsData.DataBean> dataBeanList=new ArrayList<ThridGoodsData.DataBean>();
-
+    private List<GoodDataBean> dataBeanList=new ArrayList<GoodDataBean>();
     public void clearAll(){
         dataBeanList.clear();
         notifyDataSetChanged();
     }
 
-    public void addAll(List<ThridGoodsData.DataBean> list) {
+    public void addAll(List<GoodDataBean> list) {
         dataBeanList.clear();
         dataBeanList.addAll(list);
         notifyDataSetChanged();
     }
+
+
     public void ClickPositionListener(int position,View parent){
-        ThridGoodsData.DataBean dataBean=getItem(position);
+        GoodDataBean dataBean=getItem(position);
         PopUtil.ShowGoodSizePopWindow(dataBean,mContext, PurchaseGoodActivity.getBottomView());
     }
     public ThridClassGoodAdapter(Activity context) {
@@ -59,7 +60,7 @@ public class ThridClassGoodAdapter extends BaseAdapter {
     }
 
     @Override
-    public ThridGoodsData.DataBean getItem(int position) {
+    public GoodDataBean getItem(int position) {
         return dataBeanList.get(position);
     }
 
@@ -78,7 +79,7 @@ public class ThridClassGoodAdapter extends BaseAdapter {
         } else {
             holder = (ThridClassGoodAdapter.ViewHolder) convertView.getTag();
         }
-        final ThridGoodsData.DataBean data = getItem(position);
+        final GoodDataBean data = getItem(position);
         holder.tv_number.setVisibility(View.INVISIBLE);
         holder.rl_bg.setBackgroundColor(mContext.getResources().getColor(R.color.gray_e5));
         if(!StringUtils.isEmpty(data.getGoods_num())){
@@ -87,6 +88,9 @@ public class ThridClassGoodAdapter extends BaseAdapter {
                 holder.rl_bg.setBackgroundColor(mContext.getResources().getColor(R.color.color_text_bg));
                 holder.tv_number.setVisibility(View.VISIBLE);
                 holder.tv_number.setText(data.getGoods_num());
+                if(goodNum>100){
+                    holder.tv_number.setText("..");
+                }
             }
         }
         if(!StringUtils.isEmpty(data.getImage_url())) {

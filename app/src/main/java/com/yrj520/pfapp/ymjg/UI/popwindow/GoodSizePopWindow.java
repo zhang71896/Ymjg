@@ -20,8 +20,8 @@ import com.yrj520.pfapp.ymjg.UI.adapter.GoodSpecAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.dialog.GoodDetailDialog;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodDataBean;
 import com.yrj520.pfapp.ymjg.UI.entity.GoodSpecData;
-import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
@@ -64,6 +64,8 @@ public class GoodSizePopWindow extends PopupWindow {
     //是否有明细
     private boolean hasSpec=false;
     private int mGoodNum;
+
+    private String  et_num;
     private String good_id;
 
     /**
@@ -178,8 +180,9 @@ public class GoodSizePopWindow extends PopupWindow {
 
 
 
-    public void  InitDatas(ThridGoodsData.DataBean dataBean){
+    public void  InitDatas(GoodDataBean dataBean){
         good_id=dataBean.getGoods_id().toString();
+        et_num=dataBean.getGoods_num().toString();
         UserApi.GetGoodsSpecApi(mContext, good_id, new HttpUtil.RequestBack() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -219,10 +222,29 @@ public class GoodSizePopWindow extends PopupWindow {
         String storeNum="999";
         if(!StringUtils.isEmpty(goodSize.getData().getSumstore_count())){
             tv_good_num.setText("总库存: "+goodSize.getData().getSumstore_count());
-
         }
 
+
+       if(et_num!=null&&et_num.length()>0){
+           et_store_num.setText(et_num);
+       }
+
         et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeNum)});
+
+        et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+
+                    if(!StringUtils.isEmpty(et_store_num.getText())) {
+                        if(!et_num.equals(et_store_num.getText())) {
+                            mGoodNum = Integer.parseInt(et_store_num.getText().toString());
+                            OperateGoodsNum();
+                        }
+                    }
+                }
+            }
+        });
 
         et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -238,7 +260,6 @@ public class GoodSizePopWindow extends PopupWindow {
                     }
                 }
                 mGoodNum=0;
-                et_store_num.setText("0");
                 return false;
 
             }

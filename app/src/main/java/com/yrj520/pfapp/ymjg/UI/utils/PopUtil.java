@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.PopupWindow;
 
+import com.yrj520.pfapp.ymjg.UI.entity.GoodDataBean;
 import com.yrj520.pfapp.ymjg.UI.entity.OrderData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.popwindow.CartPopWindow;
@@ -26,7 +27,7 @@ public class PopUtil {
 
     private static PopupWindow currentPopWindow;
 
-    public static void ShowGoodSizePopWindow(ThridGoodsData.DataBean dataBean, Activity mContext,View parent){
+    public static void ShowGoodSizePopWindow(GoodDataBean dataBean, Activity mContext, View parent){
         //HiddenCurrentWindow();
         GoodSizePopWindow goodSizePopWindow=new GoodSizePopWindow(mContext);
         goodSizePopWindow.InitDatas(dataBean);

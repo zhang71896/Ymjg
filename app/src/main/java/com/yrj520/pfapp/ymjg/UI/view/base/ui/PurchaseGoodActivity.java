@@ -176,18 +176,6 @@ public class PurchaseGoodActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    private View.OnClickListener mTabOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-                int pos = (int) view.getTag();
-                ToastUtils.showShort(PurchaseGoodActivity.this,"hi");
-                TabLayout.Tab tab = tab_essence.getTabAt(pos);
-                if (tab != null) {
-
-
-            }
-        }
-    };
 
     public static OneTwoClassGoodData getOneTwoClassGoodData(){
 
@@ -219,7 +207,6 @@ public class PurchaseGoodActivity extends BaseActivity {
                 code=response.optString("code");
                 //获取数据成功
                 if(code.equals("200")) {
-                    ToastUtils.showShort(PurchaseGoodActivity.this, "获取数据成功!");
                     Gson gson = new Gson();
                     mOneTwoClassGoodData = gson.fromJson(response.toString(), OneTwoClassGoodData.class);
                     if(mType==0) {

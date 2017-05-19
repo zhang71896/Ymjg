@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.view.base.BaseActivity;
 
-import static com.yrj520.pfapp.ymjg.R.id.tv_left;
-
 /**
  * Created by zry on 17/4/1.
  */
@@ -28,7 +26,7 @@ public class ActivityAboutUs extends BaseActivity {
 
     private Button btn_call;
 
-    private String phoneNumber = "028-88888888";
+    private String phoneNumber = "18030636106";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

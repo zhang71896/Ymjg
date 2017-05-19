@@ -20,8 +20,6 @@ import org.json.JSONObject;
 
 import okhttp3.Request;
 
-import static com.yrj520.pfapp.ymjg.R.id.tv_left;
-
 
 /**
  * 注册和找回密码界面
@@ -236,12 +234,14 @@ public class RegisterActivity extends BaseActivity {
                         public void onSuccess(JSONObject response) {
                             String code=response.optString("code");
                             String meg=response.optString("meg");
-                            ToastUtils.showShort(RegisterActivity.this,meg);
                             if(code.equals("200")){
+                                ToastUtils.showShort(RegisterActivity.this,"密码找回成功！");
                                 Intent intent=new Intent(RegisterActivity.this,LoginActivity.class);
                                 //清空之前activity的栈
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                            }else{
+                                ToastUtils.showShort(RegisterActivity.this,"密码找回失败!");
                             }
                         }
 

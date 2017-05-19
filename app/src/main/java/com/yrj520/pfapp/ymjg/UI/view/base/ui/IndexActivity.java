@@ -141,7 +141,6 @@ public class IndexActivity extends BaseActivity {
                 String code=response.optString("code");
                 //获取数据成功
                 if(code.equals("200")){
-                    ToastUtils.showShort(IndexActivity.this,"获取数据成功!");
                     Gson gson = new Gson();
                     indexData=gson.fromJson(response.toString(),IndexData.class);
                     setViews();

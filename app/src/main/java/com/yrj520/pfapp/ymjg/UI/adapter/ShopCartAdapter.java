@@ -143,11 +143,29 @@ public class ShopCartAdapter extends BaseAdapter {
                     OperateGoodsNum(data, holder.tv_stock, holder.et_store_num,position);
                 }
             });
-            String storeCount="999";
+             String storeCount="999";
+            String goodsNums="0";
             if(data.getStore_count()!=null&&data.getStore_count().length()>0){
                 storeCount=data.getStore_count().toString();
             }
+            if(data.getGoods_num()!=null&&data.getGoods_num().length()>0){
+                goodsNums=data.getGoods_num().toString();
+            }
+            final String fgoodsNums=goodsNums;
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeCount)});
+            holder.et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
+                            if(!fgoodsNums.equals(holder.et_store_num.getText().toString())) {
+                                store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                                OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            }
+                        }
+                    }
+                }
+            });
             holder.et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

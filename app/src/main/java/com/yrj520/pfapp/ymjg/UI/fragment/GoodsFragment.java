@@ -16,7 +16,9 @@ import com.yrj520.pfapp.ymjg.UI.adapter.SecondClassGoodAdapter;
 import com.yrj520.pfapp.ymjg.UI.adapter.ThridClassGoodAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.application.SuperApplication;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodDataBean;
 import com.yrj520.pfapp.ymjg.UI.entity.OneTwoClassGoodData;
+import com.yrj520.pfapp.ymjg.UI.entity.ThridAllGood;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
 import com.yrj520.pfapp.ymjg.UI.utils.StringUtils;
@@ -93,7 +95,7 @@ public class GoodsFragment extends BaseFragment {
                 if (code.equals("200")) {
                     Gson gson = new Gson();
                     thridGoodsData = gson.fromJson(response.toString(), ThridGoodsData.class);
-                    List<ThridGoodsData.DataBean> dataBeanList = thridGoodsData.getData();
+                    List<GoodDataBean> dataBeanList = thridGoodsData.getData();
                     thridAdapter.addAll(dataBeanList);
                 }else {
                     ToastUtils.showShort(getActivity(), "没有数据了。。");
@@ -114,6 +116,30 @@ public class GoodsFragment extends BaseFragment {
             public void onAfter() {
                 super.onAfter();
                 closeLoading();
+            }
+        });
+    }
+
+    private void Get3AllGoods(String pid){
+        UserApi.Get12GoodsSinglyApi(SuperApplication.getInstance().getApplicationContext(), pid, new HttpUtil.RequestBack() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Gson gson =new Gson();
+                String code=response.optString("code");
+                if(code.equals("200")) {
+                    ThridAllGood thridAllGood = gson.fromJson(response.toString(), ThridAllGood.class);
+                    List<GoodDataBean> dataBeanList = thridAllGood.getGoodsdata();
+                    thridAdapter.addAll(dataBeanList);
+                }else {
+                    ToastUtils.showShort(getActivity(), "没有数据了。。");
+                }
+
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
             }
         });
     }
@@ -168,13 +194,11 @@ public class GoodsFragment extends BaseFragment {
      * 初始化所有的三级菜单
      */
     public void  initAllThridDatas(){
-
         if(mArrayBeanList!=null&&PurchaseGoodActivity.getOneTwoClassGoodData().getData().size()>0) {
-
             String pid = PurchaseGoodActivity.getOneTwoClassGoodData().getData().get(mFirstPosition).getCid();
             if (!StringUtils.isEmpty(pid)) {
                 secondAdapter.clearSelectedIndex();
-                Get3Goods(pid);
+                Get3AllGoods(pid);
             }
         }
     }
