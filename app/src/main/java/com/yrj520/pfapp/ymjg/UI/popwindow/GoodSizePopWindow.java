@@ -2,11 +2,11 @@ package com.yrj520.pfapp.ymjg.UI.popwindow;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,7 +20,7 @@ import com.yrj520.pfapp.ymjg.UI.adapter.GoodSpecAdapter;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
 import com.yrj520.pfapp.ymjg.UI.dialog.GoodDetailDialog;
-import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodSpecData;
 import com.yrj520.pfapp.ymjg.UI.entity.ThridGoodsData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
@@ -46,7 +46,7 @@ public class GoodSizePopWindow extends PopupWindow {
     private static Activity mContext;
     private View view;
     //private ThridGoodsData.DataBean mDataBean;
-    private GoodSizeData goodSize;
+    private GoodSpecData goodSize;
     private GoodSpecAdapter goodSpecAdapter;
     private  RelativeLayout rl_good_detail;
     private  static GoodSizePopWindow mCartPopWindow=null;
@@ -187,7 +187,7 @@ public class GoodSizePopWindow extends PopupWindow {
                 String meg=response.optString("meg");
                 if(code.equals("200")){
                      Gson gson=new Gson();
-                     goodSize=gson.fromJson(response.toString(),GoodSizeData.class);
+                     goodSize=gson.fromJson(response.toString(),GoodSpecData.class);
                      setViews();
                 }
             }
@@ -221,27 +221,28 @@ public class GoodSizePopWindow extends PopupWindow {
             tv_good_num.setText("总库存: "+goodSize.getData().getSumstore_count());
 
         }
+
         et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeNum)});
-        et_store_num.addTextChangedListener(new TextWatcher() {
+
+        et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!StringUtils.isEmpty(et_store_num.getText())) {
-                    mGoodNum = Integer.parseInt(et_store_num.getText().toString());
-                    OperateGoodsNum();
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_NEXT) {
+                    // do something
+                    if(!StringUtils.isEmpty(et_store_num.getText())) {
+                        mGoodNum = Integer.parseInt(et_store_num.getText().toString());
+                        OperateGoodsNum();
+                        return true;
+                    }else{
+                        return  false;
+                    }
                 }
+                mGoodNum=0;
+                et_store_num.setText("0");
+                return false;
+
             }
         });
-
         if(!StringUtils.isEmpty(goodSize.getData().getShop_price())){
             tv_now_price.setText("¥ "+goodSize.getData().getShop_price());
         }

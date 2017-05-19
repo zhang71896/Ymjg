@@ -1,12 +1,12 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.yrj520.pfapp.ymjg.R;
 import com.yrj520.pfapp.ymjg.UI.api.UserApi;
 import com.yrj520.pfapp.ymjg.UI.constant.MyConstant;
-import com.yrj520.pfapp.ymjg.UI.entity.GoodSizeData;
+import com.yrj520.pfapp.ymjg.UI.entity.GoodSpecData;
 import com.yrj520.pfapp.ymjg.UI.event.CartRefreshEvent;
 import com.yrj520.pfapp.ymjg.UI.filter.InputMaxLimitFilter;
 import com.yrj520.pfapp.ymjg.UI.net.HttpUtil;
@@ -39,7 +39,7 @@ import de.greenrobot.event.EventBus;
  */
 
 public class GoodSpecAdapter extends BaseAdapter {
-    private List<GoodSizeData.DataBean.SpecBean> mListArrayBean= new ArrayList<GoodSizeData.DataBean.SpecBean>();
+    private List<GoodSpecData.DataBean.SpecBean> mListArrayBean= new ArrayList<GoodSpecData.DataBean.SpecBean>();
     private LayoutInflater mInflater;
     private Context mContext;
     private List<GoodSizeBean> goodSizeBeanList=new ArrayList<GoodSizeBean>();
@@ -61,13 +61,13 @@ public class GoodSpecAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addAll(GoodSizeData goodSize) {
+    public void addAll(GoodSpecData goodSize) {
         mListArrayBean.clear();
         mListArrayBean.addAll(goodSize.getData().getSpec());
         goodSizeBeanList.clear();
 
         for(int i=0;i<goodSize.getData().getSpec().size();i++){
-            GoodSizeData.DataBean.SpecBean  specBean=getItem(i);
+            GoodSpecData.DataBean.SpecBean  specBean=getItem(i);
             GoodSizeBean goodSizeBean=new GoodSizeBean();
             goodSizeBean.setGood_num(0);
             goodSizeBean.setGood_price(Float.parseFloat(specBean.getPrice().toString()));
@@ -83,7 +83,7 @@ public class GoodSpecAdapter extends BaseAdapter {
     }
 
     @Override
-    public GoodSizeData.DataBean.SpecBean getItem(int position) {
+    public GoodSpecData.DataBean.SpecBean getItem(int position) {
         return mListArrayBean.get(position);
     }
 
@@ -102,7 +102,7 @@ public class GoodSpecAdapter extends BaseAdapter {
         }else {
             holder = (GoodSpecAdapter.ViewHolder) convertView.getTag();
         }
-        final GoodSizeData.DataBean.SpecBean data = getItem(position);
+        final GoodSpecData.DataBean.SpecBean data = getItem(position);
 
         if(!StringUtils.isEmpty(data.getKey_name())){
             holder.tv_keyname.setText(data.getKey_name());
@@ -142,32 +142,31 @@ public class GoodSpecAdapter extends BaseAdapter {
                 }
             });
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", data.getStore_count().toString())});
-            holder.et_store_num.addTextChangedListener(new TextWatcher() {
+            holder.et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
-                        store_num = Integer.parseInt(holder.et_store_num.getText().toString());
-                        OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_NEXT) {
+                        // do something
+                        if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
+                            store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                            OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            return true;
+                        }else{
+                            return  false;
+                        }
                     }
+                    return false;
                 }
             });
+
+
         }
 
         return convertView;
     }
 
 
-    private void OperateGoodsNum(GoodSizeData.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
+    private void OperateGoodsNum(GoodSpecData.DataBean.SpecBean data, TextView tv_stock, final EditText et_store_num, final int position) {
         if(store_num>=0) {
             String goodsNum = store_num + "";
             UserApi.OperateGoodsNumApi(mContext, good_id, data.getSgp_id().toString(), goodsNum, new HttpUtil.RequestBack() {

@@ -1,12 +1,12 @@
 package com.yrj520.pfapp.ymjg.UI.adapter;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -148,25 +148,25 @@ public class ShopCartAdapter extends BaseAdapter {
                 storeCount=data.getStore_count().toString();
             }
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeCount)});
-            holder.et_store_num.addTextChangedListener(new TextWatcher() {
+            holder.et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_NEXT) {
+                        // do something
+                        if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
+                            store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                            OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            return true;
+                        }else{
 
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
-                        store_num = Integer.parseInt(holder.et_store_num.getText().toString());
-                        OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            return false;
+                        }
                     }
+                    holder.et_store_num.setText("0");
+                    return false;
                 }
             });
+
         }
 
         return convertView;

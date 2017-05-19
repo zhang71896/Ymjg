@@ -53,7 +53,7 @@ public class GoodSpecData {
         private String sumstore_count;
         private String image_url;
         private int goodsnum;
-        private List<?> spec;
+        private List<SpecBean> spec;
         private List<?> goods_image;
         private List<AttrBean> attr;
 
@@ -113,11 +113,11 @@ public class GoodSpecData {
             this.goodsnum = goodsnum;
         }
 
-        public List<?> getSpec() {
+        public List<SpecBean> getSpec() {
             return spec;
         }
 
-        public void setSpec(List<?> spec) {
+        public void setSpec(List<SpecBean> spec) {
             this.spec = spec;
         }
 
@@ -161,6 +161,62 @@ public class GoodSpecData {
 
             public void setAttr_value(String attr_value) {
                 this.attr_value = attr_value;
+            }
+        }
+
+        public static class SpecBean {
+            /**
+             * goods_num :
+             * sgp_id : 138
+             * key_name : 是否含花盆:不含花盆 颜色:深黑色
+             * price : 6.00
+             * store_count : 222
+             */
+
+            private String goods_num;
+            private String sgp_id;
+            private String key_name;
+            private String price;
+            private String store_count;
+
+            public String getGoods_num() {
+                return goods_num;
+            }
+
+            public void setGoods_num(String goods_num) {
+                this.goods_num = goods_num;
+            }
+
+            public String getSgp_id() {
+                return sgp_id;
+            }
+
+            public void setSgp_id(String sgp_id) {
+                this.sgp_id = sgp_id;
+            }
+
+            public String getKey_name() {
+                return key_name;
+            }
+
+            public void setKey_name(String key_name) {
+                this.key_name = key_name;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getStore_count() {
+                return store_count;
+            }
+
+            public void setStore_count(String store_count) {
+                this.store_count = store_count;
             }
         }
     }
