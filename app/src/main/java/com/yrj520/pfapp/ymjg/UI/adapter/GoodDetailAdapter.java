@@ -93,7 +93,7 @@ public class GoodDetailAdapter extends BaseAdapter {
             holder.tv_good_num.setText("共计: "+specBean.getGoods_num());
         }
         if(!StringUtils.isEmpty(specBean.getSumprice())) {
-            holder.tv_good_sum_prices.setText(specBean.getSumprice());
+            holder.tv_good_sum_prices.setText("总价¥"+specBean.getSumprice());
         }
         return convertView;
     }

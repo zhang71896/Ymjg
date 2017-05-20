@@ -222,12 +222,16 @@ public class GoodSizePopWindow extends PopupWindow {
         String storeNum="999";
         if(!StringUtils.isEmpty(goodSize.getData().getSumstore_count())){
             tv_good_num.setText("总库存: "+goodSize.getData().getSumstore_count());
+            storeNum=goodSize.getData().getSumstore_count();
         }
 
+        if(et_num!=null&&et_num.length()>=0){
+            if(et_num.length()==0){
+                et_num="0";
+            }
+            et_store_num.setText(et_num);
+        }
 
-       if(et_num!=null&&et_num.length()>0){
-           et_store_num.setText(et_num);
-       }
 
         et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeNum)});
 
@@ -235,9 +239,10 @@ public class GoodSizePopWindow extends PopupWindow {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-
                     if(!StringUtils.isEmpty(et_store_num.getText())) {
-                        if(!et_num.equals(et_store_num.getText())) {
+                        int int_num=Integer.parseInt(et_num);
+                        int int_store_num= Integer.parseInt(et_store_num.getText().toString());
+                        if(int_num!=int_store_num) {
                             mGoodNum = Integer.parseInt(et_store_num.getText().toString());
                             OperateGoodsNum();
                         }
@@ -245,6 +250,8 @@ public class GoodSizePopWindow extends PopupWindow {
                 }
             }
         });
+
+
 
         et_store_num.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

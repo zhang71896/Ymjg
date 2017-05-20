@@ -40,7 +40,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="@color/colorpurple"
-        android:text="客户热线: 028-88888888"
+        android:text="客户热线: 18030636106"
         android:textSize="16sp"
         android:textColor="@color/colorWhite"
         />
