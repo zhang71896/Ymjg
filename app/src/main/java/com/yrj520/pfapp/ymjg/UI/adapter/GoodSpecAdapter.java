@@ -111,7 +111,11 @@ public class GoodSpecAdapter extends BaseAdapter {
         if(!StringUtils.isEmpty(data.getPrice())){
             holder.tv_good_price.setText("¥ "+data.getPrice());
         }
-        holder.et_store_num.setText(goodSizeBeanList.get(position).getGood_num()+"");
+        if(!StringUtils.isEmpty(data.getGoods_num())) {
+            holder.et_store_num.setText(data.getGoods_num() + "");
+        }else{
+            holder.et_store_num.setText("0");
+        }
         if(!StringUtils.isEmpty(data.getStore_count())) {
             holder.tv_stock.setText("(库存:" + data.getStore_count() + ")");
             max_store_num=Integer.parseInt(data.getStore_count().toString());
@@ -152,6 +156,7 @@ public class GoodSpecAdapter extends BaseAdapter {
             }
             final String  fgoodsNums=goodsNums;
             holder.et_store_num.setFilters(new InputFilter[]{new InputMaxLimitFilter("0", storeCount)});
+
             holder.et_store_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -171,8 +176,10 @@ public class GoodSpecAdapter extends BaseAdapter {
                     if (actionId == EditorInfo.IME_ACTION_DONE||actionId==EditorInfo.IME_ACTION_NEXT) {
                         // do something
                         if(!StringUtils.isEmpty(holder.et_store_num.getText())) {
-                            store_num = Integer.parseInt(holder.et_store_num.getText().toString());
-                            OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            if(!fgoodsNums.equals(holder.et_store_num.getText().toString())) {
+                                store_num = Integer.parseInt(holder.et_store_num.getText().toString());
+                                OperateGoodsNum(data, holder.tv_stock, holder.et_store_num, position);
+                            }
                             return true;
                         }else{
                             return  false;

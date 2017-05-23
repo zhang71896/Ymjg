@@ -88,9 +88,6 @@ public class ThridClassGoodAdapter extends BaseAdapter {
                 holder.rl_bg.setBackgroundColor(mContext.getResources().getColor(R.color.color_text_bg));
                 holder.tv_number.setVisibility(View.VISIBLE);
                 holder.tv_number.setText(data.getGoods_num());
-                if(goodNum>100){
-                    holder.tv_number.setText("..");
-                }
             }
         }
         if(!StringUtils.isEmpty(data.getImage_url())) {
